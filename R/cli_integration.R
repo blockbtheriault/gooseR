@@ -178,7 +178,7 @@ goose_test_cli <- function(verbose = TRUE) {
   # First check if CLI is installed
   if (!goose_check_installation()) {
     if (verbose) {
-      message("❌ Goose CLI not installed")
+      message("[CLI] Goose CLI not installed")
       message("   Install from: https://github.com/block/goose")
     }
     return(FALSE)
@@ -192,7 +192,7 @@ goose_test_cli <- function(verbose = TRUE) {
   test_query <- "Reply with just the word 'working' if you receive this."
   
   if (verbose) {
-    message("🔍 Testing CLI connection...")
+    message("[CLI] Testing CLI connection...")
   }
   
   result <- tryCatch({
@@ -225,13 +225,13 @@ goose_test_cli <- function(verbose = TRUE) {
     
     if (has_success && !has_error) {
       if (verbose) {
-        message("✅ Goose CLI is working properly!")
+        message("[CLI] Goose CLI is working properly!")
         message("   You can use all goose_* functions without additional configuration.")
       }
       return(TRUE)
     } else if (has_error) {
       if (verbose) {
-        message("⚠️  Goose CLI needs configuration")
+        message("  Goose CLI needs configuration")
         message("   The CLI is installed but may need API credentials.")
         message("   ")
         message("   For Block employees:")
@@ -245,7 +245,7 @@ goose_test_cli <- function(verbose = TRUE) {
     } else {
       # Got a response but unclear if it's working
       if (verbose) {
-        message("⚠️  Goose CLI response unclear")
+        message("  Goose CLI response unclear")
         message("   Got response but couldn't verify if it's working properly.")
         message("   Try: goose_ask('Hello') to test manually.")
       }
@@ -253,7 +253,7 @@ goose_test_cli <- function(verbose = TRUE) {
     }
   } else {
     if (verbose) {
-      message("❌ Goose CLI not responding")
+      message(" Goose CLI not responding")
       message("   The CLI is installed but not responding to queries.")
       message("   ")
       message("   Possible issues:")
