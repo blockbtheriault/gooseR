@@ -75,20 +75,41 @@ goose_cache_set <- function(query, response, model = NULL,
   hash <- digest::digest(paste(query, model), algo = "sha256")
   
   # Serialize metadata
-  meta_json <- NULL
+  meta_json <- NA_character_
   if (!is.null(metadata)) {
-    meta_json <- jsonlite::toJSON(metadata, auto_unbox = TRUE)
+    meta_json <- as.character(jsonlite::toJSON(metadata, auto_unbox = TRUE))
   }
   
   # Insert or update cache entry
   result <- tryCatch({
-    DBI::dbExecute(conn, "
-      INSERT OR REPLACE INTO cache 
-      (hash, query, response, model, metadata, timestamp, access_count, last_accessed)
-      VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 
-              COALESCE((SELECT access_count FROM cache WHERE hash = ?), 0) + 1,
-              CURRENT_TIMESTAMP)
-    ", params = list(hash, query, response, model, meta_json, hash))
+    # First check if entry exists
+    existing <- DBI::dbGetQuery(conn, 
+      "SELECT access_count FROM cache WHERE hash = ?", 
+      params = list(hash))
+    
+    if (nrow(existing) > 0) {
+      # Update existing entry
+      DBI::dbExecute(conn, "
+        UPDATE cache 
+        SET query = ?, response = ?, model = ?, metadata = ?,
+            timestamp = CURRENT_TIMESTAMP, 
+            access_count = access_count + 1,
+            last_accessed = CURRENT_TIMESTAMP
+        WHERE hash = ?
+      ", params = list(query, response, 
+                      ifelse(is.null(model), NA_character_, model), 
+                      ifelse(is.na(meta_json), NA_character_, meta_json), 
+                      hash))
+    } else {
+      # Insert new entry
+      DBI::dbExecute(conn, "
+        INSERT INTO cache 
+        (hash, query, response, model, metadata, timestamp, access_count, last_accessed)
+        VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP)
+      ", params = list(hash, query, response, 
+                      ifelse(is.null(model), NA_character_, model), 
+                      ifelse(is.na(meta_json), NA_character_, meta_json)))
+    }
     TRUE
   }, error = function(e) {
     warning("Cache set failed: ", e$message)

@@ -113,8 +113,8 @@ StreamHandler <- R6::R6Class(
     #' Monitor streaming process
     monitor = function() {
       while (self$process$is_alive()) {
-        # Check for output with timeout
-        output <- self$process$read_output_lines(timeout = 100)
+        # Check for output (no timeout parameter needed)
+        output <- self$process$read_output_lines()
         
         if (length(output) > 0) {
           for (line in output) {
@@ -138,6 +138,9 @@ StreamHandler <- R6::R6Class(
         if (length(errors) > 0) {
           self$error_callback(paste(errors, collapse = "\n"))
         }
+        
+        # Small delay to prevent CPU spinning
+        Sys.sleep(0.1)
       }
       
       # Process complete
