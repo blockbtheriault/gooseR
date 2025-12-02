@@ -37,4 +37,10 @@ Imports:
     glue,
     R6,
     rappdirs,
-    later
+    later,
+    shiny,
+    miniUI,
+    rstudioapi,
+    DT,
+    knitr,
+    markdown
