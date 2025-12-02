@@ -1,111 +1,86 @@
 # Block Brand Configuration
 # Official brand identity for Block Inc.
-# Reference: https://design.cash.app
+# Based on official Block slide templates
 
 brand:
   name: "Block"
-  version: "1.0.0"
-  description: "Block Inc. official brand identity"
+  version: "2.0.0"
+  description: "Block Inc. official brand identity - minimal black and white design"
   
 colors:
-  # Core brand colors
+  # Core brand colors (minimal palette)
   primary:
     black: "#000000"
     white: "#FFFFFF"
     
-  # Primary palette
-  core:
-    blue: "#0055FF"      # Block Blue
-    gray: "#666666"      # Block Gray
-    light_gray: "#F7F7F7" # Light Gray background
-    
-  # Extended palette - Orange series
-  orange:
-    0: "#FFF8F6"   # Orange 0
-    10: "#FFE0B1"  # Orange 10
-    30: "#FF5500"  # Orange 30 (primary orange)
-    50: "#D75A00"  # Orange 50
-    80: "#8B3A00"  # Orange 80
-    100: "#4F2000" # Orange 100
-    
-  # Extended palette - Teal series
-  teal:
-    0: "#F4FFFC"   # Teal 0
-    20: "#40E0D0"  # Teal 20
-    40: "#00B5B7"  # Teal 40 (primary teal)
-    60: "#008587"  # Teal 60
-    80: "#005758"  # Teal 80
-    100: "#004243" # Teal 100
-    
-  # Additional accent colors
+  # Accent colors (used sparingly)
   accent:
-    lilac_10: "#F4E0FF"   # Lilac 10
-    sky_blue_20: "#E0F4FF" # Sky Blue 20
-    gold_30: "#FFB514"    # Gold 30
-    red_40: "#D53857"     # Red 40
-    dark_blue_60: "#003333" # Dark Blue 60
-    purple_80: "#4F0066"  # Purple 80
+    # Primary accent - used for emphasis
+    primary: "#000000"    # Black is the primary accent
+    # Data visualization colors (minimal, muted palette)
+    viz1: "#333333"       # Dark gray
+    viz2: "#666666"       # Medium gray  
+    viz3: "#999999"       # Light gray
+    viz4: "#CCCCCC"       # Very light gray
     
-  # Semantic colors for UI
+  # Semantic colors (minimal use)
   semantic:
-    success: "#00B5B7"  # Teal 40
-    warning: "#FF5500"  # Orange 30
-    error: "#D53857"    # Red 40
-    info: "#0055FF"     # Block Blue
+    text: "#000000"       # Black text (light theme)
+    text_inverse: "#FFFFFF"  # White text (dark theme)
+    background: "#FFFFFF"    # White background (light theme)
+    background_inverse: "#000000"  # Black background (dark theme)
     
-  # Grayscale palette
+  # Grayscale palette (for subtle variations)
   gray:
-    0: "#FFFFFF"
-    10: "#FAFAFA"
-    20: "#F7F7F7"
-    30: "#E5E5E5"
-    40: "#CCCCCC"
-    50: "#999999"
-    60: "#666666"
-    70: "#4D4D4D"
-    80: "#333333"
-    90: "#1A1A1A"
-    100: "#000000"
+    5: "#F5F5F5"    # Almost white
+    10: "#E5E5E5"   # Very light gray
+    20: "#CCCCCC"   # Light gray
+    30: "#B3B3B3"   # Light-medium gray
+    40: "#999999"   # Medium gray
+    50: "#808080"   # True gray
+    60: "#666666"   # Medium-dark gray
+    70: "#4D4D4D"   # Dark gray
+    80: "#333333"   # Very dark gray
+    90: "#1A1A1A"   # Almost black
     
 typography:
-  # Font families (Block standard)
+  # Font families (clean, minimal)
   fonts:
-    primary: "Montserrat"      # Primary brand font
-    secondary: "Roboto"        # Secondary font
-    body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-    monospace: "Fira Code, 'Courier New', monospace"
+    # System fonts for maximum compatibility and clean look
+    primary: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    monospace: "'SF Mono', Monaco, 'Courier New', monospace"
     
   # Font sizes (in points)
   sizes:
-    base: 12
-    h1: 28
-    h2: 24
-    h3: 20
-    h4: 16
-    h5: 14
-    h6: 12
-    body: 12
-    small: 10
+    base: 11
+    h1: 24
+    h2: 18
+    h3: 14
+    h4: 12
+    h5: 11
+    h6: 10
+    body: 11
+    small: 9
     tiny: 8
+    large: 14
+    xlarge: 18
     
-  # Font weights
+  # Font weights (minimal variation)
   weights:
-    light: 300
     regular: 400
     medium: 500
     semibold: 600
     bold: 700
-    black: 900
     
   # Line heights
   line_heights:
     tight: 1.2
     normal: 1.5
     relaxed: 1.6
-    loose: 1.8
     
 spacing:
-  # Base spacing unit (Block uses 8px grid)
+  # Base spacing unit (clean, consistent)
   unit: 8
   
   # Spacing scale
@@ -114,12 +89,10 @@ spacing:
     xs: 0.25   # 2px
     sm: 0.5    # 4px
     md: 1      # 8px
-    lg: 1.5    # 12px
-    xl: 2      # 16px
-    2xl: 3     # 24px
-    3xl: 4     # 32px
-    4xl: 6     # 48px
-    5xl: 8     # 64px
+    lg: 2      # 16px
+    xl: 3      # 24px
+    2xl: 4     # 32px
+    3xl: 6     # 48px
     
 layout:
   # Maximum widths
@@ -128,124 +101,108 @@ layout:
     text: 720
     narrow: 480
     
-  # Border radius (Block uses sharp corners mostly)
+  # Border radius (Block uses sharp corners)
   radius:
     none: 0
-    sm: 2
-    md: 4
-    lg: 8
-    xl: 12
+    sm: 0    # Sharp corners
+    md: 0    # Sharp corners
+    lg: 0    # Sharp corners
     
-  # Border widths
+  # Border widths (minimal)
   borders:
     none: 0
-    thin: 1
-    medium: 2
-    thick: 3
+    thin: 0.5
+    medium: 1
+    thick: 2
     
-  # Shadows (minimal use in Block design)
+  # Shadows (none - flat design)
   shadows:
     none: "none"
-    sm: "0 1px 3px 0 rgba(0, 0, 0, 0.1)"
-    md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-    lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+    
+# Brand themes
+themes:
+  light:
+    name: "Block Light"
+    background: "#FFFFFF"
+    text: "#000000"
+    grid: "#F5F5F5"
+    axis: "#000000"
+    
+  dark:
+    name: "Block Dark"
+    background: "#000000"
+    text: "#FFFFFF"
+    grid: "#1A1A1A"
+    axis: "#FFFFFF"
     
 # Brand assets
 assets:
   logos:
-    primary: "https://drive.google.com/drive/folders/1LZ9sfDB0tgtAz-6woGb0BTTc6ghqPkLF"
-    svg: "https://drive.google.com/drive/folders/1sQzzbCyYLv9aJ-_POpow2pgc7UtmSi9i"
-    
-  # Font sources
-  fonts:
-    montserrat: "https://fonts.google.com/specimen/Montserrat"
-    roboto: "https://fonts.google.com/specimen/Roboto"
+    primary: "block-logo-black.svg"
+    inverse: "block-logo-white.svg"
     
 # Metadata
 metadata:
   author: "Block Inc."
   copyright: "© 2025 Block Inc."
   website: "https://block.xyz"
-  design_system: "https://design.cash.app"
   
 # Plot-specific settings for ggplot2
 plots:
   # Default dimensions
   dimensions:
     width: 7
-    height: 5
+    height: 4.5  # Wider aspect ratio
     dpi: 300
     
-  # Grid settings (minimal grids in Block style)
+  # Grid settings (minimal)
   grid:
-    major: true
+    major: false  # No grid lines for cleaner look
     minor: false
-    color: "#E5E5E5"  # gray.30
+    color: "#F5F5F5"
     
-  # Color palettes for data visualization
+  # Minimal color palettes for data visualization
   palettes:
-    # Primary categorical palette
+    # Monochrome palette (preferred)
+    monochrome:
+      - "#000000"  # Black
+      - "#333333"  # Dark gray
+      - "#666666"  # Medium gray
+      - "#999999"  # Light gray
+      - "#CCCCCC"  # Very light gray
+      
+    # Minimal categorical (when color needed)
     categorical:
-      - "#0055FF"  # Block Blue
-      - "#FF5500"  # Orange 30
-      - "#00B5B7"  # Teal 40
-      - "#FFB514"  # Gold 30
-      - "#D53857"  # Red 40
-      - "#4F0066"  # Purple 80
-      - "#003333"  # Dark Blue 60
+      - "#000000"  # Black
+      - "#666666"  # Gray
+      - "#CCCCCC"  # Light gray
       
-    # Sequential palette (blues)
-    sequential_blue:
-      - "#E0F4FF"  # Sky Blue 20
-      - "#99C2FF"
-      - "#6699FF"
-      - "#3377FF"
-      - "#0055FF"  # Block Blue
-      - "#0044CC"
-      - "#003399"
-      
-    # Sequential palette (orange)
-    sequential_orange:
-      - "#FFF8F6"  # Orange 0
-      - "#FFE0B1"  # Orange 10
-      - "#FFAA66"
-      - "#FF5500"  # Orange 30
-      - "#D75A00"  # Orange 50
-      - "#8B3A00"  # Orange 80
-      
-    # Diverging palette (orange to teal)
-    diverging:
-      - "#FF5500"  # Orange 30
-      - "#FFAA66"
-      - "#FFE0B1"
-      - "#F0F0F0"  # Neutral
-      - "#B3E6E0"
-      - "#66CCC0"
-      - "#00B5B7"  # Teal 40
+    # Sequential (grayscale)
+    sequential:
+      - "#F5F5F5"  # Almost white
+      - "#CCCCCC"  # Light gray
+      - "#999999"  # Medium gray
+      - "#666666"  # Dark gray
+      - "#333333"  # Very dark gray
+      - "#000000"  # Black
       
 # Brand usage guidelines
 guidelines:
-  contrast:
-    description: "Use sufficient contrast for accessibility"
-    rules:
-      - "Black text on white background for primary content"
-      - "White text on black for inverted layouts"
-      - "Minimum contrast ratio 4.5:1 for body text"
-      - "Minimum contrast ratio 3:1 for large text"
-      
+  design_principles:
+    - "Minimal and clean aesthetic"
+    - "Black and white as primary colors"
+    - "No unnecessary decoration"
+    - "Clear hierarchy through size and weight"
+    - "Generous white space"
+    
   color_usage:
-    description: "Color application principles"
-    rules:
-      - "Black and white as primary colors"
-      - "Blue for primary actions and links"
-      - "Orange for emphasis and calls-to-action"
-      - "Teal for success states and positive feedback"
-      - "Red for errors and warnings only"
-      
+    - "Black on white for primary content (light theme)"
+    - "White on black for inverted layouts (dark theme)"
+    - "Grayscale for data visualization"
+    - "Avoid color unless absolutely necessary"
+    
   typography_usage:
-    description: "Typography application"
-    rules:
-      - "Montserrat for headlines and key messaging"
-      - "Roboto or system fonts for body text"
-      - "Bold weight for emphasis, avoid italics"
-      - "Maintain consistent hierarchy"
+    - "System fonts for clean, consistent rendering"
+    - "Bold for emphasis, not color"
+    - "Clear hierarchy through size"
+    - "Minimal font weights"

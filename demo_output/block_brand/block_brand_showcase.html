@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Block Brand Showcase - Official Minimal Design</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        h2 { font-size: 24px; font-weight: 600; margin: 40px 0 20px; }
+        h3 { font-size: 18px; font-weight: 600; margin: 20px 0 10px; }
+        p { margin-bottom: 16px; color: #666; }
+        .theme-section { margin: 40px 0; }
+        .visualization { margin: 20px 0; }
+        .visualization img { 
+            width: 100%; 
+            max-width: 800px; 
+            border: 1px solid #e5e5e5;
+            display: block;
+        }
+        .dark-section { 
+            background: #000; 
+            color: #fff; 
+            padding: 40px 0;
+            margin: 40px -20px;
+        }
+        .dark-section h2, .dark-section h3 { color: #fff; }
+        .dark-section p { color: #ccc; }
+        .dark-section .visualization img { border-color: #333; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .principle {
+            padding: 20px;
+            background: #f5f5f5;
+            border-left: 4px solid #000;
+        }
+        .dark-section .principle {
+            background: #1a1a1a;
+            border-left-color: #fff;
+        }
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: 14px;
+        }
+        .dark-section code {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Block Brand Design System</h1>
+        <p>Official minimal black and white design language for Block Inc.</p>
+        
+        <div class="theme-section">
+            <h2>Design Principles</h2>
+            <div class="grid">
+                <div class="principle">
+                    <h3>Minimal</h3>
+                    <p>Clean aesthetic with no unnecessary decoration</p>
+                </div>
+                <div class="principle">
+                    <h3>Monochrome</h3>
+                    <p>Black and white as primary colors</p>
+                </div>
+                <div class="principle">
+                    <h3>Clear Hierarchy</h3>
+                    <p>Size and weight create visual structure</p>
+                </div>
+                <div class="principle">
+                    <h3>Generous Space</h3>
+                    <p>White space enhances readability</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="theme-section">
+            <h2>Light Theme</h2>
+            <p>White background with black elements - the primary Block aesthetic</p>
+            
+            <div class="visualization">
+                <h3>Bar Chart</h3>
+                <img src="block_bar_light.png" alt="Block Light Bar Chart">
+            </div>
+            
+            <div class="visualization">
+                <h3>Line Chart</h3>
+                <img src="block_line_light.png" alt="Block Light Line Chart">
+            </div>
+            
+            <div class="visualization">
+                <h3>Horizontal Bar Chart</h3>
+                <img src="block_horizontal_light.png" alt="Block Light Horizontal Bar">
+            </div>
+            
+            <div class="visualization">
+                <h3>Multi-Series Comparison</h3>
+                <img src="block_multi_series_light.png" alt="Block Multi-Series Chart">
+            </div>
+        </div>
+    </div>
+    
+    <div class="dark-section">
+        <div class="container">
+            <h2>Dark Theme</h2>
+            <p>Black background with white elements - for dark contexts</p>
+            
+            <div class="visualization">
+                <h3>Bar Chart</h3>
+                <img src="block_bar_dark.png" alt="Block Dark Bar Chart">
+            </div>
+            
+            <div class="visualization">
+                <h3>Line Chart</h3>
+                <img src="block_line_dark.png" alt="Block Dark Line Chart">
+            </div>
+            
+            <div class="visualization">
+                <h3>Horizontal Bar Chart</h3>
+                <img src="block_horizontal_dark.png" alt="Block Dark Horizontal Bar">
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="theme-section">
+            <h2>Usage in R</h2>
+            <pre><code># Light theme (default)
+library(gooseR)
+library(ggplot2)
+
+ggplot(data, aes(x, y)) +
+  geom_col() +
+  theme_brand("block", variant = "light")
+
+# Dark theme
+ggplot(data, aes(x, y)) +
+  geom_col(fill = "white") +
+  theme_brand("block", variant = "dark")
+
+# Get Block colors
+mono_palette <- brand_palette("block", "monochrome")</code></pre>
+        </div>
+        
+        <div class="theme-section">
+            <p style="text-align: center; color: #999; margin-top: 60px;">
+                © 2025 Block Inc. | Built with gooseR
+            </p>
+        </div>
+    </div>
+</body>
+</html>

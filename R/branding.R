@@ -235,6 +235,7 @@ goose_create_brand <- function(brand_name = NULL,
 #' Generate ggplot2 theme from brand configuration
 #' 
 #' @param brand Name of the brand to use
+#' @param variant Theme variant ("light", "dark", or NULL for default)
 #' @param base_theme Base ggplot2 theme to build upon (default: theme_minimal())
 #' @param base_size Base font size (overrides brand config if specified)
 #' @return A ggplot2 theme object
@@ -242,11 +243,18 @@ goose_create_brand <- function(brand_name = NULL,
 #' @examples
 #' \dontrun{
 #' library(ggplot2)
+#' # Light theme
 #' ggplot(mtcars, aes(mpg, wt)) +
 #'   geom_point() +
-#'   theme_brand("block")
+#'   theme_brand("block", variant = "light")
+#'   
+#' # Dark theme
+#' ggplot(mtcars, aes(mpg, wt)) +
+#'   geom_point() +
+#'   theme_brand("block", variant = "dark")
 #' }
 theme_brand <- function(brand = "block", 
+                       variant = "light",
                        base_theme = ggplot2::theme_minimal(),
                        base_size = NULL) {
   
@@ -257,6 +265,7 @@ theme_brand <- function(brand = "block",
   colors <- config$colors
   typography <- config$typography
   spacing <- config$spacing
+  themes <- config$themes
   
   # Get base size from config or parameter
   if (is.null(base_size)) {
@@ -265,13 +274,29 @@ theme_brand <- function(brand = "block",
                        12)
   }
   
-  # Get colors with fallbacks
-  text_color <- colors$primary$black %||% colors$primary$main %||% "#000000"
-  background_color <- colors$primary$white %||% colors$primary$contrast %||% "#FFFFFF"
-  grid_color <- colors$gray$`30` %||% colors$gray$`300` %||% "#E5E5E5"
+  # Determine colors based on variant
+  if (!is.null(variant) && !is.null(themes) && !is.null(themes[[variant]])) {
+    # Use theme-specific colors
+    theme_config <- themes[[variant]]
+    text_color <- theme_config$text %||% "#000000"
+    background_color <- theme_config$background %||% "#FFFFFF"
+    grid_color <- theme_config$grid %||% "#F5F5F5"
+    axis_color <- theme_config$axis %||% text_color
+  } else {
+    # Fall back to default colors
+    text_color <- colors$primary$black %||% colors$primary$main %||% "#000000"
+    background_color <- colors$primary$white %||% colors$primary$contrast %||% "#FFFFFF"
+    grid_color <- colors$gray$`5` %||% colors$gray$`10` %||% "#F5F5F5"
+    axis_color <- text_color
+  }
   
   # Get fonts with fallbacks
   font_family <- typography$fonts$body %||% typography$fonts$primary %||% ""
+  
+  # Determine if we should show grid lines
+  show_grid <- ifelse(!is.null(config$plots$grid$major), 
+                      config$plots$grid$major, 
+                      FALSE)
   
   # Build theme
   theme <- base_theme +
@@ -324,10 +349,11 @@ theme_brand <- function(brand = "block",
         fill = background_color,
         color = NA
       ),
-      panel.grid.major = ggplot2::element_line(
-        color = grid_color,
-        linewidth = 0.5
-      ),
+      panel.grid.major = if (show_grid) {
+        ggplot2::element_line(color = grid_color, linewidth = 0.25)
+      } else {
+        ggplot2::element_blank()
+      },
       panel.grid.minor = ggplot2::element_blank(),
       panel.border = ggplot2::element_blank(),
       
