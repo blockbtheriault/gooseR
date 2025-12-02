@@ -6,6 +6,7 @@
 #' @importFrom digest digest
 #' @importFrom jsonlite toJSON fromJSON write_json read_json
 #' @importFrom rappdirs user_cache_dir
+#' @importFrom utils write.csv read.csv
 NULL
 
 #' Initialize Cache Database

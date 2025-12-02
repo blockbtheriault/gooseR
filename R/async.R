@@ -5,6 +5,7 @@
 #' @importFrom promises promise as.promise promise_race
 #' @importFrom future.apply future_lapply
 #' @importFrom later later
+#' @importFrom utils txtProgressBar setTxtProgressBar
 NULL
 
 #' Execute Query Asynchronously

@@ -4,6 +4,7 @@
 #' @importFrom glue glue
 #' @importFrom yaml write_yaml read_yaml
 #' @importFrom rappdirs user_data_dir
+#' @importFrom stats setNames
 NULL
 
 #' Create a Prompt Template
