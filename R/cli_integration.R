@@ -5,30 +5,60 @@
 
 #' Configure Goose CLI Settings
 #'
-#' Set up Goose CLI configuration including provider, model, and API key.
-#' Stores settings in environment variables and optionally in .Renviron.
+#' Set up Goose CLI configuration. Note: If Goose CLI is already configured
+#' (e.g., for Block employees), this function is not needed. The package will
+#' use the existing CLI configuration automatically.
 #'
 #' @param provider Character string specifying the AI provider (e.g., "openai", "anthropic")
 #' @param model Character string specifying the model (e.g., "gpt-4", "claude-3")
 #' @param api_key Character string with the API key (stored securely)
 #' @param save_to_renviron Logical, whether to save to .Renviron file
+#' @param check_cli_first Logical, check if CLI already works before configuring (default TRUE)
 #'
 #' @return Invisible TRUE if successful
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' # For Block employees with configured CLI, just check:
+#' goose_test_cli()
+#' 
+#' # For external users who need API keys:
 #' goose_configure(provider = "openai", model = "gpt-4", api_key = "your-key")
 #' }
 goose_configure <- function(provider = NULL, model = NULL, api_key = NULL, 
-                           save_to_renviron = FALSE) {
+                           save_to_renviron = FALSE,
+                           check_cli_first = TRUE) {
   
   # Check if Goose CLI is installed
   if (!goose_check_installation()) {
     stop("Goose CLI not found. Please install from: https://github.com/block/goose")
   }
   
-  # Set environment variables
+  # Check if CLI already works (for Block employees)
+  if (check_cli_first) {
+    cli_works <- goose_test_cli(verbose = FALSE)
+    if (cli_works) {
+      message("✅ Goose CLI is already configured and working!")
+      message("   No additional configuration needed.")
+      return(invisible(TRUE))
+    }
+  }
+  
+  # Only configure if needed
+  if (is.null(provider) && is.null(model) && is.null(api_key)) {
+    message("ℹ️ No configuration provided.")
+    message("   If Goose CLI is already configured (e.g., Block employees),")
+    message("   you can use gooseR without additional setup.")
+    message("   ")
+    message("   To test if CLI works: goose_test_cli()")
+    message("   ")
+    message("   For external users, provide API credentials:")
+    message("   goose_configure(provider='openai', model='gpt-4', api_key='key')")
+    return(invisible(FALSE))
+  }
+  
+  # Set environment variables only if provided
   if (!is.null(provider)) {
     Sys.setenv(GOOSE_PROVIDER = provider)
   }
@@ -42,7 +72,7 @@ goose_configure <- function(provider = NULL, model = NULL, api_key = NULL,
   }
   
   # Save to .Renviron if requested
-  if (save_to_renviron) {
+  if (save_to_renviron && (!is.null(provider) || !is.null(model) || !is.null(api_key))) {
     renviron_path <- file.path(Sys.getenv("HOME"), ".Renviron")
     
     # Read existing .Renviron
@@ -73,14 +103,10 @@ goose_configure <- function(provider = NULL, model = NULL, api_key = NULL,
     message("Configuration saved to .Renviron. Restart R session to apply.")
   }
   
-  # Verify configuration
-  config <- goose_get_config()
-  message("Goose configured successfully:")
-  message("  Provider: ", config$provider)
-  message("  Model: ", config$model)
-  message("  API Key: ", if(!is.null(config$api_key)) "***configured***" else "not set")
+  # Test if it works now
+  cli_works <- goose_test_cli(verbose = TRUE)
   
-  invisible(TRUE)
+  invisible(cli_works)
 }
 
 #' Get Current Goose Configuration
@@ -122,6 +148,120 @@ goose_version <- function() {
     trimws(result[1])
   } else {
     NULL
+  }
+}
+
+#' Test if Goose CLI is Working
+#'
+#' Tests if Goose CLI is properly configured and can execute queries.
+#' This is especially useful for Block employees who have CLI configured
+#' but don't need to provide API keys in R.
+#'
+#' @param verbose Logical, whether to print status messages
+#'
+#' @return Logical, TRUE if CLI works, FALSE otherwise
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Check if CLI works
+#' if (goose_test_cli()) {
+#'   # Ready to use goose_ask() etc.
+#'   response <- goose_ask("Hello!")
+#' } else {
+#'   # May need configuration
+#'   goose_configure(provider = "openai", model = "gpt-4", api_key = "key")
+#' }
+#' }
+goose_test_cli <- function(verbose = TRUE) {
+  
+  # First check if CLI is installed
+  if (!goose_check_installation()) {
+    if (verbose) {
+      message("❌ Goose CLI not installed")
+      message("   Install from: https://github.com/block/goose")
+    }
+    return(FALSE)
+  }
+  
+  if (verbose) {
+    message("✅ Goose CLI found: ", goose_version())
+  }
+  
+  # Try a simple test query
+  test_query <- "Reply with just the word 'working' if you receive this."
+  
+  if (verbose) {
+    message("🔍 Testing CLI connection...")
+  }
+  
+  result <- tryCatch({
+    system2("goose", 
+            args = c("run", "--text", shQuote(test_query), 
+                    "--no-session", "--quiet"),
+            stdout = TRUE,
+            stderr = TRUE,
+            timeout = 10)
+  }, error = function(e) {
+    return(NULL)
+  }, warning = function(w) {
+    return(NULL)
+  })
+  
+  # Check if we got a response
+  if (!is.null(result) && length(result) > 0) {
+    # Check if response contains expected text or any reasonable response
+    response_text <- paste(tolower(result), collapse = " ")
+    
+    # Look for signs of success
+    success_indicators <- c("working", "yes", "received", "hello", "understand")
+    
+    # Check for error messages
+    error_indicators <- c("error", "failed", "unauthorized", "api", "key", 
+                         "credential", "authenticate", "token", "forbidden")
+    
+    has_success <- any(sapply(success_indicators, function(x) grepl(x, response_text)))
+    has_error <- any(sapply(error_indicators, function(x) grepl(x, response_text)))
+    
+    if (has_success && !has_error) {
+      if (verbose) {
+        message("✅ Goose CLI is working properly!")
+        message("   You can use all goose_* functions without additional configuration.")
+      }
+      return(TRUE)
+    } else if (has_error) {
+      if (verbose) {
+        message("⚠️  Goose CLI needs configuration")
+        message("   The CLI is installed but may need API credentials.")
+        message("   ")
+        message("   For Block employees:")
+        message("   - Make sure you're logged into the Block Goose system")
+        message("   - Check: goose session list")
+        message("   ")
+        message("   For external users:")
+        message("   - Configure with: goose_configure(provider='openai', model='gpt-4', api_key='key')")
+      }
+      return(FALSE)
+    } else {
+      # Got a response but unclear if it's working
+      if (verbose) {
+        message("⚠️  Goose CLI response unclear")
+        message("   Got response but couldn't verify if it's working properly.")
+        message("   Try: goose_ask('Hello') to test manually.")
+      }
+      return(TRUE)  # Assume it's working if we got any response
+    }
+  } else {
+    if (verbose) {
+      message("❌ Goose CLI not responding")
+      message("   The CLI is installed but not responding to queries.")
+      message("   ")
+      message("   Possible issues:")
+      message("   - CLI needs configuration: run 'goose configure' in terminal")
+      message("   - For Block employees: ensure you're on the corporate network")
+      message("   - For external users: provide API credentials")
+    }
+    return(FALSE)
   }
 }
 

@@ -9,7 +9,7 @@
 Seamless integration between R and Goose AI capabilities including memory management, visualization enhancements, and workflow automation. Save R objects to Goose memory, apply Block branding to visualizations, and manage data science project workflows.
 }
 \author{
-\strong{Maintainer}: Brandon Theriault \email{brandon.theriault@block.xyz}
+\strong{Maintainer}: Brandon Theriault \email{btheriault@block.xyz}
 
 }
 \keyword{internal}
