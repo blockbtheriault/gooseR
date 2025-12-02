@@ -1,9 +1,12 @@
 #' Response Caching Module for GooseR
 #'
 #' Provides intelligent caching of AI responses for performance
-#' @import DBI
-#' @import RSQLite
-#' @import digest
+#' @importFrom DBI dbConnect dbExecute dbGetQuery dbDisconnect
+#' @importFrom RSQLite SQLite
+#' @importFrom digest digest
+#' @importFrom jsonlite toJSON fromJSON write_json read_json
+#' @importFrom rappdirs user_cache_dir
+NULL
 
 #' Initialize Cache Database
 #'

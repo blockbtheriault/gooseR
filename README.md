@@ -1,276 +1,238 @@
-# gooseR <img src="man/figures/logo.png" align="right" height="139" />
+# gooseR 🦆📊
 
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/blockbtheriault/gooseR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/blockbtheriault/gooseR/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-<!-- badges: end -->
+An R package that integrates R with Goose AI, providing a comprehensive toolkit for AI-powered data analysis, visualization, and development assistance.
 
-> **Seamless R Integration for Goose AI** 🦆
+## Features
 
-gooseR bridges R and [Goose AI](https://github.com/block/goose), enabling AI-augmented data analysis workflows. Save R objects to Goose memory, enhance visualizations with Block branding, and manage reproducible data science projects.
+### 🧠 AI-Powered Development
+- **Code Review & Optimization** - Get instant feedback on your R code
+- **Error Debugging** - Understand and fix errors with AI assistance
+- **Documentation Generation** - Auto-generate roxygen2 documentation
+- **Test Creation** - Generate comprehensive unit tests
 
-## ✨ Features
+### 💾 Smart Memory Integration
+- **Persistent Storage** - Save and load R objects with Goose memory
+- **Tag-Based Organization** - Organize objects with categories and tags
+- **Global/Local Scopes** - Choose between project and system-wide storage
 
-### 🧠 Memory Integration
-- **Save R objects to Goose memory** - Models, datasets, and analysis artifacts persist across sessions
-- **Smart retrieval** - Load objects by name, category, or tags
-- **Metadata tracking** - Automatic documentation of object class, size, and creation time
-- **Global & local storage** - Project-specific or user-wide memory
+### 🎨 Universal Branding System
+- **Dynamic Themes** - Apply consistent branding to all visualizations
+- **Block Brand Built-in** - Official Block design system included
+- **Light/Dark Modes** - Support for theme variants
+- **Export to CSS** - Use your brand across web applications
 
-### 🎨 Universal Branding System ✅
-- **Brand Configuration** - Define complete brand identity in YAML format
-- **ggplot2 Themes** - Generate consistent, branded themes for all visualizations
-- **RMarkdown Templates** - Create branded report templates with integrated CSS
-- **CSS Generation** - Export brand styles for web projects
-- **Color Palettes** - Access brand colors for categorical, sequential, and diverging scales
-- **Interactive Creation** - Build new brands through interactive CLI prompts
-- **Multi-brand Support** - Manage multiple brand configurations
+### ⚡ Advanced AI Features
+- **Streaming Responses** - Real-time AI responses for better UX
+- **Intelligent Caching** - Speed up repeated queries with SQLite cache
+- **Parallel Processing** - Run multiple AI queries simultaneously
+- **Template System** - Create reusable prompt templates
 
-### 🔧 Workflow Management (Coming Soon)
-- **Project templates** - Cookiecutter-style setup for people analytics, data science, and reporting
-- **Dependency tracking** - Monitor data lineage and reproducibility
-- **Team collaboration** - Share workflows and analysis patterns
+## Installation
 
-## 📦 Installation
+### Prerequisites
+- R version 4.3 or higher
+- [Goose CLI](https://github.com/block/goose) installed and configured
+
+### Install from GitHub
 
 ```r
-# Install from GitHub (development version)
-# install.packages("devtools")
+# Install devtools if needed
+install.packages("devtools")
+
+# Install gooseR
 devtools::install_github("blockbtheriault/gooseR")
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
-### Memory Integration
+### 1. Test Your Setup
 
 ```r
 library(gooseR)
 
-# Save a model to Goose memory
-model <- lm(mpg ~ wt + hp, data = mtcars)
-goose_save(
-  model, 
-  name = "mtcars_model_v1",
-  category = "models",
-  tags = c("regression", "mtcars", "production"),
-  description = "Linear model predicting mpg from weight and horsepower"
-)
-#> ✔ Saved 'mtcars_model_v1' to Goose memory (category: 'models')
-#> ℹ Tags: regression, mtcars, production
+# Test Goose CLI connection - PRIMARY SETUP METHOD
+goose_test_cli()
 
-# Save analysis results
-results <- data.frame(
-  metric = c("R²", "RMSE", "MAE"),
-  value = c(0.83, 2.54, 2.01)
-)
-goose_save(results, "model_performance", category = "results")
+# You should see:
+# ✓ Goose CLI found at: /path/to/goose
+# ✓ Goose CLI is working!
+# ✓ You're ready to use gooseR!
+```
 
-# List all saved objects
-goose_list()
-#> ── Goose Memory Objects ──
-#> Found 2 objects
-#> 
-#>              name category   class    size                    tags
-#> 1 mtcars_model_v1   models      lm  7.2 Kb regression, mtcars, ...
-#> 2 model_performance results data.frame 1.1 Kb                    
+### 2. Basic AI Queries
 
-# Filter by category
+```r
+# Ask Goose anything
+goose_ask("How do I create a correlation matrix in R?")
+
+# Get code review
+my_code <- "for(i in 1:length(x)) { y[i] <- x[i]^2 }"
+goose_review_code(my_code, language = "R")
+
+# Debug an error
+goose_explain_error("Error: object 'x' not found", 
+                    context = "Trying to plot data")
+```
+
+### 3. Memory Integration
+
+```r
+# Save R objects with Goose memory
+my_model <- lm(mpg ~ wt, data = mtcars)
+goose_save(my_model, "fuel_efficiency_model", 
+           category = "models", 
+           tags = c("mtcars", "regression"))
+
+# List saved objects
 goose_list(category = "models")
 
-# Filter by tags
-goose_list(tags = "production")
-
-# Load a saved object
-loaded_model <- goose_load("mtcars_model_v1", category = "models")
-#> ✔ Loaded 'mtcars_model_v1' from Goose memory
-
-# Use it immediately
-summary(loaded_model)
-predict(loaded_model, newdata = data.frame(wt = 3.0, hp = 150))
+# Load saved objects
+model <- goose_load("fuel_efficiency_model")
 ```
 
-### Real-World Example: Model Versioning
+### 4. Beautiful Visualizations with Block Branding
 
 ```r
-library(gooseR)
-library(tidyverse)
-
-# Experiment with different models
-models <- list(
-  simple = lm(mpg ~ wt, data = mtcars),
-  complex = lm(mpg ~ wt + hp + cyl + am, data = mtcars),
-  interaction = lm(mpg ~ wt * hp, data = mtcars)
-)
-
-# Save all models with metadata
-iwalk(models, ~{
-  goose_save(
-    .x,
-    name = paste0("mtcars_", .y, "_model"),
-    category = "experiments",
-    tags = c("mtcars", "regression", .y),
-    description = paste("Model variant:", .y)
-  )
-})
-
-# Later, compare all experimental models
-experiment_models <- goose_list(category = "experiments")
-print(experiment_models)
-
-# Load the best performing model
-best_model <- goose_load("mtcars_complex_model", category = "experiments")
-```
-
-### Universal Branding System
-
-```r
-library(gooseR)
 library(ggplot2)
 
-# Apply Block branding to your visualizations
-ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+# Create plot with Block theme
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_manual(values = brand_palette("block", "monochrome")) +
-  labs(
-    title = "Vehicle Performance Analysis",
-    subtitle = "Weight vs Fuel Efficiency",
-    caption = "© 2025 Block Inc."
-  ) +
-  theme_brand("block", variant = "light")  # Light theme with Inter font
+  theme_brand("block", variant = "light") +
+  scale_color_manual(values = brand_palette("block", "primary"))
 
-# Dark theme variant
-ggplot(data, aes(x = quarter, y = revenue)) +
-  geom_col(fill = "white") +
-  theme_brand("block", variant = "dark")  # Dark theme
-
-# Custom fonts in your brand
-# Brands can specify any font (e.g., Inter, Roboto, custom fonts)
-# The system will use fallbacks if fonts aren't installed
-
-# Create a new brand for your organization
-goose_create_brand("my_company")
-#> Enter brand name: My Company
-#> Define your brand colors:
-#> Primary color (hex, e.g., #0055FF): #2E7D32
-#> Primary contrast color (hex, e.g., #FFFFFF): #FFFFFF
-#> ...
-#> Brand configuration created: ~/.config/goose/brands/my_company/my_company_brand.yaml
-
-# Generate branded RMarkdown template
-brand_rmd_template("block", 
-                  title = "Q4 2025 Analytics Report",
-                  output_file = "report.Rmd")
-
-# Export CSS for web projects
-brand_css("block", output_file = "assets/block.css")
+# Export brand CSS for web apps
+brand_css("block", output = "block_styles.css")
 ```
 
-### Integration with Analysis Workflows
+### 5. Advanced Features
 
 ```r
-# At the start of your analysis
-library(gooseR)
-library(tidyverse)
+# Parallel processing
+queries <- c(
+  "Explain PCA",
+  "Explain random forests",
+  "Explain neural networks"
+)
+results <- goose_batch(queries, max_workers = 3)
 
-# Load previously saved data
-employee_data <- goose_load("employee_survey_2024", category = "datasets")
-
-# Run your analysis
-retention_model <- glm(
-  attrition ~ tenure + satisfaction + manager_quality,
-  data = employee_data,
-  family = binomial()
+# Use templates
+goose_template_apply("code_review",
+  language = "R",
+  code = "function(x) mean(x, na.rm = TRUE)",
+  focus = "performance and edge cases"
 )
 
-# Save results for later or sharing with team
-goose_save(
-  retention_model,
-  name = "retention_model_2024_q4",
-  category = "production_models",
-  tags = c("attrition", "production", "2024-Q4"),
-  description = "Retention model for Q4 2024 - includes manager quality metric"
-)
-
-# Save model diagnostics
-diagnostics <- data.frame(
-  auc = 0.78,
-  accuracy = 0.82,
-  precision = 0.75,
-  recall = 0.71
-)
-goose_save(diagnostics, "retention_model_2024_q4_diagnostics", 
-           category = "model_metrics")
+# Streaming responses (Phase 4)
+goose_stream("Write a detailed data analysis plan")
 ```
 
-## 🎯 Use Cases
+## Phase Status
 
-### For Data Scientists
-- **Model versioning** - Track experiments and compare model performance
-- **Reproducibility** - Save intermediate analysis artifacts
-- **Collaboration** - Share models and datasets with team members
+| Phase | Status | Features |
+|-------|--------|----------|
+| **Phase 1** | ✅ Complete | Memory Integration |
+| **Phase 2** | ✅ Complete | Universal Branding System |
+| **Phase 3** | ✅ Complete | CLI Integration & AI Assistant |
+| **Phase 4** | ⚠️ Fixed | Streaming, Caching, Async, Templates |
+| **Phase 5** | 📋 Planned | IDE Integration |
 
-### For People Analytics
-- **Survey analysis** - Store cleaned survey data and analysis results
-- **Predictive models** - Version retention, performance, and engagement models
-- **Reporting** - Save processed data for recurring reports
+See [PHASES_STATUS.md](PHASES_STATUS.md) for detailed progress.
 
-### For Research
-- **Experiment tracking** - Document analysis iterations
-- **Data provenance** - Track data transformations and cleaning steps
-- **Publication** - Archive analysis artifacts for reproducibility
+## Examples by Phase
 
-## 🗺️ Roadmap
+### Phase 1: Memory Integration
+```r
+# Save analysis results
+results <- analyze_sales_data()
+goose_save(results, "q4_sales_analysis", 
+           category = "analysis",
+           tags = c("sales", "2025Q4"))
 
-### ✅ v0.1.0 (Phase 1 - Complete)
-- [x] Core memory integration (`goose_save`, `goose_load`, `goose_list`, `goose_delete`)
-- [x] Tag-based filtering and search
-- [x] Metadata tracking
-- [x] Global and local memory support
+# Load and continue work
+analysis <- goose_load("q4_sales_analysis")
+```
 
-### ✅ v0.2.0 (Phase 2 - Complete)
-- [x] Universal branding system (`theme_brand()`, `brand_palette()`)
-- [x] Brand configuration in YAML format
-- [x] Interactive brand creation (`goose_create_brand()`)
-- [x] RMarkdown template generation (`brand_rmd_template()`)
-- [x] CSS export for web projects (`brand_css()`)
-- [x] Block brand as reference implementation
+### Phase 2: Branding
+```r
+# Create custom brand
+goose_create_brand()  # Interactive wizard
 
-### 📋 v0.3.0 (Planned)
-- [ ] AI-powered code review (`goose_review_code()`)
-- [ ] Data validation (`goose_validate_data()`)
-- [ ] Automated EDA suggestions (`goose_explore_data()`)
+# Apply to RMarkdown
+brand_rmd_template("my_brand", "report.Rmd")
+```
 
-### 🔮 v0.4.0 (Future)
-- [ ] Project templates (`goose_init_project()`)
-- [ ] Dependency tracking
-- [ ] Interactive visualization enhancement
+### Phase 3: AI Assistant
+```r
+# Generate documentation
+code <- "calculate_roi <- function(revenue, cost) {
+  (revenue - cost) / cost * 100
+}"
+goose_document(code)
 
-## 🤝 Contributing
+# Optimize visualization
+p <- ggplot(data, aes(x, y)) + geom_point()
+goose_optimize_plot(p, goal = "publication-ready")
+```
 
-gooseR is in active development! Contributions, ideas, and feedback are welcome.
+### Phase 4: Advanced Features (Testing)
+```r
+# Cache responses for speed
+goose_cached("Explain machine learning", max_age = 86400)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+# Async operations
+library(promises)
+goose_async("Complex analysis") %...>%
+  { cat("Result:", .) }
+```
 
-## 📝 License
+## Troubleshooting
 
-MIT License - see [LICENSE](LICENSE) file for details
+### Goose CLI Not Found
+```r
+# Specify path explicitly
+goose_test_cli("/usr/local/bin/goose")
 
-## 🙏 Acknowledgments
+# Or add to PATH in ~/.Rprofile
+Sys.setenv(PATH = paste("/usr/local/bin", Sys.getenv("PATH"), sep = ":"))
+```
 
-- Built for the [Goose AI](https://github.com/block/goose) project by Block
-- Inspired by the need for AI-augmented data analysis workflows
-- Developed by the People Analytics & Research (PAR) Team at Block
+### Missing Dependencies
+```r
+# Install all dependencies
+deps <- c("jsonlite", "R6", "ggplot2", "yaml", "glue",
+          "future", "promises", "DBI", "RSQLite", "digest")
+install.packages(deps)
+```
 
-## 📚 Learn More
+### Phase 4 Functions Not Working
+Phase 4 features require additional setup:
+```r
+# Install Phase 4 dependencies
+install.packages(c("processx", "later", "rappdirs", "future.apply"))
 
-- [Goose Documentation](https://block.github.io/goose/)
-- [Package Documentation](https://blockbtheriault.github.io/gooseR/) (Coming Soon)
-- [Example Gallery](https://github.com/blockbtheriault/gooseR/tree/main/examples) (Coming Soon)
+# Test streaming
+goose_stream("Hello, streaming world!")
+```
+
+## Contributing
+
+This is an internal Block project. For questions or contributions:
+- GitHub Issues: [gooseR Issues](https://github.com/blockbtheriault/gooseR/issues)
+- Contact: Brandon Theriault (Block People Analytics & Research Team)
+
+## License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Block People Analytics & Research (PAR) Team
+- Goose AI Development Team
+- R Community
 
 ---
 
-**Built with 🦆 by [Brandon Theriault](https://github.com/blockbtheriault) at Block**
+**Current Version:** 0.0.0.9000 (Development)  
+**Last Updated:** December 2, 2025  
+**Maintainer:** Brandon Theriault (@blockbtheriault)

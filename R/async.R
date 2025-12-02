@@ -1,9 +1,11 @@
 #' Async and Parallel Execution Module for GooseR
 #'
 #' Provides asynchronous and parallel query execution
-#' @import future
-#' @import promises
-#' @import future.apply
+#' @importFrom future future plan multisession sequential
+#' @importFrom promises promise as.promise promise_race
+#' @importFrom future.apply future_lapply
+#' @importFrom later later
+NULL
 
 #' Execute Query Asynchronously
 #'

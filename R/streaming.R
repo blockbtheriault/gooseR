@@ -1,9 +1,12 @@
 #' Streaming Response Module for GooseR
 #'
 #' Provides real-time streaming responses from Goose AI
-#' @import processx
-#' @import jsonlite
+#' @importFrom processx process
+#' @importFrom jsonlite fromJSON
 #' @importFrom R6 R6Class
+#' @importFrom promises promise promise_race as.promise
+#' @importFrom later later
+NULL
 
 #' Stream Response from Goose
 #'

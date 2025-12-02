@@ -1,8 +1,10 @@
 #' Prompt Template Module for GooseR
 #'
 #' Create and manage reusable prompt templates
-#' @import glue
-#' @import yaml
+#' @importFrom glue glue
+#' @importFrom yaml write_yaml read_yaml
+#' @importFrom rappdirs user_data_dir
+NULL
 
 #' Create a Prompt Template
 #'
@@ -385,8 +387,8 @@ goose_template_validate <- function(template) {
   # Check for issues
   issues <- list()
   
-  # Check for unclosed braces
-  if (str_count(template_text, "\\{") != str_count(template_text, "\\}")) {
+  # Check for unclosed braces using internal str_count function
+  if (gooseR_str_count(template_text, "\\{") != gooseR_str_count(template_text, "\\}")) {
     issues <- append(issues, "Mismatched braces")
   }
   
@@ -412,7 +414,7 @@ goose_template_validate <- function(template) {
 # Helper function for NULL default
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
-# Helper function to count pattern occurrences
-str_count <- function(string, pattern) {
+# Internal helper function to count pattern occurrences
+gooseR_str_count <- function(string, pattern) {
   lengths(regmatches(string, gregexpr(pattern, string)))
 }
