@@ -1,6 +1,6 @@
 Package: gooseR
 Title: R Integration for Goose AI
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Brandon", "Theriault", , "btheriault@block.xyz", role = c("aut", "cre"))
 Description: Seamless integration between R and Goose AI capabilities
@@ -19,7 +19,7 @@ Imports: cli, fs, here, jsonlite, magrittr, purrr, ggplot2, yaml,
         miniUI, rstudioapi, DT, knitr, markdown, htmltools, stringr
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-12-02 23:11:06 UTC; btheriault
+Packaged: 2025-12-02 23:21:05 UTC; btheriault
 Author: Brandon Theriault [aut, cre]
 Maintainer: Brandon Theriault <btheriault@block.xyz>
-Built: R 4.5.1; ; 2025-12-02 23:11:24 UTC; unix
+Built: R 4.5.1; ; 2025-12-02 23:21:23 UTC; unix

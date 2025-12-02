@@ -529,6 +529,7 @@ parse_session_list <- function(output) {
 }
 
 #' Null coalescing operator
+#' @noRd
 #' @keywords internal
 `%||%` <- function(x, y) {
   if (is.null(x)) y else x

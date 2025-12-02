@@ -1,3 +1,4 @@
+#' @importFrom promises %...%
 #' Async and Parallel Execution Module for GooseR
 #'
 #' Provides asynchronous and parallel query execution
@@ -382,3 +383,5 @@ goose_async_retry <- function(query, max_retries = 3, retry_delay = 2) {
     }
   }
 }
+
+#' @importFrom promises 

@@ -8,19 +8,12 @@
 * using session charset: UTF-8
 * using options ‘--no-manual --as-cran’
 * checking for file ‘gooseR/DESCRIPTION’ ... OK
-* this is package ‘gooseR’ version ‘0.0.0.9000’
+* this is package ‘gooseR’ version ‘0.1.0’
 * package encoding: UTF-8
-* checking CRAN incoming feasibility ... [3s/16s] NOTE
+* checking CRAN incoming feasibility ... [3s/17s] NOTE
 Maintainer: ‘Brandon Theriault <btheriault@block.xyz>’
 
 New submission
-
-Version contains large components (0.0.0.9000)
-
-Package CITATION file contains call(s) to old-style personList() or
-as.personList().  Please use c() on person objects instead.
-Package CITATION file contains call(s) to old-style citEntry().  Please
-use bibentry() instead.
 
 Found the following (possibly) invalid URLs:
   URL: https://github.com/blockbtheriault/gooseR
@@ -46,20 +39,11 @@ use conditionally.
 * checking for future file timestamps ... OK
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
-* checking top-level files ... NOTE
-Non-standard file/directory found at top level:
-  ‘reference’
+* checking top-level files ... OK
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
-* checking code files for non-ASCII characters ... WARNING
-Found the following file with non-ASCII characters:
-  R/cli_integration.R
-Portable packages must use only ASCII characters in their R code and
-NAMESPACE directives, except perhaps in comments.
-Use \uxxxx escapes for other characters.
-Function ‘tools::showNonASCIIfile’ can help in finding non-ASCII
-characters in files.
+* checking code files for non-ASCII characters ... OK
 * checking R files for syntax errors ... OK
 * checking whether the package can be loaded ... OK
 * checking whether the package can be loaded with stated dependencies ... OK
@@ -73,14 +57,9 @@ characters in files.
 * checking foreign function calls ... OK
 * checking R code for possible problems ... NOTE
 goose_pipeline: no visible global function definition for ‘%...>%’
-goose_pipeline: no visible binding for global variable ‘.’
-preview_brand: no visible binding for global variable ‘x’
-preview_brand: no visible binding for global variable ‘y’
-preview_brand: no visible binding for global variable ‘category’
 Undefined global functions or variables:
-  %...>% . category x y
-* checking Rd files ... WARNING
-checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
+  %...>%
+* checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
 * checking Rd cross-references ... OK
@@ -101,4 +80,4 @@ checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 2 WARNINGs, 3 NOTEs
+Status: 2 NOTEs
