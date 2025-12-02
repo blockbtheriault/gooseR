@@ -741,3 +741,454 @@ brand_css_inline <- function(brand = "block") {
   css <- brand_css(brand, minify = TRUE)
   return(htmltools::HTML(paste0("<style>", css, "</style>")))
 }
+
+# AI-Enhanced Branding Functions ----
+
+#' Create Brand with AI Assistance
+#'
+#' Enhanced brand creation with AI-powered suggestions for colors and typography.
+#'
+#' @param brand_name Name of the brand
+#' @param industry Optional industry context for better suggestions
+#' @param style Optional style preference (e.g., "modern", "classic", "playful")
+#' @param use_ai Whether to use AI for suggestions (requires goose_ask)
+#' @param output_dir Directory to save brand configuration
+#'
+#' @return Path to created brand configuration
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Create brand with AI assistance
+#' goose_create_brand_ai("TechStartup", 
+#'                      industry = "fintech",
+#'                      style = "modern")
+#' }
+goose_create_brand_ai <- function(brand_name,
+                                 industry = NULL,
+                                 style = NULL,
+                                 use_ai = TRUE,
+                                 output_dir = NULL) {
+  
+  if (is.null(output_dir)) {
+    output_dir <- get_brand_dir()
+  }
+  
+  # Sanitize brand name
+  brand_slug <- tolower(gsub("[^a-zA-Z0-9_-]", "_", brand_name))
+  
+  # Initialize configuration
+  config <- list(
+    brand = list(
+      name = brand_name,
+      version = "1.0.0",
+      description = paste("Brand configuration for", brand_name),
+      created_with_ai = use_ai
+    )
+  )
+  
+  if (use_ai) {
+    # Check if AI functions are available
+    if (!exists("goose_ask")) {
+      source(system.file("R", "cli_integration.R", package = "gooseR"))
+      source(system.file("R", "ai_assistant.R", package = "gooseR"))
+    }
+    
+    message("🤖 Using AI to generate brand suggestions...")
+    
+    # Build context for AI
+    context <- sprintf("Creating a brand identity for %s", brand_name)
+    if (!is.null(industry)) {
+      context <- paste0(context, " in the ", industry, " industry")
+    }
+    if (!is.null(style)) {
+      context <- paste0(context, " with a ", style, " style")
+    }
+    
+    # Get color suggestions
+    color_prompt <- paste0(
+      context, ".\n\n",
+      "Suggest a professional color palette with:\n",
+      "1. Primary color (main brand color)\n",
+      "2. Primary contrast color\n",
+      "3. Secondary colors (3-5 colors)\n",
+      "4. Neutral colors (grays)\n",
+      "5. Semantic colors (success, warning, error)\n\n",
+      "Provide hex codes and explain the rationale."
+    )
+    
+    color_response <- goose_ask(color_prompt, timeout = 30)
+    colors_hex <- extract_hex_colors(color_response)
+    
+    # Parse AI color suggestions
+    if (length(colors_hex) >= 2) {
+      config$colors <- list(
+        primary = list(
+          main = colors_hex[1],
+          contrast = colors_hex[2]
+        )
+      )
+      
+      if (length(colors_hex) >= 5) {
+        config$colors$secondary <- list(
+          main = colors_hex[3],
+          light = colors_hex[4],
+          dark = colors_hex[5]
+        )
+      }
+      
+      # Add semantic colors if we have enough
+      if (length(colors_hex) >= 8) {
+        config$colors$semantic <- list(
+          success = colors_hex[6],
+          warning = colors_hex[7],
+          error = colors_hex[8]
+        )
+      }
+    }
+    
+    # Get typography suggestions
+    typo_prompt <- paste0(
+      context, ".\n\n",
+      "Suggest typography for this brand:\n",
+      "1. Primary font (for headings)\n",
+      "2. Body font (for text)\n",
+      "3. Monospace font (for code)\n\n",
+      "Consider web-safe fonts or Google Fonts.\n",
+      "Explain why these fonts work for this brand."
+    )
+    
+    typo_response <- goose_ask(typo_prompt, timeout = 30)
+    
+    # Extract font suggestions (simple pattern matching)
+    fonts <- extract_font_suggestions(typo_response)
+    
+    config$typography <- list(
+      fonts = list(
+        primary = fonts$primary %||% "Inter",
+        body = fonts$body %||% "Inter",
+        monospace = fonts$monospace %||% "Courier New",
+        fallback = "system-ui, -apple-system, sans-serif"
+      ),
+      sizes = list(
+        base = 12,
+        h1 = 28,
+        h2 = 24,
+        h3 = 20,
+        h4 = 16,
+        h5 = 14,
+        h6 = 12
+      )
+    )
+    
+    # Store AI rationale
+    config$ai_rationale <- list(
+      colors = color_response,
+      typography = typo_response,
+      generated = Sys.time()
+    )
+    
+    message("✅ AI suggestions generated successfully!")
+    
+  } else {
+    # Use defaults without AI
+    config$colors <- list(
+      primary = list(
+        main = "#0055FF",
+        contrast = "#FFFFFF"
+      ),
+      secondary = list(
+        main = "#FF5500",
+        light = "#FFE0B1",
+        dark = "#8B3A00"
+      )
+    )
+    
+    config$typography <- list(
+      fonts = list(
+        primary = "Inter",
+        body = "Inter",
+        monospace = "Courier New"
+      ),
+      sizes = list(
+        base = 12,
+        h1 = 28,
+        h2 = 24
+      )
+    )
+  }
+  
+  # Add plot configuration
+  config$plots <- list(
+    grid = list(
+      major = FALSE,
+      minor = FALSE
+    ),
+    palettes = list(
+      categorical = unname(unlist(config$colors$primary)),
+      sequential = generate_sequential_palette(config$colors$primary$main),
+      diverging = generate_diverging_palette(
+        config$colors$primary$main,
+        config$colors$secondary$main %||% "#FF5500"
+      )
+    )
+  )
+  
+  # Add themes
+  config$themes <- list(
+    light = list(
+      background = "#FFFFFF",
+      text = config$colors$primary$main,
+      grid = "#F5F5F5"
+    ),
+    dark = list(
+      background = "#1A1A1A",
+      text = "#FFFFFF",
+      grid = "#333333"
+    )
+  )
+  
+  # Create brand directory
+  brand_dir <- file.path(output_dir, brand_slug)
+  if (!dir.exists(brand_dir)) {
+    dir.create(brand_dir, recursive = TRUE, showWarnings = FALSE)
+  }
+  
+  # Save configuration
+  config_path <- file.path(brand_dir, paste0(brand_slug, "_brand.yaml"))
+  yaml::write_yaml(config, config_path)
+  
+  message(sprintf("\n✨ Brand configuration created: %s", config_path))
+  message(sprintf("To use: theme_brand('%s')", brand_slug))
+  
+  # Generate preview if possible
+  if (interactive() && requireNamespace("ggplot2", quietly = TRUE)) {
+    message("\nGenerating brand preview...")
+    preview_brand(brand_slug)
+  }
+  
+  return(invisible(config_path))
+}
+
+#' Optimize Brand Palette with AI
+#'
+#' Get AI suggestions to improve an existing brand palette.
+#'
+#' @param brand Name of the brand to optimize
+#' @param goals Character vector of optimization goals
+#' @param constraints Optional constraints (e.g., "keep primary color")
+#'
+#' @return List with original and optimized palettes
+#' @export
+goose_optimize_palette <- function(brand,
+                                  goals = c("accessibility", "harmony", "contrast"),
+                                  constraints = NULL) {
+  
+  # Load current brand
+  config <- load_brand(brand)
+  current_colors <- unlist(config$colors)
+  
+  # Build optimization prompt
+  prompt <- sprintf(
+    "Optimize this color palette for %s:\n\n",
+    paste(goals, collapse = ", ")
+  )
+  
+  prompt <- paste0(prompt, "Current colors:\n")
+  for (name in names(current_colors)) {
+    if (!is.null(current_colors[[name]])) {
+      prompt <- paste0(prompt, sprintf("- %s: %s\n", name, current_colors[[name]]))
+    }
+  }
+  
+  if (!is.null(constraints)) {
+    prompt <- paste0(prompt, "\nConstraints: ", paste(constraints, collapse = ", "))
+  }
+  
+  prompt <- paste0(prompt, 
+                  "\n\nProvide optimized hex codes with:\n",
+                  "1. WCAG accessibility scores\n",
+                  "2. Color harmony analysis\n",
+                  "3. Specific improvements made")
+  
+  # Get AI response
+  response <- goose_ask(prompt, timeout = 45)
+  
+  # Extract optimized colors
+  optimized_colors <- extract_hex_colors(response)
+  
+  result <- list(
+    original = current_colors,
+    optimized = optimized_colors,
+    analysis = response,
+    goals = goals,
+    timestamp = Sys.time()
+  )
+  
+  class(result) <- c("goose_palette_optimization", "list")
+  result
+}
+
+#' Preview Brand Configuration
+#'
+#' Generate a preview of brand colors and typography.
+#'
+#' @param brand Name of the brand to preview
+#' @param output_file Optional file to save preview
+#'
+#' @return ggplot object with brand preview
+#' @export
+preview_brand <- function(brand, output_file = NULL) {
+  
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is required for brand preview")
+  }
+  
+  config <- load_brand(brand)
+  
+  # Create sample plot with brand theme
+  sample_data <- data.frame(
+    x = 1:5,
+    y = c(3, 5, 4, 7, 6),
+    category = factor(c("A", "B", "A", "B", "C"))
+  )
+  
+  p <- ggplot2::ggplot(sample_data, ggplot2::aes(x = x, y = y, color = category)) +
+    ggplot2::geom_line(size = 2) +
+    ggplot2::geom_point(size = 4) +
+    ggplot2::scale_color_manual(values = brand_palette(brand, "categorical", 3)) +
+    ggplot2::labs(
+      title = sprintf("%s Brand Preview", config$brand$name),
+      subtitle = "Sample visualization with brand theme",
+      x = "X Axis Label",
+      y = "Y Axis Label",
+      color = "Category"
+    ) +
+    theme_brand(brand)
+  
+  if (!is.null(output_file)) {
+    ggplot2::ggsave(output_file, p, width = 8, height = 6)
+    message(sprintf("Preview saved to: %s", output_file))
+  }
+  
+  return(p)
+}
+
+# Helper functions for AI branding ----
+
+#' Extract font suggestions from AI response
+#' @keywords internal
+extract_font_suggestions <- function(text) {
+  fonts <- list()
+  
+  # Common font patterns
+  font_patterns <- c(
+    "Primary font:?\\s*([A-Za-z\\s]+)",
+    "Heading font:?\\s*([A-Za-z\\s]+)",
+    "Body font:?\\s*([A-Za-z\\s]+)",
+    "Text font:?\\s*([A-Za-z\\s]+)",
+    "Monospace:?\\s*([A-Za-z\\s]+)",
+    "Code font:?\\s*([A-Za-z\\s]+)"
+  )
+  
+  # Try to extract fonts
+  lines <- strsplit(text, "\n")[[1]]
+  
+  for (line in lines) {
+    if (grepl("primary|heading", line, ignore.case = TRUE)) {
+      # Extract font name (assuming it's in quotes or after colon)
+      font_match <- regmatches(line, regexpr('"[^"]+"', line))
+      if (length(font_match) > 0) {
+        fonts$primary <- gsub('"', '', font_match[1])
+      }
+    }
+    if (grepl("body|text", line, ignore.case = TRUE) && !grepl("monospace", line, ignore.case = TRUE)) {
+      font_match <- regmatches(line, regexpr('"[^"]+"', line))
+      if (length(font_match) > 0) {
+        fonts$body <- gsub('"', '', font_match[1])
+      }
+    }
+    if (grepl("monospace|code", line, ignore.case = TRUE)) {
+      font_match <- regmatches(line, regexpr('"[^"]+"', line))
+      if (length(font_match) > 0) {
+        fonts$monospace <- gsub('"', '', font_match[1])
+      }
+    }
+  }
+  
+  # Defaults if not found
+  if (is.null(fonts$primary)) fonts$primary <- "Inter"
+  if (is.null(fonts$body)) fonts$body <- fonts$primary
+  if (is.null(fonts$monospace)) fonts$monospace <- "Courier New"
+  
+  fonts
+}
+
+#' Generate sequential color palette
+#' @keywords internal
+generate_sequential_palette <- function(base_color, n = 5) {
+  # Simple sequential palette generation
+  # This is a placeholder - could be enhanced with proper color theory
+  colors <- character(n)
+  colors[1] <- "#FFFFFF"
+  colors[n] <- base_color
+  
+  # Interpolate middle colors
+  if (n > 2) {
+    for (i in 2:(n-1)) {
+      # Simple linear interpolation
+      alpha <- (i - 1) / (n - 1)
+      colors[i] <- blend_colors("#FFFFFF", base_color, alpha)
+    }
+  }
+  
+  colors
+}
+
+#' Generate diverging color palette
+#' @keywords internal
+generate_diverging_palette <- function(color1, color2, n = 5) {
+  colors <- character(n)
+  mid <- ceiling(n / 2)
+  
+  colors[1] <- color1
+  colors[n] <- color2
+  colors[mid] <- "#FFFFFF"
+  
+  # Fill in remaining colors
+  if (n > 3) {
+    for (i in 2:(mid-1)) {
+      alpha <- i / mid
+      colors[i] <- blend_colors(color1, "#FFFFFF", alpha)
+    }
+    for (i in (mid+1):(n-1)) {
+      alpha <- (i - mid) / (n - mid)
+      colors[i] <- blend_colors("#FFFFFF", color2, alpha)
+    }
+  }
+  
+  colors
+}
+
+#' Blend two colors
+#' @keywords internal
+blend_colors <- function(color1, color2, alpha = 0.5) {
+  # Convert hex to RGB
+  rgb1 <- col2rgb(color1)[,1]
+  rgb2 <- col2rgb(color2)[,1]
+  
+  # Blend
+  blended <- rgb1 * (1 - alpha) + rgb2 * alpha
+  
+  # Convert back to hex
+  rgb(blended[1], blended[2], blended[3], maxColorValue = 255)
+}
+
+#' Extract hex colors from text
+#' @keywords internal
+extract_hex_colors <- function(text) {
+  pattern <- "#[0-9A-Fa-f]{6}"
+  matches <- gregexpr(pattern, text)
+  colors <- regmatches(text, matches)[[1]]
+  unique(colors)
+}
