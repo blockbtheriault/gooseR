@@ -46,10 +46,13 @@ colors:
 typography:
   # Font families (clean, minimal)
   fonts:
-    # System fonts for maximum compatibility and clean look
-    primary: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
-    body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    # Inter is Block's primary font - clean, modern, highly readable
+    primary: "Inter"
+    body: "Inter"
+    heading: "Inter"
     monospace: "'SF Mono', Monaco, 'Courier New', monospace"
+    # Fallback chain for when Inter isn't available
+    fallback: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
     
   # Font sizes (in points)
   sizes:

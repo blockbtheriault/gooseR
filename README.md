@@ -130,13 +130,22 @@ library(ggplot2)
 # Apply Block branding to your visualizations
 ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_manual(values = brand_palette("block", "categorical")) +
+  scale_color_manual(values = brand_palette("block", "monochrome")) +
   labs(
     title = "Vehicle Performance Analysis",
     subtitle = "Weight vs Fuel Efficiency",
     caption = "© 2025 Block Inc."
   ) +
-  theme_brand("block")  # Applies complete Block theme
+  theme_brand("block", variant = "light")  # Light theme with Inter font
+
+# Dark theme variant
+ggplot(data, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "white") +
+  theme_brand("block", variant = "dark")  # Dark theme
+
+# Custom fonts in your brand
+# Brands can specify any font (e.g., Inter, Roboto, custom fonts)
+# The system will use fallbacks if fonts aren't installed
 
 # Create a new brand for your organization
 goose_create_brand("my_company")

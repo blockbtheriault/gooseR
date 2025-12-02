@@ -293,6 +293,22 @@ theme_brand <- function(brand = "block",
   # Get fonts with fallbacks
   font_family <- typography$fonts$body %||% typography$fonts$primary %||% ""
   
+  # Check if we need to register Inter font (for ggplot2)
+  if (!is.null(font_family) && grepl("Inter", font_family, ignore.case = TRUE)) {
+    # Try to use Inter if available, otherwise use fallback
+    if (requireNamespace("systemfonts", quietly = TRUE)) {
+      available_fonts <- systemfonts::system_fonts()$family
+      if (!"Inter" %in% available_fonts) {
+        # Use fallback font chain
+        font_family <- typography$fonts$fallback %||% ""
+        if (!config$suppress_font_warning %||% FALSE) {
+          message("Note: Inter font not found. Install from https://fonts.google.com/specimen/Inter")
+          message("      Using fallback fonts. To suppress this message, set suppress_font_warning: true in brand config.")
+        }
+      }
+    }
+  }
+  
   # Determine if we should show grid lines
   show_grid <- ifelse(!is.null(config$plots$grid$major), 
                       config$plots$grid$major, 
