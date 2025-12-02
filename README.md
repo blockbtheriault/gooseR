@@ -1,47 +1,80 @@
 # gooseR
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](#)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](#)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-gooseR brings Goose AI into R with a user-first toolkit for analysis, visualization, and workflows.
+GooseR brings Goose AI into R. It’s a user-first toolkit for analysis, visualization, and developer workflows — powered by the Goose CLI.
 
-- Seamless memory integration (save/load/list/delete any R object)
-- Universal branding system (Block-ready themes, CSS, R Markdown)
-- AI assistant functions (ask, review, document, optimize)
-- Advanced features (streaming, caching, async, templates)
+- Memory integration for any R object
+- Brand-ready visualization system (Block-first with smart fallbacks)
+- AI assistant utilities for code, docs, and debugging
+- Advanced runtime features: streaming, caching, async, templates
 - IDE addins (RStudio/Positron) for one-click actions
+
+About Goose
+- Goose is a CLI-oriented AI assistant that supports multiple AI providers and models. It offers sessions for context, recipes for automation, and integrations across tools and workflows. Anyone with Goose CLI configured can use gooseR with zero additional setup in R.
 
 ## Installation
 
 ```r
 # Install from GitHub (private repo)
-# remotes::install_github("blockbtheriault/gooseR")
+# install.packages("remotes")
+remotes::install_github("blockbtheriault/gooseR")
+```
+
+Configuration
+- If Goose CLI is already working on your machine, you do not need any extra R-side setup. This applies to anyone with the Goose CLI configured — not just Block employees.
+- To validate, run:
+
+```r
+library(gooseR)
+if (goose_test_cli()) message("Goose CLI is ready!")
+```
+
+- If you don’t have Goose CLI working yet, configure credentials:
+
+```r
+# Example for external users
+# goose_configure(provider = "openai", model = "gpt-4o", api_key = "your-key")
 ```
 
 ## Quick Start
 
 ```r
 library(gooseR)
-# Ask Goose for help
-# goose_ask("Summarize mtcars and suggest visualizations")
 
-# Save and load objects from Goose memory
-# goose_save(mtcars, category = "demo", tags = c("cars","example"))
-# objs <- goose_list(category = "demo")
-# restored <- goose_load(objs[[1]]$path)
+# Ask Goose a question
+resp <- goose_ask("Summarize mtcars and suggest 2 visualizations")
+cat(substr(resp, 1, 240), "...\n")
 
-# Brand your charts
-# library(ggplot2)
-# ggplot(mtcars, aes(wt, mpg)) + geom_point() + theme_brand("block")
+# Memory: save and load any R object
+gears <- as.list(split(mtcars, mtcars$gear))
+goose_save(gears, category = "demo", tags = c("example", "mtcars"))
+objs <- goose_list(category = "demo")
+restored <- goose_load(objs$name[1])
+
+# Branded visualization (Block)
+library(ggplot2)
+
+# IMPORTANT FONT COMPLIANCE
+# Titles and axes must use Inter (preferred) or Cash Sans or Helvetica in that order.
+# theme_brand("block") attempts to use Inter via systemfonts. If Inter is not available,
+# install it (recommended) or ensure a fallback to Cash Sans or Helvetica.
+
+p <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point(color = "#0055FF", alpha = 0.8) +
+  theme_brand("block") +
+  labs(title = "Fuel Efficiency vs Weight", x = "Weight", y = "MPG") +
+  theme(
+    plot.title = element_text(family = "Inter", face = "bold"),
+    axis.title = element_text(family = "Inter"),
+    axis.text = element_text(family = "Inter")
+  )
+print(p)
 ```
 
-## Feature Overview
-
-- Memory: goose_save(), goose_load(), goose_list(), goose_delete()
-- Branding: theme_brand(), brand_palette(), brand_css(), brand_rmd_template()
-- AI Assistant: goose_ask(), goose_review_code(), goose_document(), goose_generate_tests()
-- Advanced: goose_stream(), goose_cache_set/get(), goose_batch(), goose_template()
-- IDE Addins: one-click review, docs, tests, and more
+If Inter is not installed, either install it (recommended) or change the font family above to "Cash Sans" or "Helvetica". theme_brand("block") includes intelligent font detection and will attempt to use Inter automatically, falling back when needed.
 
 ## Visual Examples
 
@@ -52,32 +85,58 @@ library(gooseR)
 
 More in docs/assets and inst/examples.
 
-## Common Use Cases
+## What gooseR Provides
 
-- People Analytics: rapid EDA, branded visuals, AI-driven insights
-- Sales Analysis: async analysis, caching, automated reporting
-- Code Review: quality checks, test generation, documentation
+- Memory
+  - goose_save(), goose_load(), goose_list(), goose_delete()
+- Branding
+  - theme_brand(), brand_palette(), brand_css(), brand_rmd_template()
+- AI Assistant
+  - goose_ask(): general queries
+  - goose_review_code(): AI code review
+  - goose_document(): AI-generated roxygen docs
+  - goose_generate_tests(): testthat scaffolding
+  - goose_explain_error(): error explanation and fixes
+- Advanced Runtime
+  - goose_stream(), goose_stream_session(): streaming with handlers
+  - goose_cache_init/set/get/stats/clear/export/import
+  - goose_batch(), goose_mapreduce(), goose_reduce()
+  - goose_template(), goose_template_apply/save/load/list/builtin/validate
+  - WorkerPool (R6) for parallel async use cases
+- IDE & Docs
+  - Addins: goose_addin_chat, goose_addin_review, goose_addin_template, goose_addin_quick, goose_addin_snippet
+  - Quarto/RMarkdown: register_goose_engine(), goose_quarto_chunk(), goose_create_quarto(), goose_create_report(), goose_insert_chunk()
 
-Run the enhanced examples in `examples/`:
+## Top / Unique Functions (Quick Overview)
+- goose_ask(): Ask Goose directly from R (text or JSON)
+- goose_review_code(): AI-powered review of selected R code (works great via addin)
+- goose_generate_tests(): Generate testthat tests from function code
+- goose_document(): Produce roxygen2 documentation from a function
+- goose_explain_error(): Explain and fix R errors with suggested code
+- theme_brand("block"): Block-branded ggplot2 theme (with Inter → Cash Sans → Helvetica font preference for titles and axes)
+- brand_palette(): Access brand color palettes (categorical, sequential, diverging)
+- brand_css(), brand_rmd_template(): Export CSS and R Markdown templates in brand style
+- goose_stream(), StreamHandler: Streaming responses with callbacks
+- goose_cache_*(): Durable caching layer (SQLite) with export/import and stats
+- goose_batch(), goose_mapreduce(): Simple parallel/async AI workflows
+- goose_template_*(): Robust templating (create/apply/save/load/validate)
+- goose_addin_*(): One-click IDE addins for chat, code review, templates, snippets
 
-```r
-source("examples/use_case_people_analytics.R")
-source("examples/use_case_sales.R")
-source("examples/use_case_code_review.R")
-```
+## About Goose (the platform)
+Goose is a CLI-oriented AI assistant that works with multiple providers and models. It supports:
+- Sessions for persistent context
+- Recipes for automated multi-step workflows
+- Extensible integrations across tools and environments
 
-## Documentation
+If Goose CLI is already installed and working, gooseR requires no additional R configuration (this applies to anyone with the Goose CLI, not just Block employees). If you need to configure your provider/model/key, use goose_configure().
 
-- User Guides: vignettes/
-- Examples: inst/examples and examples/
-- Technical Docs: docs/development
-- Phase summaries: docs/phases
+## Documentation & Examples
+- Vignettes: run `browseVignettes("gooseR")` to open the overview and use-case demos.
+- Examples: examples/ (use_case_*.R) and inst/examples/ contain runnable scripts.
+- Technical docs and assets: docs/ and docs/assets/
 
 ## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
-
 MIT License. See [LICENSE](LICENSE).
-
