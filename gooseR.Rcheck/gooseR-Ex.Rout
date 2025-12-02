@@ -1,0 +1,781 @@
+
+R version 4.5.1 (2025-06-13) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "gooseR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "gooseR-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('gooseR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("brand_css")
+> ### * brand_css
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: brand_css
+> ### Title: Generate CSS from brand configuration
+> ### Aliases: brand_css
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Save to file
+> ##D brand_css("block", "assets/block.css")
+> ##D 
+> ##D # Get as string
+> ##D css <- brand_css("block")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("brand_css", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("brand_palette")
+> ### * brand_palette
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: brand_palette
+> ### Title: Get brand color palette
+> ### Aliases: brand_palette
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D colors <- brand_palette("block", "categorical")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("brand_palette", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("brand_rmd_template")
+> ### * brand_rmd_template
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: brand_rmd_template
+> ### Title: Generate RMarkdown template with brand styling
+> ### Aliases: brand_rmd_template
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Create branded RMarkdown template
+> ##D brand_rmd_template("block", "My Report", output_file = "report.Rmd")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("brand_rmd_template", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_ask")
+> ### * goose_ask
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_ask
+> ### Title: Ask Goose a Question
+> ### Aliases: goose_ask
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Simple query
+> ##D response <- goose_ask("What's the best color for a heatmap?")
+> ##D 
+> ##D # JSON response
+> ##D data <- goose_ask("List 5 colors for data viz", output_format = "json")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_ask", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_async")
+> ### * goose_async
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_async
+> ### Title: Execute Query Asynchronously
+> ### Aliases: goose_async
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(promises)
+> ##D 
+> ##D # Single async query
+> ##D goose_async("Explain async programming") %...>%
+> ##D   { cat("Response:", .) }
+> ##D 
+> ##D # Chain multiple async operations
+> ##D goose_async("Write a function") %...>%
+> ##D   { goose_async(paste("Optimize this:", .)) } %...>%
+> ##D   { cat("Optimized:", .) }
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_async", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_batch")
+> ### * goose_batch
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_batch
+> ### Title: Execute Multiple Queries in Parallel
+> ### Aliases: goose_batch
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D queries <- c(
+> ##D   "Explain R functions",
+> ##D   "Write a data analysis script",
+> ##D   "Create a visualization"
+> ##D )
+> ##D 
+> ##D results <- goose_batch(queries, max_workers = 3)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_batch", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_configure")
+> ### * goose_configure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_configure
+> ### Title: Configure Goose CLI Settings
+> ### Aliases: goose_configure
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # For Block employees with configured CLI, just check:
+> ##D goose_test_cli()
+> ##D 
+> ##D # For external users who need API keys:
+> ##D goose_configure(provider = "openai", model = "gpt-4", api_key = "your-key")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_configure", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_create_brand")
+> ### * goose_create_brand
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_create_brand
+> ### Title: Create a new brand configuration interactively
+> ### Aliases: goose_create_brand
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D goose_create_brand("my_company")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_create_brand", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_create_brand_ai")
+> ### * goose_create_brand_ai
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_create_brand_ai
+> ### Title: Create Brand with AI Assistance
+> ### Aliases: goose_create_brand_ai
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Create brand with AI assistance
+> ##D goose_create_brand_ai("TechStartup", 
+> ##D                      industry = "fintech",
+> ##D                      style = "modern")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_create_brand_ai", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_delete")
+> ### * goose_delete
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_delete
+> ### Title: Delete Object from Goose Memory
+> ### Aliases: goose_delete
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Delete an object
+> ##D goose_delete("old_model", category = "models")
+> ##D 
+> ##D # Delete without confirmation
+> ##D goose_delete("temp_data", confirm = FALSE)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_delete", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_document")
+> ### * goose_document
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_document
+> ### Title: Generate R Documentation with AI
+> ### Aliases: goose_document
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D my_func <- function(x, y, method = "pearson") {
+> ##D   cor(x, y, method = method)
+> ##D }
+> ##D 
+> ##D docs <- goose_document(my_func)
+> ##D cat(docs)
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_document", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_explain_error")
+> ### * goose_explain_error
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_explain_error
+> ### Title: Explain R Error with AI
+> ### Aliases: goose_explain_error
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Explain last error
+> ##D tryCatch({
+> ##D   data.frame(x = 1:3, y = 1:4)
+> ##D }, error = function(e) {
+> ##D   explanation <- goose_explain_error(e)
+> ##D   print(explanation)
+> ##D })
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_explain_error", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_list")
+> ### * goose_list
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_list
+> ### Title: List Objects in Goose Memory
+> ### Aliases: goose_list
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # List all saved objects
+> ##D goose_list()
+> ##D 
+> ##D # List objects in a specific category
+> ##D goose_list(category = "models")
+> ##D 
+> ##D # List objects with specific tags
+> ##D goose_list(tags = "production")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_list", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_load")
+> ### * goose_load
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_load
+> ### Title: Load R Object from Goose Memory
+> ### Aliases: goose_load
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Load a previously saved model
+> ##D model <- goose_load("mtcars_model", category = "models")
+> ##D 
+> ##D # Load a dataset
+> ##D data <- goose_load("iris_data", category = "datasets")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_load", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_map")
+> ### * goose_map
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_map
+> ### Title: Map Async Function Over Data
+> ### Aliases: goose_map
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Analyze multiple code snippets
+> ##D code_snippets <- c("function(x) x^2", "for(i in 1:10) print(i)")
+> ##D reviews <- goose_map(code_snippets, "Review this R code: {x}")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_map", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_optimize_plot")
+> ### * goose_optimize_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_optimize_plot
+> ### Title: Optimize ggplot2 Code with AI
+> ### Aliases: goose_optimize_plot
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D plot_code <- "
+> ##D ggplot(mtcars, aes(x = wt, y = mpg)) +
+> ##D   geom_point()
+> ##D "
+> ##D 
+> ##D optimized <- goose_optimize_plot(plot_code, 
+> ##D                                  goals = c("aesthetics", "clarity"))
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_optimize_plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_pipeline")
+> ### * goose_pipeline
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_pipeline
+> ### Title: Create Async Query Pipeline
+> ### Aliases: goose_pipeline
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D goose_pipeline(
+> ##D   "Write a data analysis function",
+> ##D   ~ paste("Add error handling to:", .),
+> ##D   ~ paste("Add documentation to:", .),
+> ##D   ~ paste("Create tests for:", .)
+> ##D ) %...>% { cat("Final result:", .) }
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_pipeline", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_quarto_chunk")
+> ### * goose_quarto_chunk
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_quarto_chunk
+> ### Title: Create AI-Powered Quarto Chunk
+> ### Aliases: goose_quarto_chunk
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # In a Quarto document
+> ##D goose_quarto_chunk("Explain linear regression", label = "explain-lm")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_quarto_chunk", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_review_code")
+> ### * goose_review_code
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_review_code
+> ### Title: Review R Code with AI
+> ### Aliases: goose_review_code
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Review a function
+> ##D my_func <- function(x) {
+> ##D   for(i in 1:length(x)) {
+> ##D     x[i] <- x[i] * 2
+> ##D   }
+> ##D   return(x)
+> ##D }
+> ##D review <- goose_review_code(my_func, focus = c("performance", "style"))
+> ##D 
+> ##D # Review code string
+> ##D code <- "df$new_col = df$col1 + df$col2"
+> ##D review <- goose_review_code(code, context = "Adding columns in data frame")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_review_code", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_save")
+> ### * goose_save
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_save
+> ### Title: Save R Object to Goose Memory
+> ### Aliases: goose_save
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Save a model
+> ##D model <- lm(mpg ~ wt, data = mtcars)
+> ##D goose_save(model, "mtcars_model", 
+> ##D            category = "models",
+> ##D            tags = c("regression", "mtcars"),
+> ##D            description = "Linear model predicting mpg from weight")
+> ##D 
+> ##D # Save a data frame
+> ##D goose_save(iris, "iris_data", 
+> ##D            category = "datasets",
+> ##D            tags = "example")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_save", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_stream")
+> ### * goose_stream
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_stream
+> ### Title: Stream Response from Goose
+> ### Aliases: goose_stream
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Simple streaming with default output
+> ##D goose_stream("Explain R functions")
+> ##D 
+> ##D # Custom callback for processing chunks
+> ##D goose_stream("Write a function", callback = function(chunk) {
+> ##D   message("Received: ", nchar(chunk), " characters")
+> ##D   cat(chunk)
+> ##D })
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_stream", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_stream_async")
+> ### * goose_stream_async
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_stream_async
+> ### Title: Async Stream with Promise
+> ### Aliases: goose_stream_async
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(promises)
+> ##D goose_stream_async("Explain promises") %...>%
+> ##D   { cat("Complete response:", .) }
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_stream_async", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_suggest_colors")
+> ### * goose_suggest_colors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_suggest_colors
+> ### Title: Suggest Color Palette with AI
+> ### Aliases: goose_suggest_colors
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Get heatmap colors
+> ##D colors <- goose_suggest_colors("heatmap", n_colors = 9)
+> ##D 
+> ##D # Get brand colors
+> ##D colors <- goose_suggest_colors("categorical", n_colors = 5, brand = "Block")
+> ##D 
+> ##D # Get accessible colors
+> ##D colors <- goose_suggest_colors("bar chart", n_colors = 4, 
+> ##D                                constraints = "colorblind-safe")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_suggest_colors", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_template")
+> ### * goose_template
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_template
+> ### Title: Create a Prompt Template
+> ### Aliases: goose_template
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Create a code review template
+> ##D review_template <- goose_template(
+> ##D   name = "code_review",
+> ##D   template = "Review this {language} code:\n\n{code}\n\nFocus on: {focus}",
+> ##D   variables = list(
+> ##D     language = "Programming language",
+> ##D     code = "Code to review",
+> ##D     focus = "Specific areas to focus on"
+> ##D   )
+> ##D )
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_template", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_template_apply")
+> ### * goose_template_apply
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_template_apply
+> ### Title: Apply Template with Variables
+> ### Aliases: goose_template_apply
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Use the template
+> ##D result <- goose_template_apply(
+> ##D   review_template,
+> ##D   language = "R",
+> ##D   code = "function(x) x^2",
+> ##D   focus = "efficiency and style"
+> ##D )
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_template_apply", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("goose_test_cli")
+> ### * goose_test_cli
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: goose_test_cli
+> ### Title: Test if Goose CLI is Working
+> ### Aliases: goose_test_cli
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Check if CLI works
+> ##D if (goose_test_cli()) {
+> ##D   # Ready to use goose_ask() etc.
+> ##D   response <- goose_ask("Hello!")
+> ##D } else {
+> ##D   # May need configuration
+> ##D   goose_configure(provider = "openai", model = "gpt-4", api_key = "key")
+> ##D }
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("goose_test_cli", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("load_brand")
+> ### * load_brand
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: load_brand
+> ### Title: Load brand configuration
+> ### Aliases: load_brand
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D config <- load_brand("block")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("load_brand", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("theme_brand")
+> ### * theme_brand
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: theme_brand
+> ### Title: Generate ggplot2 theme from brand configuration
+> ### Aliases: theme_brand
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(ggplot2)
+> ##D # Light theme
+> ##D ggplot(mtcars, aes(mpg, wt)) +
+> ##D   geom_point() +
+> ##D   theme_brand("block", variant = "light")
+> ##D   
+> ##D # Dark theme
+> ##D ggplot(mtcars, aes(mpg, wt)) +
+> ##D   geom_point() +
+> ##D   theme_brand("block", variant = "dark")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("theme_brand", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.583 0.075 1.704 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

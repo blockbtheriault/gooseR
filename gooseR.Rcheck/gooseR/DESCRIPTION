@@ -1,0 +1,25 @@
+Package: gooseR
+Title: R Integration for Goose AI
+Version: 0.0.0.9000
+Authors@R: 
+    person("Brandon", "Theriault", , "btheriault@block.xyz", role = c("aut", "cre"))
+Description: Seamless integration between R and Goose AI capabilities
+    including memory management, visualization enhancements, and workflow
+    automation. Save R objects to Goose memory, apply Block branding to
+    visualizations, and manage data science project workflows.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: rmarkdown, testthat (>= 3.0.0), dplyr
+Config/testthat/edition: 3
+Imports: cli, fs, here, jsonlite, magrittr, purrr, ggplot2, yaml,
+        grDevices, systemfonts, processx, DBI, RSQLite, digest, future,
+        future.apply, promises, glue, R6, rappdirs, later, shiny,
+        miniUI, rstudioapi, DT, knitr, markdown, htmltools, stringr
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2025-12-02 23:11:06 UTC; btheriault
+Author: Brandon Theriault [aut, cre]
+Maintainer: Brandon Theriault <btheriault@block.xyz>
+Built: R 4.5.1; ; 2025-12-02 23:11:24 UTC; unix

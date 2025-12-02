@@ -12,7 +12,9 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
-    testthat (>= 3.0.0)
+    rmarkdown,
+    testthat (>= 3.0.0),
+    dplyr
 Config/testthat/edition: 3
 Imports: 
     cli,
@@ -21,8 +23,6 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    rlang,
-    httr2,
     ggplot2,
     yaml,
     grDevices,
@@ -43,4 +43,7 @@ Imports:
     rstudioapi,
     DT,
     knitr,
-    markdown
+    markdown,
+    htmltools,
+    stringr
+VignetteBuilder: knitr
