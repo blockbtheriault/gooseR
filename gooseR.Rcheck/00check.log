@@ -44,10 +44,9 @@ characters in files.
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking dependencies in R code ... WARNING
 '::' or ':::' imports not declared from:
-  ‘htmltools’ ‘scales’ ‘stringr’
-'loadNamespace' or 'requireNamespace' call not declared from: ‘scales’
-Namespaces in Imports field not imported from:
-  ‘grDevices’ ‘httr2’ ‘rlang’
+  ‘htmltools’ ‘stringr’
+'loadNamespace' or 'requireNamespace' call not declared from: ‘htmltools’
+Namespace in Imports field not imported from: ‘grDevices’
   All declared Imports should be used.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK

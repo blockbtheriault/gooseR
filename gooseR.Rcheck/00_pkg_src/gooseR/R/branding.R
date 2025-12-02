@@ -794,7 +794,7 @@ goose_create_brand_ai <- function(brand_name,
       source(system.file("R", "ai_assistant.R", package = "gooseR"))
     }
     
-    message("🤖 Using AI to generate brand suggestions...")
+    message("[AI] Using AI to generate brand suggestions...")
     
     # Build context for AI
     context <- sprintf("Creating a brand identity for %s", brand_name)

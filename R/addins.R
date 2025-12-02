@@ -1,4 +1,7 @@
 #' RStudio/Positron Addins for GooseR
+#' @import shiny
+#' @import miniUI
+
 #'
 #' Interactive UI components for IDE integration
 #' @importFrom shiny shinyApp fluidPage sidebarLayout sidebarPanel mainPanel
@@ -671,4 +674,3 @@ goose_addin_quick <- function() {
     rstudioapi::viewer(temp_html)
   }
 }
-

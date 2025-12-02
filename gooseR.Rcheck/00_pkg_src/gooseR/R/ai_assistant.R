@@ -534,8 +534,14 @@ print.goose_palette <- function(x, ...) {
   }
   
   # Show color swatches if in RStudio
-  if (requireNamespace("scales", quietly = TRUE) && interactive()) {
-    scales::show_col(x$colors)
+  if (interactive()) {
+    try({
+      # visualize swatches inline if htmltools is available
+      if (requireNamespace("htmltools", quietly = TRUE)) {
+        sw <- paste(sprintf("<span style='display:inline-block;width:16px;height:16px;background:%s;margin-right:4px;border:1px solid #ddd'></span>", x$colors), collapse = "")
+        cat("Swatches:", sw, "\n")
+      }
+    }, silent = TRUE)
   }
   
   invisible(x)

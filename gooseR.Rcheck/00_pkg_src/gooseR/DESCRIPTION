@@ -13,12 +13,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Imports: cli, fs, here, jsonlite, magrittr, purrr, rlang, httr2,
-        ggplot2, yaml, grDevices, systemfonts, processx, DBI, RSQLite,
-        digest, future, future.apply, promises, glue, R6, rappdirs,
-        later, shiny, miniUI, rstudioapi, DT, knitr, markdown
+Imports: cli, fs, here, jsonlite, magrittr, purrr, ggplot2, yaml,
+        grDevices, systemfonts, processx, DBI, RSQLite, digest, future,
+        future.apply, promises, glue, R6, rappdirs, later, shiny,
+        miniUI, rstudioapi, DT, knitr, markdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-12-02 22:53:27 UTC; btheriault
+Packaged: 2025-12-02 22:57:29 UTC; btheriault
 Author: Brandon Theriault [aut, cre]
 Maintainer: Brandon Theriault <btheriault@block.xyz>

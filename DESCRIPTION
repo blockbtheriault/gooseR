@@ -22,8 +22,6 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    rlang,
-    httr2,
     ggplot2,
     yaml,
     grDevices,

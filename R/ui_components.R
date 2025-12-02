@@ -1,4 +1,8 @@
 #' Visual UI Components for GooseR
+#' @import shiny
+#' @import miniUI
+#' @import graphics
+
 #'
 #' Shiny-based visual interfaces for cache and conversation management
 #' @importFrom shiny shinyApp fluidPage fluidRow column
