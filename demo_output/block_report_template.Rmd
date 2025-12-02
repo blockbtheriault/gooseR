@@ -1,0 +1,77 @@
+---
+title: "Block Analytics Report"
+author: "Block Inc."
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: true
+    theme: null
+    highlight: tango
+    css: !expr gooseR::brand_css_inline()
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
+  fig.height = 5,
+  fig.align = 'center'
+)
+
+# Load libraries
+library(ggplot2)
+library(gooseR)
+
+# Set brand theme as default
+theme_set(theme_brand("block"))
+
+# Load brand colors
+brand_colors <- brand_palette("block", "categorical")
+```
+
+# Executive Summary
+
+Key findings and recommendations go here.
+
+# Introduction
+
+Background and context for the analysis.
+
+# Methods
+
+Description of data sources and analytical approach.
+
+# Results
+
+## Data Overview
+
+```{r example-plot}
+# Example plot with brand theme
+ggplot(mtcars, aes(x = mpg, y = wt, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_manual(values = brand_palette("block", "categorical", 3)) +
+  labs(
+    title = "Fuel Efficiency vs Weight",
+    subtitle = "By number of cylinders",
+    x = "Miles per Gallon",
+    y = "Weight (1000 lbs)",
+    color = "Cylinders"
+  )
+```
+
+# Discussion
+
+Interpretation of results and implications.
+
+# Conclusions
+
+Summary of key findings and next steps.
+
+# Appendix
+
+Additional tables, figures, and technical details.

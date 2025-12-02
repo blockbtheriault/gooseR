@@ -1,0 +1,251 @@
+# Block Brand Configuration
+# Official brand identity for Block Inc.
+# Reference: https://design.cash.app
+
+brand:
+  name: "Block"
+  version: "1.0.0"
+  description: "Block Inc. official brand identity"
+  
+colors:
+  # Core brand colors
+  primary:
+    black: "#000000"
+    white: "#FFFFFF"
+    
+  # Primary palette
+  core:
+    blue: "#0055FF"      # Block Blue
+    gray: "#666666"      # Block Gray
+    light_gray: "#F7F7F7" # Light Gray background
+    
+  # Extended palette - Orange series
+  orange:
+    0: "#FFF8F6"   # Orange 0
+    10: "#FFE0B1"  # Orange 10
+    30: "#FF5500"  # Orange 30 (primary orange)
+    50: "#D75A00"  # Orange 50
+    80: "#8B3A00"  # Orange 80
+    100: "#4F2000" # Orange 100
+    
+  # Extended palette - Teal series
+  teal:
+    0: "#F4FFFC"   # Teal 0
+    20: "#40E0D0"  # Teal 20
+    40: "#00B5B7"  # Teal 40 (primary teal)
+    60: "#008587"  # Teal 60
+    80: "#005758"  # Teal 80
+    100: "#004243" # Teal 100
+    
+  # Additional accent colors
+  accent:
+    lilac_10: "#F4E0FF"   # Lilac 10
+    sky_blue_20: "#E0F4FF" # Sky Blue 20
+    gold_30: "#FFB514"    # Gold 30
+    red_40: "#D53857"     # Red 40
+    dark_blue_60: "#003333" # Dark Blue 60
+    purple_80: "#4F0066"  # Purple 80
+    
+  # Semantic colors for UI
+  semantic:
+    success: "#00B5B7"  # Teal 40
+    warning: "#FF5500"  # Orange 30
+    error: "#D53857"    # Red 40
+    info: "#0055FF"     # Block Blue
+    
+  # Grayscale palette
+  gray:
+    0: "#FFFFFF"
+    10: "#FAFAFA"
+    20: "#F7F7F7"
+    30: "#E5E5E5"
+    40: "#CCCCCC"
+    50: "#999999"
+    60: "#666666"
+    70: "#4D4D4D"
+    80: "#333333"
+    90: "#1A1A1A"
+    100: "#000000"
+    
+typography:
+  # Font families (Block standard)
+  fonts:
+    primary: "Montserrat"      # Primary brand font
+    secondary: "Roboto"        # Secondary font
+    body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    monospace: "Fira Code, 'Courier New', monospace"
+    
+  # Font sizes (in points)
+  sizes:
+    base: 12
+    h1: 28
+    h2: 24
+    h3: 20
+    h4: 16
+    h5: 14
+    h6: 12
+    body: 12
+    small: 10
+    tiny: 8
+    
+  # Font weights
+  weights:
+    light: 300
+    regular: 400
+    medium: 500
+    semibold: 600
+    bold: 700
+    black: 900
+    
+  # Line heights
+  line_heights:
+    tight: 1.2
+    normal: 1.5
+    relaxed: 1.6
+    loose: 1.8
+    
+spacing:
+  # Base spacing unit (Block uses 8px grid)
+  unit: 8
+  
+  # Spacing scale
+  scale:
+    none: 0
+    xs: 0.25   # 2px
+    sm: 0.5    # 4px
+    md: 1      # 8px
+    lg: 1.5    # 12px
+    xl: 2      # 16px
+    2xl: 3     # 24px
+    3xl: 4     # 32px
+    4xl: 6     # 48px
+    5xl: 8     # 64px
+    
+layout:
+  # Maximum widths
+  max_width:
+    content: 1200
+    text: 720
+    narrow: 480
+    
+  # Border radius (Block uses sharp corners mostly)
+  radius:
+    none: 0
+    sm: 2
+    md: 4
+    lg: 8
+    xl: 12
+    
+  # Border widths
+  borders:
+    none: 0
+    thin: 1
+    medium: 2
+    thick: 3
+    
+  # Shadows (minimal use in Block design)
+  shadows:
+    none: "none"
+    sm: "0 1px 3px 0 rgba(0, 0, 0, 0.1)"
+    md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+    lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+    
+# Brand assets
+assets:
+  logos:
+    primary: "https://drive.google.com/drive/folders/1LZ9sfDB0tgtAz-6woGb0BTTc6ghqPkLF"
+    svg: "https://drive.google.com/drive/folders/1sQzzbCyYLv9aJ-_POpow2pgc7UtmSi9i"
+    
+  # Font sources
+  fonts:
+    montserrat: "https://fonts.google.com/specimen/Montserrat"
+    roboto: "https://fonts.google.com/specimen/Roboto"
+    
+# Metadata
+metadata:
+  author: "Block Inc."
+  copyright: "© 2025 Block Inc."
+  website: "https://block.xyz"
+  design_system: "https://design.cash.app"
+  
+# Plot-specific settings for ggplot2
+plots:
+  # Default dimensions
+  dimensions:
+    width: 7
+    height: 5
+    dpi: 300
+    
+  # Grid settings (minimal grids in Block style)
+  grid:
+    major: true
+    minor: false
+    color: "#E5E5E5"  # gray.30
+    
+  # Color palettes for data visualization
+  palettes:
+    # Primary categorical palette
+    categorical:
+      - "#0055FF"  # Block Blue
+      - "#FF5500"  # Orange 30
+      - "#00B5B7"  # Teal 40
+      - "#FFB514"  # Gold 30
+      - "#D53857"  # Red 40
+      - "#4F0066"  # Purple 80
+      - "#003333"  # Dark Blue 60
+      
+    # Sequential palette (blues)
+    sequential_blue:
+      - "#E0F4FF"  # Sky Blue 20
+      - "#99C2FF"
+      - "#6699FF"
+      - "#3377FF"
+      - "#0055FF"  # Block Blue
+      - "#0044CC"
+      - "#003399"
+      
+    # Sequential palette (orange)
+    sequential_orange:
+      - "#FFF8F6"  # Orange 0
+      - "#FFE0B1"  # Orange 10
+      - "#FFAA66"
+      - "#FF5500"  # Orange 30
+      - "#D75A00"  # Orange 50
+      - "#8B3A00"  # Orange 80
+      
+    # Diverging palette (orange to teal)
+    diverging:
+      - "#FF5500"  # Orange 30
+      - "#FFAA66"
+      - "#FFE0B1"
+      - "#F0F0F0"  # Neutral
+      - "#B3E6E0"
+      - "#66CCC0"
+      - "#00B5B7"  # Teal 40
+      
+# Brand usage guidelines
+guidelines:
+  contrast:
+    description: "Use sufficient contrast for accessibility"
+    rules:
+      - "Black text on white background for primary content"
+      - "White text on black for inverted layouts"
+      - "Minimum contrast ratio 4.5:1 for body text"
+      - "Minimum contrast ratio 3:1 for large text"
+      
+  color_usage:
+    description: "Color application principles"
+    rules:
+      - "Black and white as primary colors"
+      - "Blue for primary actions and links"
+      - "Orange for emphasis and calls-to-action"
+      - "Teal for success states and positive feedback"
+      - "Red for errors and warnings only"
+      
+  typography_usage:
+    description: "Typography application"
+    rules:
+      - "Montserrat for headlines and key messaging"
+      - "Roboto or system fonts for body text"
+      - "Bold weight for emphasis, avoid italics"
+      - "Maintain consistent hierarchy"
