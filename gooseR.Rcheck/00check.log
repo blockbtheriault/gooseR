@@ -10,7 +10,7 @@
 * checking for file ‘gooseR/DESCRIPTION’ ... OK
 * this is package ‘gooseR’ version ‘0.0.0.9000’
 * package encoding: UTF-8
-* checking CRAN incoming feasibility ... [3s/17s] NOTE
+* checking CRAN incoming feasibility ... [3s/16s] NOTE
 Maintainer: ‘Brandon Theriault <btheriault@block.xyz>’
 
 New submission
@@ -29,7 +29,7 @@ Found the following (possibly) invalid URLs:
     Message: Not Found
 * checking package namespace information ... OK
 * checking package dependencies ... INFO
-Imports includes 26 non-default packages.
+Imports includes 28 non-default packages.
 Importing from so many packages makes the package vulnerable to any of
 them becoming unavailable.  Move as many as possible to Suggests and
 use conditionally.
@@ -53,8 +53,7 @@ Non-standard file/directory found at top level:
 * checking index information ... OK
 * checking package subdirectories ... OK
 * checking code files for non-ASCII characters ... WARNING
-Found the following files with non-ASCII characters:
-  R/branding.R
+Found the following file with non-ASCII characters:
   R/cli_integration.R
 Portable packages must use only ASCII characters in their R code and
 NAMESPACE directives, except perhaps in comments.
@@ -68,10 +67,7 @@ characters in files.
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking use of S3 registration ... OK
-* checking dependencies in R code ... WARNING
-'::' or ':::' imports not declared from:
-  ‘htmltools’ ‘stringr’
-'loadNamespace' or 'requireNamespace' call not declared from: ‘htmltools’
+* checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
@@ -99,11 +95,10 @@ checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
   Running ‘testthat.R’
-* checking for unstated dependencies in vignettes ... NOTE
-'library' or 'require' call not declared from: ‘dplyr’
+* checking for unstated dependencies in vignettes ... OK
 * checking package vignettes ... OK
 * checking re-building of vignette outputs ... OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 3 WARNINGs, 4 NOTEs
+Status: 2 WARNINGs, 3 NOTEs

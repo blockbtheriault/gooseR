@@ -13,7 +13,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    dplyr
 Config/testthat/edition: 3
 Imports: 
     cli,
@@ -42,5 +43,7 @@ Imports:
     rstudioapi,
     DT,
     knitr,
-    markdown
+    markdown,
+    htmltools,
+    stringr
 VignetteBuilder: knitr

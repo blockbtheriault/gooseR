@@ -958,7 +958,7 @@ goose_create_brand_ai <- function(brand_name,
   config_path <- file.path(brand_dir, paste0(brand_slug, "_brand.yaml"))
   yaml::write_yaml(config, config_path)
   
-  message(sprintf("\n✨ Brand configuration created: %s", config_path))
+  message(sprintf("\n[Brand] Configuration created: %s", config_path))
   message(sprintf("To use: theme_brand('%s')", brand_slug))
   
   # Generate preview if possible
