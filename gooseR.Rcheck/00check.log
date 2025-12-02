@@ -1,0 +1,244 @@
+* using log directory ‘/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck’
+* using R version 4.5.1 (2025-06-13)
+* using platform: aarch64-apple-darwin20
+* R was compiled by
+    Apple clang version 16.0.0 (clang-1600.0.26.6)
+    GNU Fortran (GCC) 14.2.0
+* running under: macOS Tahoe 26.1
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘gooseR/DESCRIPTION’ ... OK
+* this is package ‘gooseR’ version ‘0.0.0.9000’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘gooseR’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking code files for non-ASCII characters ... WARNING
+Found the following files with non-ASCII characters:
+  R/branding.R
+  R/cli_integration.R
+Portable packages must use only ASCII characters in their R code and
+NAMESPACE directives, except perhaps in comments.
+Use \uxxxx escapes for other characters.
+Function ‘tools::showNonASCIIfile’ can help in finding non-ASCII
+characters in files.
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking dependencies in R code ... WARNING
+'::' or ':::' imports not declared from:
+  ‘htmltools’ ‘scales’ ‘stringr’
+'loadNamespace' or 'requireNamespace' call not declared from: ‘scales’
+Namespaces in Imports field not imported from:
+  ‘grDevices’ ‘httr2’ ‘rlang’
+  All declared Imports should be used.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+blend_colors: no visible global function definition for ‘col2rgb’
+blend_colors: no visible global function definition for ‘rgb’
+goose_addin_chat: no visible global function definition for ‘icon’
+goose_addin_chat : server: no visible global function definition for
+  ‘reactiveValues’
+goose_addin_chat : server: no visible global function definition for
+  ‘req’
+goose_addin_chat : server: no visible global function definition for
+  ‘insertUI’
+goose_addin_chat : server: no visible global function definition for
+  ‘removeUI’
+goose_addin_chat : server: no visible global function definition for
+  ‘stopApp’
+goose_addin_chat: no visible global function definition for
+  ‘dialogViewer’
+goose_addin_chat: no visible global function definition for ‘runGadget’
+goose_addin_review: no visible global function definition for
+  ‘verbatimTextOutput’
+goose_addin_review: no visible global function definition for ‘hr’
+goose_addin_review: no visible global function definition for ‘icon’
+goose_addin_review: no visible global function definition for
+  ‘uiOutput’
+goose_addin_review : server: no visible global function definition for
+  ‘stopApp’
+goose_addin_review: no visible global function definition for
+  ‘dialogViewer’
+goose_addin_review: no visible global function definition for
+  ‘runGadget’
+goose_addin_snippet: no visible global function definition for
+  ‘conditionalPanel’
+goose_addin_snippet: no visible global function definition for
+  ‘checkboxGroupInput’
+goose_addin_snippet: no visible global function definition for ‘hr’
+goose_addin_snippet: no visible global function definition for
+  ‘verbatimTextOutput’
+goose_addin_snippet: no visible global function definition for ‘icon’
+goose_addin_snippet : server: no visible global function definition for
+  ‘reactiveVal’
+goose_addin_snippet : server: no visible global function definition for
+  ‘stopApp’
+goose_addin_snippet: no visible global function definition for
+  ‘dialogViewer’
+goose_addin_snippet: no visible global function definition for
+  ‘runGadget’
+goose_addin_template: no visible global function definition for ‘hr’
+goose_addin_template: no visible global function definition for ‘icon’
+goose_addin_template: no visible global function definition for
+  ‘verbatimTextOutput’
+goose_addin_template : server: no visible global function definition
+  for ‘reactiveValues’
+goose_addin_template : server: no visible global function definition
+  for ‘observe’
+goose_addin_template : server: no visible global function definition
+  for ‘removeUI’
+goose_addin_template : server: no visible global function definition
+  for ‘insertUI’
+goose_addin_template : server: no visible global function definition
+  for ‘stopApp’
+goose_addin_template : server: no visible global function definition
+  for ‘showModal’
+goose_addin_template : server: no visible global function definition
+  for ‘modalDialog’
+goose_addin_template : server: no visible global function definition
+  for ‘tagList’
+goose_addin_template : server: no visible global function definition
+  for ‘modalButton’
+goose_addin_template : server: no visible global function definition
+  for ‘updateTextInput’
+goose_addin_template : server: no visible global function definition
+  for ‘removeModal’
+goose_addin_template: no visible global function definition for
+  ‘dialogViewer’
+goose_addin_template: no visible global function definition for
+  ‘runGadget’
+goose_optimize_plot: no visible global function definition for
+  ‘capture.output’
+goose_optimize_plot: no visible global function definition for ‘str’
+goose_pipeline: no visible global function definition for ‘%...>%’
+goose_pipeline: no visible binding for global variable ‘.’
+goose_save: no visible global function definition for ‘object.size’
+preview_brand: no visible binding for global variable ‘x’
+preview_brand: no visible binding for global variable ‘y’
+preview_brand: no visible binding for global variable ‘category’
+run_cache_app: no visible global function definition for ‘titlePanel’
+run_cache_app: no visible global function definition for ‘icon’
+run_cache_app: no visible global function definition for ‘hr’
+run_cache_app: no visible global function definition for ‘tabsetPanel’
+run_cache_app: no visible global function definition for ‘tabPanel’
+run_cache_app: no visible global function definition for
+  ‘verbatimTextOutput’
+run_cache_gadget: no visible global function definition for
+  ‘tabsetPanel’
+run_cache_gadget: no visible global function definition for ‘tabPanel’
+run_cache_gadget: no visible global function definition for ‘icon’
+run_cache_gadget: no visible global function definition for
+  ‘verbatimTextOutput’
+run_cache_gadget: no visible global function definition for
+  ‘numericInput’
+run_cache_gadget: no visible global function definition for ‘hr’
+run_cache_gadget : server: no visible global function definition for
+  ‘onStop’
+run_cache_gadget : server: no visible global function definition for
+  ‘reactiveVal’
+run_cache_gadget : server: no visible global function definition for
+  ‘req’
+run_cache_gadget : server: no visible global function definition for
+  ‘showModal’
+run_cache_gadget : server: no visible global function definition for
+  ‘modalDialog’
+run_cache_gadget : server: no visible global function definition for
+  ‘verbatimTextOutput’
+run_cache_gadget : server: no visible global function definition for
+  ‘modalButton’
+run_cache_gadget : server: no visible global function definition for
+  ‘renderPrint’
+run_cache_gadget : server: no visible global function definition for
+  ‘par’
+run_cache_gadget : server: no visible global function definition for
+  ‘hist’
+run_cache_gadget : server: no visible global function definition for
+  ‘tagList’
+run_cache_gadget : server: no visible global function definition for
+  ‘removeModal’
+run_cache_gadget : server: no visible global function definition for
+  ‘stopApp’
+run_cache_gadget: no visible global function definition for
+  ‘dialogViewer’
+run_cache_gadget: no visible global function definition for ‘runGadget’
+run_conversation_app: no visible global function definition for
+  ‘titlePanel’
+run_conversation_app: no visible global function definition for
+  ‘uiOutput’
+run_conversation_app: no visible global function definition for ‘hr’
+run_conversation_gadget: no visible global function definition for
+  ‘icon’
+run_conversation_gadget: no visible global function definition for
+  ‘uiOutput’
+run_conversation_gadget : server: no visible global function definition
+  for ‘reactiveVal’
+run_conversation_gadget : server : <anonymous>: no visible global
+  function definition for ‘strong’
+run_conversation_gadget : server: no visible global function definition
+  for ‘showModal’
+run_conversation_gadget : server: no visible global function definition
+  for ‘modalDialog’
+run_conversation_gadget : server: no visible global function definition
+  for ‘tagList’
+run_conversation_gadget : server: no visible global function definition
+  for ‘modalButton’
+run_conversation_gadget : server: no visible global function definition
+  for ‘removeModal’
+run_conversation_gadget : server: no visible global function definition
+  for ‘stopApp’
+run_conversation_gadget: no visible global function definition for
+  ‘dialogViewer’
+run_conversation_gadget: no visible global function definition for
+  ‘runGadget’
+Undefined global functions or variables:
+  %...>% . capture.output category checkboxGroupInput col2rgb
+  conditionalPanel dialogViewer hist hr icon insertUI modalButton
+  modalDialog numericInput object.size observe onStop par reactiveVal
+  reactiveValues removeModal removeUI renderPrint req rgb runGadget
+  showModal stopApp str strong tabPanel tabsetPanel tagList titlePanel
+  uiOutput updateTextInput verbatimTextOutput x y
+Consider adding
+  importFrom("grDevices", "col2rgb", "rgb")
+  importFrom("graphics", "hist", "par")
+  importFrom("utils", "capture.output", "object.size", "str")
+to your NAMESPACE file.
+* checking Rd files ... WARNING
+checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 3 WARNINGs, 1 NOTE
