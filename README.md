@@ -74,8 +74,6 @@ p <- ggplot(mtcars, aes(wt, mpg)) +
 print(p)
 ```
 
-If Inter is not installed, either install it (recommended) or change the font family above to "Cash Sans" or "Helvetica". theme_brand("block") includes intelligent font detection and will attempt to use Inter automatically, falling back when needed.
-
 ## Visual Examples
 
 <p align="center">
