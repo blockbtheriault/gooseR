@@ -1,1 +1,12 @@
 ^LICENSE\.md$
+^docs$
+^examples$
+^demo$
+^demo_output$
+^\.github$
+^\.DS_Store$
+^CODE_OF_CONDUCT\.md$
+^CONTRIBUTING\.md$
+^ROADMAP\.md$
+^README\.Rmd$
+^pkgdown$
