@@ -1,4 +1,17 @@
 #' Visual UI Components for GooseR
+#' @import shiny
+#' @import miniUI
+#' @import graphics
+#' @importFrom shiny reactive reactiveVal reactiveValues observe observeEvent req
+#' @importFrom shiny insertUI removeUI stopApp renderPrint verbatimTextOutput
+#' @importFrom shiny hr icon uiOutput tagList modalButton modalDialog titlePanel
+#' @importFrom shiny updateTextInput tabPanel tabsetPanel numericInput
+#' @importFrom miniUI dialogViewer runGadget
+#' @importFrom graphics par hist
+#' @importFrom grDevices col2rgb rgb
+#' @importFrom utils capture.output object.size str
+
+
 #'
 #' Shiny-based visual interfaces for cache and conversation management
 #' @importFrom shiny shinyApp fluidPage fluidRow column

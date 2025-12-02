@@ -888,7 +888,7 @@ goose_create_brand_ai <- function(brand_name,
       generated = Sys.time()
     )
     
-    message("✅ AI suggestions generated successfully!")
+    message("[AI] Suggestions generated successfully!")
     
   } else {
     # Use defaults without AI

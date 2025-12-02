@@ -6,24 +6,49 @@
     GNU Fortran (GCC) 14.2.0
 * running under: macOS Tahoe 26.1
 * using session charset: UTF-8
-* using option ‘--no-manual’
+* using options ‘--no-manual --as-cran’
 * checking for file ‘gooseR/DESCRIPTION’ ... OK
 * this is package ‘gooseR’ version ‘0.0.0.9000’
 * package encoding: UTF-8
+* checking CRAN incoming feasibility ... [3s/17s] NOTE
+Maintainer: ‘Brandon Theriault <btheriault@block.xyz>’
+
+New submission
+
+Version contains large components (0.0.0.9000)
+
+Package CITATION file contains call(s) to old-style personList() or
+as.personList().  Please use c() on person objects instead.
+Package CITATION file contains call(s) to old-style citEntry().  Please
+use bibentry() instead.
+
+Found the following (possibly) invalid URLs:
+  URL: https://github.com/blockbtheriault/gooseR
+    From: inst/CITATION
+    Status: 404
+    Message: Not Found
 * checking package namespace information ... OK
-* checking package dependencies ... OK
+* checking package dependencies ... INFO
+Imports includes 26 non-default packages.
+Importing from so many packages makes the package vulnerable to any of
+them becoming unavailable.  Move as many as possible to Suggests and
+use conditionally.
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
 * checking whether package ‘gooseR’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
+* checking for future file timestamps ... OK
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
-* checking top-level files ... OK
+* checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘reference’
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
@@ -42,188 +67,26 @@ characters in files.
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
 * checking dependencies in R code ... WARNING
 '::' or ':::' imports not declared from:
   ‘htmltools’ ‘stringr’
 'loadNamespace' or 'requireNamespace' call not declared from: ‘htmltools’
-Namespace in Imports field not imported from: ‘grDevices’
-  All declared Imports should be used.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... NOTE
-blend_colors: no visible global function definition for ‘col2rgb’
-blend_colors: no visible global function definition for ‘rgb’
-goose_addin_chat: no visible global function definition for ‘icon’
-goose_addin_chat : server: no visible global function definition for
-  ‘reactiveValues’
-goose_addin_chat : server: no visible global function definition for
-  ‘req’
-goose_addin_chat : server: no visible global function definition for
-  ‘insertUI’
-goose_addin_chat : server: no visible global function definition for
-  ‘removeUI’
-goose_addin_chat : server: no visible global function definition for
-  ‘stopApp’
-goose_addin_chat: no visible global function definition for
-  ‘dialogViewer’
-goose_addin_chat: no visible global function definition for ‘runGadget’
-goose_addin_review: no visible global function definition for
-  ‘verbatimTextOutput’
-goose_addin_review: no visible global function definition for ‘hr’
-goose_addin_review: no visible global function definition for ‘icon’
-goose_addin_review: no visible global function definition for
-  ‘uiOutput’
-goose_addin_review : server: no visible global function definition for
-  ‘stopApp’
-goose_addin_review: no visible global function definition for
-  ‘dialogViewer’
-goose_addin_review: no visible global function definition for
-  ‘runGadget’
-goose_addin_snippet: no visible global function definition for
-  ‘conditionalPanel’
-goose_addin_snippet: no visible global function definition for
-  ‘checkboxGroupInput’
-goose_addin_snippet: no visible global function definition for ‘hr’
-goose_addin_snippet: no visible global function definition for
-  ‘verbatimTextOutput’
-goose_addin_snippet: no visible global function definition for ‘icon’
-goose_addin_snippet : server: no visible global function definition for
-  ‘reactiveVal’
-goose_addin_snippet : server: no visible global function definition for
-  ‘stopApp’
-goose_addin_snippet: no visible global function definition for
-  ‘dialogViewer’
-goose_addin_snippet: no visible global function definition for
-  ‘runGadget’
-goose_addin_template: no visible global function definition for ‘hr’
-goose_addin_template: no visible global function definition for ‘icon’
-goose_addin_template: no visible global function definition for
-  ‘verbatimTextOutput’
-goose_addin_template : server: no visible global function definition
-  for ‘reactiveValues’
-goose_addin_template : server: no visible global function definition
-  for ‘observe’
-goose_addin_template : server: no visible global function definition
-  for ‘removeUI’
-goose_addin_template : server: no visible global function definition
-  for ‘insertUI’
-goose_addin_template : server: no visible global function definition
-  for ‘stopApp’
-goose_addin_template : server: no visible global function definition
-  for ‘showModal’
-goose_addin_template : server: no visible global function definition
-  for ‘modalDialog’
-goose_addin_template : server: no visible global function definition
-  for ‘tagList’
-goose_addin_template : server: no visible global function definition
-  for ‘modalButton’
-goose_addin_template : server: no visible global function definition
-  for ‘updateTextInput’
-goose_addin_template : server: no visible global function definition
-  for ‘removeModal’
-goose_addin_template: no visible global function definition for
-  ‘dialogViewer’
-goose_addin_template: no visible global function definition for
-  ‘runGadget’
-goose_optimize_plot: no visible global function definition for
-  ‘capture.output’
-goose_optimize_plot: no visible global function definition for ‘str’
 goose_pipeline: no visible global function definition for ‘%...>%’
 goose_pipeline: no visible binding for global variable ‘.’
-goose_save: no visible global function definition for ‘object.size’
 preview_brand: no visible binding for global variable ‘x’
 preview_brand: no visible binding for global variable ‘y’
 preview_brand: no visible binding for global variable ‘category’
-run_cache_app: no visible global function definition for ‘titlePanel’
-run_cache_app: no visible global function definition for ‘icon’
-run_cache_app: no visible global function definition for ‘hr’
-run_cache_app: no visible global function definition for ‘tabsetPanel’
-run_cache_app: no visible global function definition for ‘tabPanel’
-run_cache_app: no visible global function definition for
-  ‘verbatimTextOutput’
-run_cache_gadget: no visible global function definition for
-  ‘tabsetPanel’
-run_cache_gadget: no visible global function definition for ‘tabPanel’
-run_cache_gadget: no visible global function definition for ‘icon’
-run_cache_gadget: no visible global function definition for
-  ‘verbatimTextOutput’
-run_cache_gadget: no visible global function definition for
-  ‘numericInput’
-run_cache_gadget: no visible global function definition for ‘hr’
-run_cache_gadget : server: no visible global function definition for
-  ‘onStop’
-run_cache_gadget : server: no visible global function definition for
-  ‘reactiveVal’
-run_cache_gadget : server: no visible global function definition for
-  ‘req’
-run_cache_gadget : server: no visible global function definition for
-  ‘showModal’
-run_cache_gadget : server: no visible global function definition for
-  ‘modalDialog’
-run_cache_gadget : server: no visible global function definition for
-  ‘verbatimTextOutput’
-run_cache_gadget : server: no visible global function definition for
-  ‘modalButton’
-run_cache_gadget : server: no visible global function definition for
-  ‘renderPrint’
-run_cache_gadget : server: no visible global function definition for
-  ‘par’
-run_cache_gadget : server: no visible global function definition for
-  ‘hist’
-run_cache_gadget : server: no visible global function definition for
-  ‘tagList’
-run_cache_gadget : server: no visible global function definition for
-  ‘removeModal’
-run_cache_gadget : server: no visible global function definition for
-  ‘stopApp’
-run_cache_gadget: no visible global function definition for
-  ‘dialogViewer’
-run_cache_gadget: no visible global function definition for ‘runGadget’
-run_conversation_app: no visible global function definition for
-  ‘titlePanel’
-run_conversation_app: no visible global function definition for
-  ‘uiOutput’
-run_conversation_app: no visible global function definition for ‘hr’
-run_conversation_gadget: no visible global function definition for
-  ‘icon’
-run_conversation_gadget: no visible global function definition for
-  ‘uiOutput’
-run_conversation_gadget : server: no visible global function definition
-  for ‘reactiveVal’
-run_conversation_gadget : server : <anonymous>: no visible global
-  function definition for ‘strong’
-run_conversation_gadget : server: no visible global function definition
-  for ‘showModal’
-run_conversation_gadget : server: no visible global function definition
-  for ‘modalDialog’
-run_conversation_gadget : server: no visible global function definition
-  for ‘tagList’
-run_conversation_gadget : server: no visible global function definition
-  for ‘modalButton’
-run_conversation_gadget : server: no visible global function definition
-  for ‘removeModal’
-run_conversation_gadget : server: no visible global function definition
-  for ‘stopApp’
-run_conversation_gadget: no visible global function definition for
-  ‘dialogViewer’
-run_conversation_gadget: no visible global function definition for
-  ‘runGadget’
 Undefined global functions or variables:
-  %...>% . capture.output category checkboxGroupInput col2rgb
-  conditionalPanel dialogViewer hist hr icon insertUI modalButton
-  modalDialog numericInput object.size observe onStop par reactiveVal
-  reactiveValues removeModal removeUI renderPrint req rgb runGadget
-  showModal stopApp str strong tabPanel tabsetPanel tagList titlePanel
-  uiOutput updateTextInput verbatimTextOutput x y
-Consider adding
-  importFrom("grDevices", "col2rgb", "rgb")
-  importFrom("graphics", "hist", "par")
-  importFrom("utils", "capture.output", "object.size", "str")
-to your NAMESPACE file.
+  %...>% . category x y
 * checking Rd files ... WARNING
 checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
 * checking Rd metadata ... OK
+* checking Rd line widths ... OK
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
@@ -236,8 +99,11 @@ checkRd: (5) grapes-or-or-grapes.Rd:3: \name should not contain !, | or @
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
   Running ‘testthat.R’
-* checking for unstated dependencies in vignettes ... OK
+* checking for unstated dependencies in vignettes ... NOTE
+'library' or 'require' call not declared from: ‘dplyr’
 * checking package vignettes ... OK
 * checking re-building of vignette outputs ... OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
 * DONE
-Status: 3 WARNINGs, 1 NOTE
+Status: 3 WARNINGs, 4 NOTEs

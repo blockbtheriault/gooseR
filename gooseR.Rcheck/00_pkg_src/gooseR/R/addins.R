@@ -1,4 +1,13 @@
 #' RStudio/Positron Addins for GooseR
+#' @import shiny
+#' @import miniUI
+#' @importFrom shiny reactive reactiveVal reactiveValues observe observeEvent req
+#' @importFrom shiny insertUI removeUI stopApp renderPrint verbatimTextOutput
+#' @importFrom shiny hr icon uiOutput tagList modalButton modalDialog titlePanel
+#' @importFrom shiny updateTextInput
+#' @importFrom miniUI dialogViewer runGadget
+
+
 #'
 #' Interactive UI components for IDE integration
 #' @importFrom shiny shinyApp fluidPage sidebarLayout sidebarPanel mainPanel
@@ -671,4 +680,3 @@ goose_addin_quick <- function() {
     rstudioapi::viewer(temp_html)
   }
 }
-

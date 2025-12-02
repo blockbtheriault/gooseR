@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="gooseR Team" />
+
+
+<title>gooseR Use-Case Demo</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">gooseR Use-Case Demo</h1>
+<h4 class="author">gooseR Team</h4>
+
+
+
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>This vignette demonstrates three real-world use cases with sample
+data: - People Analytics - Sales Analysis - Code Review Workflow</p>
+<div id="people-analytics" class="section level2">
+<h2>People Analytics</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>employees <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">employee_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="at">tenure_years =</span> <span class="fu">runif</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">satisfaction =</span> <span class="fu">pmax</span>(<span class="fu">pmin</span>(<span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="fl">3.5</span>, <span class="dv">1</span>), <span class="dv">5</span>), <span class="dv">1</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">performance =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">500</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">department =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Engineering&quot;</span>, <span class="st">&quot;Sales&quot;</span>, <span class="st">&quot;HR&quot;</span>, <span class="st">&quot;Finance&quot;</span>), <span class="dv">500</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">ggplot</span>(employees, <span class="fu">aes</span>(department, satisfaction, <span class="at">fill =</span> department)) <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">theme_brand</span>(<span class="st">&quot;block&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Employee Satisfaction by Department&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Satisfaction (1-5)&quot;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; Loaded brand configuration from: /private/var/folders/_4/5zbk3mcx73qfmmscm52hpd2w0000gn/T/Rtmp0XRAeD/Rinst1442c247b46ab/gooseR/brands/block/block_brand.yaml</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; Note: Inter font not found. Install from https://fonts.google.com/specimen/Inter</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;       Using fallback fonts. To suppress this message, set suppress_font_warning: true in brand config.</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-62"><a href="#cb1-62" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-63"><a href="#cb1-63" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-64"><a href="#cb1-64" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-65"><a href="#cb1-65" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-66"><a href="#cb1-66" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-67"><a href="#cb1-67" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-68"><a href="#cb1-68" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-69"><a href="#cb1-69" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-70"><a href="#cb1-70" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-71"><a href="#cb1-71" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-72"><a href="#cb1-72" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-73"><a href="#cb1-73" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-74"><a href="#cb1-74" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-75"><a href="#cb1-75" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-76"><a href="#cb1-76" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-77"><a href="#cb1-77" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-78"><a href="#cb1-78" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-79"><a href="#cb1-79" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-80"><a href="#cb1-80" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-81"><a href="#cb1-81" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-82"><a href="#cb1-82" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-83"><a href="#cb1-83" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-84"><a href="#cb1-84" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-85"><a href="#cb1-85" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-86"><a href="#cb1-86" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-87"><a href="#cb1-87" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-88"><a href="#cb1-88" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-89"><a href="#cb1-89" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-90"><a href="#cb1-90" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-91"><a href="#cb1-91" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-92"><a href="#cb1-92" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-93"><a href="#cb1-93" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-94"><a href="#cb1-94" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-95"><a href="#cb1-95" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-96"><a href="#cb1-96" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-97"><a href="#cb1-97" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-98"><a href="#cb1-98" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-99"><a href="#cb1-99" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-100"><a href="#cb1-100" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-101"><a href="#cb1-101" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-102"><a href="#cb1-102" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-103"><a href="#cb1-103" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-104"><a href="#cb1-104" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-105"><a href="#cb1-105" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-106"><a href="#cb1-106" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-107"><a href="#cb1-107" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-108"><a href="#cb1-108" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-109"><a href="#cb1-109" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-110"><a href="#cb1-110" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-111"><a href="#cb1-111" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-112"><a href="#cb1-112" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-113"><a href="#cb1-113" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-114"><a href="#cb1-114" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-115"><a href="#cb1-115" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-116"><a href="#cb1-116" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-117"><a href="#cb1-117" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-118"><a href="#cb1-118" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-119"><a href="#cb1-119" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-120"><a href="#cb1-120" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-121"><a href="#cb1-121" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-122"><a href="#cb1-122" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-123"><a href="#cb1-123" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-124"><a href="#cb1-124" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-125"><a href="#cb1-125" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-126"><a href="#cb1-126" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-127"><a href="#cb1-127" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-128"><a href="#cb1-128" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-129"><a href="#cb1-129" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-130"><a href="#cb1-130" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-131"><a href="#cb1-131" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-132"><a href="#cb1-132" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-133"><a href="#cb1-133" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-134"><a href="#cb1-134" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-135"><a href="#cb1-135" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-136"><a href="#cb1-136" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-137"><a href="#cb1-137" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-138"><a href="#cb1-138" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-139"><a href="#cb1-139" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-140"><a href="#cb1-140" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-141"><a href="#cb1-141" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-142"><a href="#cb1-142" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-143"><a href="#cb1-143" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-144"><a href="#cb1-144" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-145"><a href="#cb1-145" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-146"><a href="#cb1-146" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-147"><a href="#cb1-147" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-148"><a href="#cb1-148" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-149"><a href="#cb1-149" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-150"><a href="#cb1-150" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-151"><a href="#cb1-151" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-152"><a href="#cb1-152" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-153"><a href="#cb1-153" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-154"><a href="#cb1-154" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-155"><a href="#cb1-155" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-156"><a href="#cb1-156" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-157"><a href="#cb1-157" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-158"><a href="#cb1-158" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-159"><a href="#cb1-159" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-160"><a href="#cb1-160" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-161"><a href="#cb1-161" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-162"><a href="#cb1-162" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-163"><a href="#cb1-163" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-164"><a href="#cb1-164" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-165"><a href="#cb1-165" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-166"><a href="#cb1-166" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-167"><a href="#cb1-167" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-168"><a href="#cb1-168" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-169"><a href="#cb1-169" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-170"><a href="#cb1-170" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-171"><a href="#cb1-171" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-172"><a href="#cb1-172" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-173"><a href="#cb1-173" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-174"><a href="#cb1-174" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-175"><a href="#cb1-175" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-176"><a href="#cb1-176" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-177"><a href="#cb1-177" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-178"><a href="#cb1-178" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-179"><a href="#cb1-179" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-180"><a href="#cb1-180" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-181"><a href="#cb1-181" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-182"><a href="#cb1-182" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-183"><a href="#cb1-183" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-184"><a href="#cb1-184" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-185"><a href="#cb1-185" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-186"><a href="#cb1-186" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-187"><a href="#cb1-187" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-188"><a href="#cb1-188" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-189"><a href="#cb1-189" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-190"><a href="#cb1-190" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-191"><a href="#cb1-191" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-192"><a href="#cb1-192" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-193"><a href="#cb1-193" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-194"><a href="#cb1-194" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-195"><a href="#cb1-195" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-196"><a href="#cb1-196" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-197"><a href="#cb1-197" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-198"><a href="#cb1-198" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-199"><a href="#cb1-199" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-200"><a href="#cb1-200" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-201"><a href="#cb1-201" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-202"><a href="#cb1-202" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-203"><a href="#cb1-203" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-204"><a href="#cb1-204" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-205"><a href="#cb1-205" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-206"><a href="#cb1-206" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-207"><a href="#cb1-207" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-208"><a href="#cb1-208" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-209"><a href="#cb1-209" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-210"><a href="#cb1-210" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-211"><a href="#cb1-211" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-212"><a href="#cb1-212" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-213"><a href="#cb1-213" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-214"><a href="#cb1-214" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-215"><a href="#cb1-215" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-216"><a href="#cb1-216" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-217"><a href="#cb1-217" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-218"><a href="#cb1-218" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-219"><a href="#cb1-219" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-220"><a href="#cb1-220" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-221"><a href="#cb1-221" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-222"><a href="#cb1-222" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-223"><a href="#cb1-223" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-224"><a href="#cb1-224" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-225"><a href="#cb1-225" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-226"><a href="#cb1-226" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-227"><a href="#cb1-227" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-228"><a href="#cb1-228" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-229"><a href="#cb1-229" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-230"><a href="#cb1-230" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-231"><a href="#cb1-231" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-232"><a href="#cb1-232" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-233"><a href="#cb1-233" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-234"><a href="#cb1-234" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-235"><a href="#cb1-235" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-236"><a href="#cb1-236" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-237"><a href="#cb1-237" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-238"><a href="#cb1-238" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-239"><a href="#cb1-239" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-240"><a href="#cb1-240" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-241"><a href="#cb1-241" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
+<span id="cb1-242"><a href="#cb1-242" tabindex="-1"></a><span class="co">#&gt; be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;,</span></span>
+<span id="cb1-243"><a href="#cb1-243" tabindex="-1"></a><span class="co">#&gt; &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-244"><a href="#cb1-244" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-245"><a href="#cb1-245" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-246"><a href="#cb1-246" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-247"><a href="#cb1-247" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-248"><a href="#cb1-248" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-249"><a href="#cb1-249" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-250"><a href="#cb1-250" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-251"><a href="#cb1-251" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-252"><a href="#cb1-252" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-253"><a href="#cb1-253" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-254"><a href="#cb1-254" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-255"><a href="#cb1-255" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-256"><a href="#cb1-256" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-257"><a href="#cb1-257" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-258"><a href="#cb1-258" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb1-259"><a href="#cb1-259" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb1-260"><a href="#cb1-260" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-261"><a href="#cb1-261" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-262"><a href="#cb1-262" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-263"><a href="#cb1-263" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-264"><a href="#cb1-264" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-265"><a href="#cb1-265" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-266"><a href="#cb1-266" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-267"><a href="#cb1-267" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-268"><a href="#cb1-268" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-269"><a href="#cb1-269" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-270"><a href="#cb1-270" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-271"><a href="#cb1-271" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-272"><a href="#cb1-272" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-273"><a href="#cb1-273" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-274"><a href="#cb1-274" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-275"><a href="#cb1-275" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-276"><a href="#cb1-276" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-277"><a href="#cb1-277" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-278"><a href="#cb1-278" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-279"><a href="#cb1-279" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-280"><a href="#cb1-280" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-281"><a href="#cb1-281" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-282"><a href="#cb1-282" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-283"><a href="#cb1-283" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-284"><a href="#cb1-284" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-285"><a href="#cb1-285" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-286"><a href="#cb1-286" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-287"><a href="#cb1-287" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-288"><a href="#cb1-288" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-289"><a href="#cb1-289" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-290"><a href="#cb1-290" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-291"><a href="#cb1-291" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-292"><a href="#cb1-292" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-293"><a href="#cb1-293" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-294"><a href="#cb1-294" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-295"><a href="#cb1-295" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-296"><a href="#cb1-296" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-297"><a href="#cb1-297" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-298"><a href="#cb1-298" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-299"><a href="#cb1-299" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-300"><a href="#cb1-300" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-301"><a href="#cb1-301" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-302"><a href="#cb1-302" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-303"><a href="#cb1-303" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-304"><a href="#cb1-304" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-305"><a href="#cb1-305" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-306"><a href="#cb1-306" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-307"><a href="#cb1-307" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-308"><a href="#cb1-308" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-309"><a href="#cb1-309" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-310"><a href="#cb1-310" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-311"><a href="#cb1-311" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-312"><a href="#cb1-312" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-313"><a href="#cb1-313" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-314"><a href="#cb1-314" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-315"><a href="#cb1-315" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-316"><a href="#cb1-316" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-317"><a href="#cb1-317" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-318"><a href="#cb1-318" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-319"><a href="#cb1-319" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-320"><a href="#cb1-320" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-321"><a href="#cb1-321" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-322"><a href="#cb1-322" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-323"><a href="#cb1-323" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-324"><a href="#cb1-324" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-325"><a href="#cb1-325" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-326"><a href="#cb1-326" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-327"><a href="#cb1-327" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-328"><a href="#cb1-328" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-329"><a href="#cb1-329" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-330"><a href="#cb1-330" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-331"><a href="#cb1-331" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-332"><a href="#cb1-332" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-333"><a href="#cb1-333" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-334"><a href="#cb1-334" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-335"><a href="#cb1-335" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-336"><a href="#cb1-336" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-337"><a href="#cb1-337" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-338"><a href="#cb1-338" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-339"><a href="#cb1-339" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-340"><a href="#cb1-340" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-341"><a href="#cb1-341" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-342"><a href="#cb1-342" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-343"><a href="#cb1-343" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-344"><a href="#cb1-344" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-345"><a href="#cb1-345" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-346"><a href="#cb1-346" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-347"><a href="#cb1-347" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-348"><a href="#cb1-348" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-349"><a href="#cb1-349" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-350"><a href="#cb1-350" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-351"><a href="#cb1-351" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-352"><a href="#cb1-352" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-353"><a href="#cb1-353" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-354"><a href="#cb1-354" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-355"><a href="#cb1-355" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-356"><a href="#cb1-356" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-357"><a href="#cb1-357" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-358"><a href="#cb1-358" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-359"><a href="#cb1-359" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-360"><a href="#cb1-360" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-361"><a href="#cb1-361" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-362"><a href="#cb1-362" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-363"><a href="#cb1-363" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-364"><a href="#cb1-364" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb1-365"><a href="#cb1-365" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb1-366"><a href="#cb1-366" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb1-367"><a href="#cb1-367" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="sales-analysis" class="section level2">
+<h2>Sales Analysis</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">date =</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2024-01-01&quot;</span>), <span class="fu">as.Date</span>(<span class="st">&quot;2024-12-31&quot;</span>), <span class="at">by =</span> <span class="st">&quot;day&quot;</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">revenue =</span> <span class="fu">pmax</span>(<span class="fu">rnorm</span>(<span class="dv">366</span>, <span class="dv">10000</span>, <span class="dv">2000</span>), <span class="dv">0</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="at">transactions =</span> <span class="fu">rpois</span>(<span class="dv">366</span>, <span class="dv">50</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">region =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;North&quot;</span>, <span class="st">&quot;South&quot;</span>, <span class="st">&quot;East&quot;</span>, <span class="st">&quot;West&quot;</span>), <span class="dv">366</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co"># Simple time series plot</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>sales_daily <span class="ot">&lt;-</span> sales <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">revenue =</span> <span class="fu">sum</span>(revenue))</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="fu">ggplot</span>(sales_daily, <span class="fu">aes</span>(date, revenue)) <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;#0055FF&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  <span class="fu">theme_brand</span>(<span class="st">&quot;block&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Daily Revenue&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Revenue&quot;</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; Loaded brand configuration from: /private/var/folders/_4/5zbk3mcx73qfmmscm52hpd2w0000gn/T/Rtmp0XRAeD/Rinst1442c247b46ab/gooseR/brands/block/block_brand.yaml</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; Note: Inter font not found. Install from https://fonts.google.com/specimen/Inter</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt;       Using fallback fonts. To suppress this message, set suppress_font_warning: true in brand config.</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
+<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-107"><a href="#cb2-107" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-108"><a href="#cb2-108" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-109"><a href="#cb2-109" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-110"><a href="#cb2-110" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-111"><a href="#cb2-111" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-112"><a href="#cb2-112" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-113"><a href="#cb2-113" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-114"><a href="#cb2-114" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-115"><a href="#cb2-115" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-116"><a href="#cb2-116" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-117"><a href="#cb2-117" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-118"><a href="#cb2-118" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-119"><a href="#cb2-119" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-120"><a href="#cb2-120" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-121"><a href="#cb2-121" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-122"><a href="#cb2-122" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-123"><a href="#cb2-123" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-124"><a href="#cb2-124" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-125"><a href="#cb2-125" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-126"><a href="#cb2-126" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-127"><a href="#cb2-127" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-128"><a href="#cb2-128" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-129"><a href="#cb2-129" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-130"><a href="#cb2-130" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-131"><a href="#cb2-131" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-132"><a href="#cb2-132" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-133"><a href="#cb2-133" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-134"><a href="#cb2-134" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-135"><a href="#cb2-135" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-136"><a href="#cb2-136" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-137"><a href="#cb2-137" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-138"><a href="#cb2-138" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-139"><a href="#cb2-139" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-140"><a href="#cb2-140" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-141"><a href="#cb2-141" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-142"><a href="#cb2-142" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-143"><a href="#cb2-143" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-144"><a href="#cb2-144" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-145"><a href="#cb2-145" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-146"><a href="#cb2-146" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-147"><a href="#cb2-147" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-148"><a href="#cb2-148" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-149"><a href="#cb2-149" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-150"><a href="#cb2-150" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-151"><a href="#cb2-151" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-152"><a href="#cb2-152" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-153"><a href="#cb2-153" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-154"><a href="#cb2-154" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-155"><a href="#cb2-155" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-156"><a href="#cb2-156" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-157"><a href="#cb2-157" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-158"><a href="#cb2-158" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-159"><a href="#cb2-159" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-160"><a href="#cb2-160" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-161"><a href="#cb2-161" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-162"><a href="#cb2-162" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-163"><a href="#cb2-163" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-164"><a href="#cb2-164" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-165"><a href="#cb2-165" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-166"><a href="#cb2-166" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-167"><a href="#cb2-167" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-168"><a href="#cb2-168" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-169"><a href="#cb2-169" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-170"><a href="#cb2-170" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-171"><a href="#cb2-171" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-172"><a href="#cb2-172" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-173"><a href="#cb2-173" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-174"><a href="#cb2-174" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span>
+<span id="cb2-175"><a href="#cb2-175" tabindex="-1"></a><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
+<span id="cb2-176"><a href="#cb2-176" tabindex="-1"></a><span class="co">#&gt; font could be found for family &quot;&#39;Inter&#39;, -apple-system, BlinkMacSystemFont,</span></span>
+<span id="cb2-177"><a href="#cb2-177" tabindex="-1"></a><span class="co">#&gt; &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Arial, sans-serif&quot;</span></span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="code-review-workflow" class="section level2">
+<h2>Code Review Workflow</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>slow_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) s <span class="ot">&lt;-</span> s <span class="sc">+</span> x[i]</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  s <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>fast_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(x)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># Example: generate test code (requires configured Goose CLI)</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co"># tests &lt;- goose_generate_tests(slow_mean)</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># cat(tests)</span></span></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

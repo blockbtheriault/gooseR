@@ -39,7 +39,7 @@ goose_configure <- function(provider = NULL, model = NULL, api_key = NULL,
   if (check_cli_first) {
     cli_works <- goose_test_cli(verbose = FALSE)
     if (cli_works) {
-      message("✅ Goose CLI is already configured and working!")
+      message("[CLI] Goose CLI is already configured and working!")
       message("   No additional configuration needed.")
       return(invisible(TRUE))
     }
@@ -47,7 +47,7 @@ goose_configure <- function(provider = NULL, model = NULL, api_key = NULL,
   
   # Only configure if needed
   if (is.null(provider) && is.null(model) && is.null(api_key)) {
-    message("ℹ️ No configuration provided.")
+    message("[CLI] No configuration provided.")
     message("   If Goose CLI is already configured (e.g., Block employees),")
     message("   you can use gooseR without additional setup.")
     message("   ")
@@ -185,7 +185,7 @@ goose_test_cli <- function(verbose = TRUE) {
   }
   
   if (verbose) {
-    message("✅ Goose CLI found: ", goose_version())
+    message("[CLI] Goose CLI found: ", goose_version())
   }
   
   # Try a simple test query
