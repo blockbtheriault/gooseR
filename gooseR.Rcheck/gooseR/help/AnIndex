@@ -1,6 +1,5 @@
 gooseR-package	gooseR-package
 %>%	pipe
-%||%	grapes-or-or-grapes
 blend_colors	blend_colors
 brand_css	brand_css
 brand_css_inline	brand_css_inline

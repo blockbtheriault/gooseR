@@ -1,10 +1,10 @@
 citHeader("To cite gooseR in publications use:")
 
-citEntry(
-  entry = "Manual",
+bibentry(
+  bibtype = "Manual",
   title = "gooseR: R Integration for Goose AI",
-  author = personList(as.person("Brandon Theriault")),
-  year = "2025",
-  note = "R package version 0.1.0",
+  author = c(person("Brandon", "Theriault")),
+  year = format(Sys.Date(), "%Y"),
+  note = "R package",
   url = "https://github.com/blockbtheriault/gooseR"
 )
