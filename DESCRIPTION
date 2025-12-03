@@ -34,7 +34,6 @@ Imports:
     systemfonts,
     processx,
     DBI,
-
     digest,
     future,
     future.apply,
@@ -46,6 +45,5 @@ Imports:
     shiny,
     miniUI,
     rstudioapi,
-
     knitr
 VignetteBuilder: knitr
