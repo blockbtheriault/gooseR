@@ -7,7 +7,7 @@
 gooseR brings goose AI into R. It’s a user-first toolkit for analysis, visualization, and developer workflows — powered by the goose CLI.
 
 - Memory integration for any R object
-- Brand-ready visualization system (Block-first with smart fallbacks)
+- Brand-ready visualization system
 - AI assistant utilities for code, docs, and debugging
 - Advanced runtime features: streaming, caching, async, templates
 - IDE addins (RStudio/Positron) for one-click actions
