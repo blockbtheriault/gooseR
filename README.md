@@ -59,18 +59,13 @@ library(ggplot2)
 
 # IMPORTANT FONT COMPLIANCE
 # Titles and axes must use Inter (preferred) or Cash Sans or Helvetica in that order.
-# theme_brand("block") attempts to use Inter via systemfonts. If Inter is not available,
-# install it (recommended) or ensure a fallback to Cash Sans or Helvetica.
+# theme_brand("block") enforces a sans-serif chain internally; if Inter is missing
+# it falls back automatically (or install Inter for best results).
 
 p <- ggplot(mtcars, aes(wt, mpg)) +
-  geom_point(color = "#0055FF", alpha = 0.8) +
+  geom_point(color = "#000000", alpha = 0.8) +
   theme_brand("block") +
-  labs(title = "Fuel Efficiency vs Weight", x = "Weight", y = "MPG") +
-  theme(
-    plot.title = element_text(family = "Inter", face = "bold"),
-    axis.title = element_text(family = "Inter"),
-    axis.text = element_text(family = "Inter")
-  )
+  labs(title = "Fuel Efficiency vs Weight", x = "Weight", y = "MPG")
 print(p)
 ```
 
@@ -111,7 +106,7 @@ More in docs/assets and inst/examples.
 - goose_generate_tests(): Generate testthat tests from function code
 - goose_document(): Produce roxygen2 documentation from a function
 - goose_explain_error(): Explain and fix R errors with suggested code
-- theme_brand("block"): Block-branded ggplot2 theme (with Inter → Cash Sans → Helvetica font preference for titles and axes)
+- theme_brand("block"): Block-branded ggplot2 theme (sans-serif only; Inter → Cash Sans → Helvetica)
 - brand_palette(): Access brand color palettes (categorical, sequential, diverging)
 - brand_css(), brand_rmd_template(): Export CSS and R Markdown templates in brand style
 - goose_stream(), StreamHandler: Streaming responses with callbacks
