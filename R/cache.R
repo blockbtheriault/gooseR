@@ -2,7 +2,7 @@
 #'
 #' Provides intelligent caching of AI responses for performance
 #' @importFrom DBI dbConnect dbExecute dbGetQuery dbDisconnect
-#' @importFrom RSQLite SQLite
+#' @seealso Requires Suggests: RSQLite. Functions in this module check for RSQLite availability at runtime.
 #' @importFrom digest digest
 #' @importFrom jsonlite toJSON fromJSON write_json read_json
 #' @importFrom rappdirs user_cache_dir
@@ -25,6 +25,9 @@ goose_cache_init <- function(cache_dir = NULL) {
   }
   
   db_path <- file.path(cache_dir, "goose_cache.db")
+  if (!requireNamespace("RSQLite", quietly = TRUE)) {
+    stop("RSQLite is required for caching. Please install it: install.packages('RSQLite')")
+  }
   conn <- DBI::dbConnect(RSQLite::SQLite(), db_path)
   
   # Create cache table if not exists

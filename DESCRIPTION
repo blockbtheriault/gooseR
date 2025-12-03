@@ -14,7 +14,12 @@ RoxygenNote: 7.3.2
 Suggests: 
     rmarkdown,
     testthat (>= 3.0.0),
-    dplyr
+    dplyr,
+    markdown,
+    stringr,
+    htmltools,
+    DT,
+    RSQLite
 Config/testthat/edition: 3
 Imports: 
     cli,
@@ -29,7 +34,7 @@ Imports:
     systemfonts,
     processx,
     DBI,
-    RSQLite,
+
     digest,
     future,
     future.apply,
@@ -41,9 +46,6 @@ Imports:
     shiny,
     miniUI,
     rstudioapi,
-    DT,
-    knitr,
-    markdown,
-    htmltools,
-    stringr
+
+    knitr
 VignetteBuilder: knitr

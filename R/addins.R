@@ -172,8 +172,8 @@ goose_addin_chat <- function() {
       insertUI(
         selector = "#chat-messages",
         where = "beforeEnd",
-        ui = div(class = "ai-message", HTML(markdown::markdownToHTML(
-          text = response, fragment.only = TRUE)))
+        ui = div(class = "ai-message", HTML(if (requireNamespace("markdown", quietly = TRUE)) markdown::markdownToHTML(
+          text = response, fragment.only = TRUE) else response))
       )
       
       # Scroll to bottom
@@ -420,7 +420,7 @@ goose_addin_review <- function() {
       })
       
       output$review_results <- renderUI({
-        HTML(markdown::markdownToHTML(text = review, fragment.only = TRUE))
+        HTML(if (requireNamespace("markdown", quietly = TRUE)) markdown::markdownToHTML(text = review, fragment.only = TRUE) else review)
       })
     })
     
@@ -674,7 +674,7 @@ goose_addin_quick <- function() {
         %s
       </body>
       </html>
-    ", markdown::markdownToHTML(text = response, fragment.only = TRUE))
+    ", (if (requireNamespace("markdown", quietly = TRUE)) markdown::markdownToHTML(text = response, fragment.only = TRUE) else response))
     
     writeLines(html_content, temp_html)
     rstudioapi::viewer(temp_html)

@@ -462,7 +462,7 @@ register_goose_engine()
 
 %s
 ', 
-    stringr::str_to_title(type),
+    (if (requireNamespace("stringr", quietly = TRUE)) stringr::str_to_title(type) else tools::toTitleCase(type)), 
     param_yaml,
     paste(sprintf("%s <- params$%s", 
                  names(parameters), 

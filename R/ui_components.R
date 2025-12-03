@@ -18,7 +18,7 @@
 #' @importFrom shiny dataTableOutput renderDataTable
 #' @importFrom shiny plotOutput renderPlot
 #' @importFrom shiny downloadHandler downloadButton
-#' @importFrom DT datatable formatDate formatStyle
+#' @seealso Requires Suggests: DT. If DT is not available, the UI will fallback to a basic table.
 NULL
 
 #' Cache Browser UI
@@ -46,7 +46,7 @@ run_cache_gadget <- function() {
       tabsetPanel(
         tabPanel("Browse",
           br(),
-          DT::dataTableOutput("cache_table"),
+          (if (requireNamespace("DT", quietly = TRUE)) DT::dataTableOutput("cache_table") else tableOutput("cache_table_basic")), 
           br(),
           fluidRow(
             column(4,
@@ -380,7 +380,7 @@ run_conversation_gadget <- function() {
                   div(
                     class = "alert alert-secondary",
                     strong("Goose: "),
-                    HTML(markdown::markdownToHTML(
+                    HTML(if (requireNamespace("markdown", quietly = TRUE)) markdown::markdownToHTML(
                       text = msg$content,
                       fragment.only = TRUE))
                   )
