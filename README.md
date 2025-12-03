@@ -4,7 +4,7 @@
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-GooseR brings Goose AI into R. It’s a user-first toolkit for analysis, visualization, and developer workflows — powered by the Goose CLI.
+gooseR brings goose AI into R. It’s a user-first toolkit for analysis, visualization, and developer workflows — powered by the goose CLI.
 
 - Memory integration for any R object
 - Brand-ready visualization system (Block-first with smart fallbacks)
@@ -12,10 +12,18 @@ GooseR brings Goose AI into R. It’s a user-first toolkit for analysis, visuali
 - Advanced runtime features: streaming, caching, async, templates
 - IDE addins (RStudio/Positron) for one-click actions
 
-About Goose
-- Goose is a CLI-oriented AI assistant that supports multiple AI providers and models. It offers sessions for context, recipes for automation, and integrations across tools and workflows. Anyone with Goose CLI configured can use gooseR with zero additional setup in R.
+About goose
+goose is your friendly AI pardner who can understand what you want to do and help you do it! The best part is that goose can learn from your preferences and remember them for next time!
 
-## Installation
+- Open Source: Built with transparency and collaboration in mind, goose empowers developers to contribute, customize, and innovate freely.
+- Runs Locally: Goose runs locally to execute tasks efficiently, keeping control in your hands.
+- Extensible: Customize goose with your preferred LLM and enhance its capabilities by connecting it to any external MCP server or API.
+- Autonomous: Goose independently handles complex tasks, from debugging to deployment, freeing you to focus on what matters most.
+
+There are both Desktop and CLI versions of goose. If you have goose CLI is already installed and working, gooseR requires no additional R configuration (this applies to anyone with the goose CLI, not just Block employees). If you need to configure your provider/model/key, use goose_configure().
+[![More about goose here](ttps://block.github.io/goose/docs/quickstart)](goose)
+
+## gooseR Installation
 
 ```r
 # Install from GitHub (private repo)
@@ -115,13 +123,6 @@ More in docs/assets and inst/examples.
 - goose_template_*(): Robust templating (create/apply/save/load/validate)
 - goose_addin_*(): One-click IDE addins for chat, code review, templates, snippets
 
-## About Goose (the platform)
-Goose is a CLI-oriented AI assistant that works with multiple providers and models. It supports:
-- Sessions for persistent context
-- Recipes for automated multi-step workflows
-- Extensible integrations across tools and environments
-
-If Goose CLI is already installed and working, gooseR requires no additional R configuration (this applies to anyone with the Goose CLI, not just Block employees). If you need to configure your provider/model/key, use goose_configure().
 
 ## Documentation & Examples
 - Vignettes: run `browseVignettes("gooseR")` to open the overview and use-case demos.
