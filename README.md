@@ -107,7 +107,7 @@ More in docs/assets and inst/examples.
 ## Top / Unique Functions (Quick Overview)
 - goose_ask(): Ask Goose directly from R (text or JSON)
 - goose_review_code(): AI-powered review of selected R code (works great via addin)
-- goose_generate_tests(): Generate testthat tests from function code
+- goose_generate_tests(): Generate tests from function code
 - goose_document(): Produce roxygen2 documentation from a function
 - goose_explain_error(): Explain and fix R errors with suggested code
 - theme_brand("block"): Block-branded ggplot2 theme
