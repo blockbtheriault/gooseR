@@ -1,0 +1,9 @@
+
+== Testing Package Examples ==
+Found 105 documentation files
+
+Testing goose_save.Rd : PASS
+
+Testing theme_brand.Rd : PASS
+
+Testing goose_create_brand.Rd : PASS

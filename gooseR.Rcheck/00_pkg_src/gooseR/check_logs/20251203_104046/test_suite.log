@@ -1,0 +1,37 @@
+== Comprehensive Local Testing Suite ==
+Test library: /tmp/test_lib_20251203_104046
+
+== 1. Fresh Install ==
+* installing *source* package ‘gooseR’ ...
+** this is package ‘gooseR’ version ‘0.1.0’
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (gooseR)
+
+== Core Functionality Tests ==
+1. Version check: PASS
+2. Load Block brand: Loaded brand configuration from: /private/tmp/test_lib_20251203_104046/gooseR/brands/block/block_brand.yaml
+Brand configuration is valid
+PASS
+3. Create theme: Loaded brand configuration from: /private/tmp/test_lib_20251203_104046/gooseR/brands/block/block_brand.yaml
+PASS
+Warning message:
+package ‘ggplot2’ was built under R version 4.5.2 
+4. Brand palette: Loaded brand configuration from: /private/tmp/test_lib_20251203_104046/gooseR/brands/block/block_brand.yaml
+PASS
+5. Memory operations: ℹ Created Goose memory directory: '/Users/btheriault/Documents/R/gooseR/.goose/memory'
+✔ Saved "test_local_20251203_104046" to Goose memory (category: "r_objects")
+✔ Loaded "test_local_20251203_104046" from Goose memory
+PASS
+✔ Deleted "test_local_20251203_104046" from Goose memory
+
+Core tests complete

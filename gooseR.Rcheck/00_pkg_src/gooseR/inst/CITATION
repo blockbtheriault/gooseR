@@ -5,6 +5,5 @@ bibentry(
   title = "gooseR: R Integration for Goose AI",
   author = c(person("Brandon", "Theriault")),
   year = format(Sys.Date(), "%Y"),
-  note = "R package",
-  url = "https://github.com/blockbtheriault/gooseR"
+  note = "R package"
 )

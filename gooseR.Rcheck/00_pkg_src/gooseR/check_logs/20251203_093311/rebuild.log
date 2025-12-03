@@ -1,0 +1,2 @@
+== Rebuild after metadata fixes (.Rbuildignore, DESCRIPTION, CITATION, man) ==
+* checking for file ‘./DESCRIPTION’ ... EXISTS but not correct format

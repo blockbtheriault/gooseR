@@ -1,0 +1,42 @@
+== R-hub v2 probe ==
+rhub exports:
+ [1] "local_check_linux_images" "rhub_setup"              
+ [3] "check_on_windows"         "check_with_roldrel"      
+ [5] "check_on_linux"           "platforms"               
+ [7] "last_check"               "local_check_linux"       
+ [9] "rc_list_local_tokens"     "check"                   
+[11] "check_with_valgrind"      "list_my_checks"          
+[13] "check_with_rdevel"        "check_on_debian"         
+[15] "list_validated_emails"    "check_on_fedora"         
+[17] "check_with_rrelease"      "check_with_sanitizers"   
+[19] "check_on_centos"          "get_check"               
+[21] "rhub_doctor"              "rhub_platforms"          
+[23] "check_on_ubuntu"          "validate_email"          
+[25] "rc_submit"                "check_for_cran"          
+[27] "check_on_solaris"         "rhub_check"              
+[29] "rc_new_token"             "list_package_checks"     
+[31] "check_with_rpatched"      "rc_list_repos"           
+[33] "check_on_macos"          
+
+Function availability:
+- check: TRUE
+- check_for_cran: TRUE
+- validate_email: TRUE
+- rhub_check: TRUE
+- rhub_setup: TRUE
+- platforms: TRUE
+- list_validated_emails: TRUE
+
+platforms() result (truncated):
+NULL
+
+Chosen platforms candidate:
+NULL
+
+check() returned:
+NULL
+
+Job URL (if any):
+[1] NA
+
+== R-hub v2 probe complete ==

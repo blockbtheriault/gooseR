@@ -219,8 +219,17 @@ goose_clear_all <- function(confirm = TRUE, backup_first = FALSE,
 #' }
 #' }
 goose_exists <- function(name, category = "general") {
-  items <- goose_list(category = category)
-  if (nrow(items) == 0) return(FALSE)
+  items <- tryCatch({
+    goose_list(category = category)
+  }, error = function(e) {
+    return(NULL)
+  })
+  
+  # Handle NULL or empty result
+  if (is.null(items) || nrow(items) == 0) {
+    return(FALSE)
+  }
+  
   name %in% items$name
 }
 
@@ -338,13 +347,17 @@ goose_backup <- function(backup_dir = "goose_backup", timestamp = TRUE) {
   cli::cli_progress_done()
   cli::cli_alert_success("Backed up {count} items to {backup_dir}/")
   
-  invisible(count)
+  # Return the backup directory path
+  invisible(file.path(getwd(), backup_dir))
 }
 
 # Session management environment
 .goose_session <- new.env(parent = emptyenv())
 
 #' Start a gooseR session for tracking saved items
+#'
+#' Note: To automatically tag items with the session ID, you need to
+#' manually add the session tag when saving, or use the wrapper functions.
 #'
 #' @param session_id Character, optional session identifier
 #'
@@ -356,8 +369,9 @@ goose_backup <- function(backup_dir = "goose_backup", timestamp = TRUE) {
 #' # Start a session
 #' session_id <- goose_session_start()
 #' 
-#' # Save items (automatically tagged with session)
-#' goose_save(mtcars, "cars_data", category = "analysis")
+#' # Save items (manually tag with session)
+#' goose_save(mtcars, "cars_data", category = "analysis", 
+#'            tags = c("myanalysis", getOption("goose.session_id")))
 #' 
 #' # See what was saved in this session
 #' goose_session_list()
@@ -378,6 +392,7 @@ goose_session_start <- function(session_id = NULL) {
   options(goose.session_id = session_id)
   
   cli::cli_alert_success("Started gooseR session: {session_id}")
+  cli::cli_alert_info("Tag items with session ID to track them: tags = '{session_id}'")
   invisible(session_id)
 }
 
@@ -470,8 +485,43 @@ goose_session_end <- function(cleanup = FALSE) {
 #' }, cleanup = TRUE)
 #' }
 with_goose_session <- function(expr, cleanup = TRUE, session_id = NULL) {
-  goose_session_start(session_id)
+  # Start session
+  sid <- goose_session_start(session_id)
+  
+  # Ensure cleanup on exit
   on.exit(goose_session_end(cleanup = cleanup), add = TRUE)
   
-  eval(expr, envir = parent.frame())
+  # Create a modified environment where goose_save adds session tag
+  env <- new.env(parent = parent.frame())
+  
+  # Override goose_save in this environment
+  env$goose_save <- function(..., tags = NULL) {
+    # Add session tag to any existing tags
+    session_tag <- getOption("goose.session_id")
+    if (!is.null(session_tag)) {
+      tags <- unique(c(tags, session_tag))
+    }
+    # Call the original goose_save
+    gooseR::goose_save(..., tags = tags)
+  }
+  
+  # Evaluate expression in modified environment
+  eval(expr, envir = env)
+}
+
+#' Save an object with session tracking
+#'
+#' A wrapper around goose_save that automatically adds the current session tag
+#'
+#' @param ... Arguments passed to goose_save
+#' @param tags Additional tags (session tag will be added automatically)
+#'
+#' @return Same as goose_save
+#' @export
+goose_session_save <- function(..., tags = NULL) {
+  session_tag <- getOption("goose.session_id")
+  if (!is.null(session_tag)) {
+    tags <- unique(c(tags, session_tag))
+  }
+  goose_save(..., tags = tags)
 }

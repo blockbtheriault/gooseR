@@ -178,53 +178,8 @@ print.goose_response <- function(x, ...) {
   format_ai_response(x, ...)
 }
 
-#' Enhanced goose_ask with formatted output
-#'
-#' @param question Character string with question for Goose
-#' @param format Logical, whether to format output (default TRUE)
-#' @param print Logical, whether to print formatted output (default TRUE)
-#' @param ... Additional arguments passed to format_ai_response
-#'
-#' @return Character string with response (invisibly if print=TRUE)
-#' @export
-goose_ask_formatted <- function(question, format = TRUE, print = TRUE, ...) {
-  # Call original goose_ask
-  response <- goose_ask(question)
-  
-  if (format && print) {
-    format_ai_response(response, ...)
-    invisible(response)
-  } else if (format) {
-    # Return formatted but don't print
-    structure(response, class = "goose_response")
-  } else {
-    response
-  }
-}
-
-#' Enhanced goose_review_code with formatted output
-#'
-#' @param code Character string with code to review
-#' @param context Optional context for the review
-#' @param format Logical, whether to format output (default TRUE)
-#' @param print Logical, whether to print formatted output (default TRUE)
-#' @param ... Additional arguments passed to format_ai_response
-#'
-#' @return Character string with review (invisibly if print=TRUE)
-#' @export
-goose_review_code_formatted <- function(code, context = NULL, 
-                                        format = TRUE, print = TRUE, ...) {
-  response <- goose_review_code(code, context)
-  
-  if (format && print) {
-    format_ai_response(response, ...)
-    invisible(response)
-  } else if (format) {
-    structure(response, class = "goose_response")
-  } else {
-    response
-  }
-}
+# Note: goose_ask and goose_review_code formatting is now integrated
+# directly into those functions. See goose_ask_enhanced.R
 
 #' Set global formatting options for gooseR
 #'
@@ -301,36 +256,4 @@ format_conversation <- function(messages, show_dividers = TRUE) {
   }
 }
 
-#' Wrapper to update existing AI functions with formatting
-#' 
-#' This function modifies the existing goose_ask and related functions
-#' to use formatted output by default
-#' 
-#' @param enable Logical, whether to enable formatted output
-#' @export
-enable_formatted_output <- function(enable = TRUE) {
-  if (enable) {
-    # Store original functions
-    assign("goose_ask_original", goose_ask, envir = .GlobalEnv)
-    assign("goose_review_code_original", goose_review_code, envir = .GlobalEnv)
-    
-    # Replace with formatted versions
-    assign("goose_ask", goose_ask_formatted, envir = .GlobalEnv)
-    assign("goose_review_code", goose_review_code_formatted, envir = .GlobalEnv)
-    
-    cli::cli_alert_success("Formatted output enabled for AI functions")
-  } else {
-    # Restore original functions if they exist
-    if (exists("goose_ask_original", envir = .GlobalEnv)) {
-      assign("goose_ask", get("goose_ask_original", envir = .GlobalEnv), 
-             envir = .GlobalEnv)
-      assign("goose_review_code", 
-             get("goose_review_code_original", envir = .GlobalEnv),
-             envir = .GlobalEnv)
-      
-      cli::cli_alert_info("Restored original AI functions")
-    }
-  }
-  
-  invisible(enable)
-}
+

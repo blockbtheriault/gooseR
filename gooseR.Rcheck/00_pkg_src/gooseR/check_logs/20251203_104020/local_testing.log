@@ -1,0 +1,10 @@
+== Comprehensive Local Testing ==
+Starting at Wed Dec  3 10:40:21 PST 2025
+
+== 1. Fresh Install Test ==
+Error: ERROR: cannot cd to directory ‘/tmp/test_lib_20251203_104020’
+Warning message:
+package ‘ggplot2’ was built under R version 4.5.2 
+== Load Test ==
+Package version: 0.1.0 
+goose_version(): 1.15.0 

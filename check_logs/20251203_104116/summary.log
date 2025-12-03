@@ -1,0 +1,9 @@
+
+== Test Summary ==
+All test logs saved to: check_logs/20251203_104116
+   1 1. Basic functions available: PASS
+   1 2. CLI integration check: PASS
+   1 PASS
+   1 Testing goose_create_brand.Rd : PASS
+   1 Testing goose_save.Rd : PASS
+   1 Testing theme_brand.Rd : PASS

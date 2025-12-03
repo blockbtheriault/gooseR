@@ -265,87 +265,9 @@ goose_test_cli <- function(verbose = TRUE) {
   }
 }
 
-#' Ask Goose a Question
-#'
-#' Send a query to Goose AI and get a response.
-#'
-#' @param prompt Character string with the question or prompt
-#' @param output_format Character, either "text" or "json" 
-#' @param quiet Logical, suppress status messages
-#' @param timeout Numeric, timeout in seconds (default 30)
-#' @param session_id Optional session ID for context preservation
-#'
-#' @return Character string with response (text format) or list (json format)
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' # Simple query
-#' response <- goose_ask("What's the best color for a heatmap?")
-#' 
-#' # JSON response
-#' data <- goose_ask("List 5 colors for data viz", output_format = "json")
-#' }
-goose_ask <- function(prompt, 
-                     output_format = c("text", "json"),
-                     quiet = TRUE,
-                     timeout = 30,
-                     session_id = NULL) {
-  
-  output_format <- match.arg(output_format)
-  
-  # Check configuration
-  if (!goose_check_installation()) {
-    stop("Goose CLI not found. Run goose_configure() first.")
-  }
-  
-  # Build command arguments
-  args <- c("run", "--text", shQuote(prompt))
-  
-  # Add output format
-  args <- c(args, "--output-format", output_format)
-  
-  # Add quiet flag
-  if (quiet) {
-    args <- c(args, "--quiet")
-  }
-  
-  # Add session if provided
-  if (!is.null(session_id)) {
-    args <- c(args, "--session-id", session_id)
-  } else {
-    args <- c(args, "--no-session")
-  }
-  
-  # Execute command with timeout
-  result <- tryCatch({
-    system2("goose", 
-            args = args,
-            stdout = TRUE,
-            stderr = TRUE,
-            timeout = timeout)
-  }, error = function(e) {
-    if (grepl("timeout", e$message, ignore.case = TRUE)) {
-      stop("Goose query timed out after ", timeout, " seconds")
-    } else {
-      stop("Goose CLI error: ", e$message)
-    }
-  })
-  
-  # Parse response based on format
-  if (output_format == "json") {
-    # Try to parse JSON
-    tryCatch({
-      jsonlite::fromJSON(paste(result, collapse = "\n"))
-    }, error = function(e) {
-      warning("Failed to parse JSON response: ", e$message)
-      result
-    })
-  } else {
-    # Return text response
-    paste(result, collapse = "\n")
-  }
-}
+# Note: goose_ask has been moved to goose_ask_enhanced.R
+# It now includes formatting by default
+# The raw version is available as goose_ask_raw()
 
 #' Execute Goose Recipe
 #'

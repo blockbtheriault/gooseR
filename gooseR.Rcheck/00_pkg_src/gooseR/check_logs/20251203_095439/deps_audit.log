@@ -1,0 +1,144 @@
+== Dependency audit: scan code references ==
+
+# shiny references
+
+# miniUI references
+R/ui_components.R:41:  ui <- miniUI::miniPage(
+R/ui_components.R:42:    miniUI::gadgetTitleBar("GooseR Cache Browser",
+R/ui_components.R:43:      left = miniUI::miniTitleBarButton("refresh", "Refresh"),
+R/ui_components.R:44:      right = miniUI::miniTitleBarButton("done", "Done", primary = TRUE)
+R/ui_components.R:46:    miniUI::miniContentPanel(
+R/ui_components.R:280:  ui <- miniUI::miniPage(
+R/ui_components.R:281:    miniUI::gadgetTitleBar("Conversation Manager",
+R/ui_components.R:282:      right = miniUI::miniTitleBarButton("done", "Done", primary = TRUE)
+R/ui_components.R:284:    miniUI::miniContentPanel(
+R/addins.R:37:  ui <- miniUI::miniPage(
+R/addins.R:38:    miniUI::gadgetTitleBar("GooseR AI Chat",
+R/addins.R:39:      right = miniUI::miniTitleBarButton("done", "Done", primary = TRUE)
+R/addins.R:41:    miniUI::miniContentPanel(
+R/addins.R:218:  ui <- miniUI::miniPage(
+R/addins.R:219:    miniUI::gadgetTitleBar("Generate Code Snippet",
+R/addins.R:220:      right = miniUI::miniTitleBarButton("done", "Insert", primary = TRUE)
+R/addins.R:222:    miniUI::miniContentPanel(
+R/addins.R:358:  ui <- miniUI::miniPage(
+R/addins.R:359:    miniUI::gadgetTitleBar("Code Review",
+R/addins.R:360:      right = miniUI::miniTitleBarButton("done", "Done", primary = TRUE)
+R/addins.R:362:    miniUI::miniContentPanel(
+R/addins.R:445:  ui <- miniUI::miniPage(
+R/addins.R:446:    miniUI::gadgetTitleBar("Template Builder",
+R/addins.R:447:      left = miniUI::miniTitleBarButton("load", "Load"),
+R/addins.R:448:      right = miniUI::miniTitleBarButton("save", "Save", primary = TRUE)
+R/addins.R:450:    miniUI::miniContentPanel(
+
+# DT references
+R/quarto_integration.R:275:library(DT)
+R/ui_components.R:50:          DT::dataTableOutput("cache_table"),
+R/ui_components.R:127:    output$cache_table <- DT::renderDataTable({
+R/ui_components.R:129:      DT::datatable(
+R/ui_components.R:142:        DT::formatDate(c("timestamp", "last_accessed")) %>%
+R/ui_components.R:143:        DT::formatStyle("access_count",
+R/ui_components.R:144:          backgroundColor = DT::styleInterval(c(5, 10), 
+R/ui_components.R:543:          tabPanel("Browse", DT::dataTableOutput("cache_table")),
+
+# rstudioapi references
+R/quarto_integration.R:42:  if (interactive() && rstudioapi::isAvailable()) {
+R/quarto_integration.R:43:    rstudioapi::insertText(chunk)
+R/quarto_integration.R:81:  if (interactive() && rstudioapi::isAvailable()) {
+R/quarto_integration.R:82:    rstudioapi::insertText(rmd_text)
+R/quarto_integration.R:204:  if (rstudioapi::isAvailable()) {
+R/quarto_integration.R:205:    rstudioapi::navigateToFile(output_file)
+R/quarto_integration.R:346:  if (rstudioapi::isAvailable()) {
+R/quarto_integration.R:347:    rstudioapi::navigateToFile(output_file)
+R/quarto_integration.R:359:  if (!rstudioapi::isAvailable()) {
+R/quarto_integration.R:364:  context <- rstudioapi::getActiveDocumentContext()
+R/quarto_integration.R:376:  prompt <- rstudioapi::showPrompt(
+R/quarto_integration.R:383:    label <- rstudioapi::showPrompt(
+R/quarto_integration.R:402:    rstudioapi::insertText(chunk)
+R/ui_components.R:30:  if (!requireNamespace("rstudioapi", quietly = TRUE) || !rstudioapi::isAvailable()) {
+R/ui_components.R:271:  if (!requireNamespace("rstudioapi", quietly = TRUE) || !rstudioapi::isAvailable()) {
+R/addins.R:33:  if (!rstudioapi::isAvailable()) {
+R/addins.R:214:  if (!rstudioapi::isAvailable()) {
+R/addins.R:331:        rstudioapi::insertText(generated())
+R/addins.R:346:  if (!rstudioapi::isAvailable()) {
+R/addins.R:351:  context <- rstudioapi::getActiveDocumentContext()
+R/addins.R:441:  if (!rstudioapi::isAvailable()) {
+R/addins.R:631:  if (!rstudioapi::isAvailable()) {
+R/addins.R:636:  context <- rstudioapi::getActiveDocumentContext()
+R/addins.R:641:    rstudioapi::showPrompt("Quick Question", 
+R/addins.R:645:    rstudioapi::showPrompt("Quick Question", 
+R/addins.R:680:    rstudioapi::viewer(temp_html)
+inst/examples/phase5_demo.R:16:if (rstudioapi::isAvailable()) {
+inst/examples/phase5_demo.R:42:if (tolower(response) == "y" && rstudioapi::isAvailable()) {
+
+# future references
+R/cache.R:343:  if (parallel && requireNamespace("future", quietly = TRUE)) {
+R/cache.R:345:    future::plan(future::multisession, workers = 4)
+R/cache.R:354:    future::plan(future::sequential)
+R/async.R:33:  future::future({
+R/async.R:60:  original_plan <- future::plan()
+R/async.R:61:  future::plan(future::multisession, workers = min(max_workers, length(queries)))
+R/async.R:62:  on.exit(future::plan(original_plan))
+R/async.R:213:  future::future({
+R/async.R:289:      future::plan(future::multisession, workers = n_workers)
+R/async.R:344:      future::plan(future::sequential)
+inst/examples/phase4_advanced_demo.R:11:library(future)
+
+# future.apply references
+R/cache.R:347:    results <- future.apply::future_lapply(queries, function(q) {
+R/async.R:71:  results <- future.apply::future_lapply(
+R/async.R:316:      self$results <- future.apply::future_lapply(
+
+# promises references
+R/streaming.R:177:#' library(promises)
+R/streaming.R:182:  promises::promise(function(resolve, reject) {
+R/async.R:21:#' library(promises)
+R/async.R:35:  }) %>% promises::as.promise()
+R/async.R:133:    result <- promises::promise(function(resolve, reject) {
+R/async.R:216:    promises::promise_race(
+R/async.R:217:      promises::promise(function(resolve, reject) {
+inst/examples/phase4_advanced_demo.R:12:library(promises)
+
+# later references
+R/async.R:218:        later::later(function() {
+
+# processx references
+R/streaming.R:94:      if (!requireNamespace("processx", quietly = TRUE)) {
+R/streaming.R:104:      self$process <- processx::process$new(
+
+# DBI references
+R/ui_components.R:100:    onStop(function() DBI::dbDisconnect(cache_conn))
+R/ui_components.R:107:      data <- DBI::dbGetQuery(cache_conn, "
+R/ui_components.R:153:        response <- DBI::dbGetQuery(cache_conn,
+R/ui_components.R:179:        DBI::dbExecute(cache_conn,
+R/cache.R:28:  conn <- DBI::dbConnect(RSQLite::SQLite(), db_path)
+R/cache.R:31:  DBI::dbExecute(conn, "
+R/cache.R:45:  DBI::dbExecute(conn, "
+R/cache.R:49:  DBI::dbExecute(conn, "
+R/cache.R:86:    existing <- DBI::dbGetQuery(conn, 
+R/cache.R:92:      DBI::dbExecute(conn, "
+R/cache.R:105:      DBI::dbExecute(conn, "
+R/cache.R:119:  if (close_conn) DBI::dbDisconnect(conn)
+R/cache.R:150:  result <- DBI::dbGetQuery(conn, sql, params = params)
+R/cache.R:157:    DBI::dbExecute(conn, "
+R/cache.R:165:  if (close_conn) DBI::dbDisconnect(conn)
+R/cache.R:187:    result <- DBI::dbExecute(conn, "DELETE FROM cache")
+R/cache.R:189:    result <- DBI::dbExecute(conn, "
+R/cache.R:194:    result <- DBI::dbExecute(conn, "
+R/cache.R:202:  if (close_conn) DBI::dbDisconnect(conn)
+R/cache.R:223:  stats$total_entries <- DBI::dbGetQuery(conn, 
+R/cache.R:227:  stats$total_size <- DBI::dbGetQuery(conn,
+R/cache.R:231:  stats$avg_response_size <- DBI::dbGetQuery(conn,
+R/cache.R:235:  stats$most_accessed <- DBI::dbGetQuery(conn,
+R/cache.R:242:  stats$recent_entries <- DBI::dbGetQuery(conn,
+R/cache.R:249:  stats$total_accesses <- DBI::dbGetQuery(conn,
+R/cache.R:253:  stats$age_distribution <- DBI::dbGetQuery(conn,
+R/cache.R:265:  if (close_conn) DBI::dbDisconnect(conn)
+R/cache.R:386:  data <- DBI::dbGetQuery(conn, "SELECT * FROM cache")
+R/cache.R:404:  if (close_conn) DBI::dbDisconnect(conn)
+R/cache.R:449:  if (close_conn) DBI::dbDisconnect(conn)
+inst/examples/phase5_demo.R:64:DBI::dbDisconnect(conn)
+inst/examples/phase4_advanced_demo.R:75:DBI::dbDisconnect(cache_conn)
+
+# RSQLite references
+R/cache.R:28:  conn <- DBI::dbConnect(RSQLite::SQLite(), db_path)
+Dependency audit plan written: v0.1.1_dependency_slimming_plan.md

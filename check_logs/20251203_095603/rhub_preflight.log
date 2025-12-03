@@ -1,0 +1,13 @@
+== R-hub preflight start ==
+
+The downloaded binary packages are in
+	/var/folders/_4/5zbk3mcx73qfmmscm52hpd2w0000gn/T//RtmpGhCWEw/downloaded_packages
+-- rhub::check_for_cran() --
+NULL
+
+== R-hub identifiers / messages ==
+$rhub
+character(0)
+
+
+== R-hub preflight complete ==

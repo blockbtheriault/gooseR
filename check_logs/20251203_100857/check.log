@@ -1,0 +1,35 @@
+* using log directory ‘/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck’
+* using R version 4.5.1 (2025-06-13)
+* using platform: aarch64-apple-darwin20
+* R was compiled by
+    Apple clang version 16.0.0 (clang-1600.0.26.6)
+    GNU Fortran (GCC) 14.2.0
+* running under: macOS Tahoe 26.1
+* using session charset: UTF-8
+* using option ‘--as-cran’
+* checking for file ‘gooseR/DESCRIPTION’ ... OK
+* this is package ‘gooseR’ version ‘0.1.0’
+* package encoding: UTF-8
+* checking CRAN incoming feasibility ... [3s/18s] NOTE
+Maintainer: ‘Brandon Theriault <btheriault@block.xyz>’
+
+New submission
+
+Found the following (possibly) invalid URLs:
+  URL: https://block.github.io/goose/docs/quickstart (moved to https://block.github.io/goose/docs/quickstart/)
+    From: README.md
+    Status: 200
+    Message: OK
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Namespace dependency missing from DESCRIPTION Imports/Depends entries: ‘knitr’
+
+Imports includes 24 non-default packages.
+Importing from so many packages makes the package vulnerable to any of
+them becoming unavailable.  Move as many as possible to Suggests and
+use conditionally.
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR, 1 NOTE

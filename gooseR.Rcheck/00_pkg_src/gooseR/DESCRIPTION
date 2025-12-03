@@ -11,14 +11,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Suggests: rmarkdown, testthat (>= 3.0.0), dplyr
+Suggests: rmarkdown, testthat (>= 3.0.0), dplyr, markdown, stringr,
+        htmltools, DT, RSQLite
 Config/testthat/edition: 3
 Imports: cli, fs, here, jsonlite, magrittr, purrr, ggplot2, yaml,
-        grDevices, systemfonts, processx, DBI, RSQLite, digest, future,
+        grDevices, systemfonts, processx, DBI, digest, future,
         future.apply, promises, glue, R6, rappdirs, later, shiny,
-        miniUI, rstudioapi, DT, knitr, markdown, htmltools, stringr
+        miniUI, rstudioapi, knitr
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-12-02 23:21:05 UTC; btheriault
+Packaged: 2025-12-03 22:44:29 UTC; btheriault
 Author: Brandon Theriault [aut, cre]
 Maintainer: Brandon Theriault <btheriault@block.xyz>

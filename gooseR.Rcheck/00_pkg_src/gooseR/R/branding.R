@@ -290,24 +290,15 @@ theme_brand <- function(brand = "block",
     axis_color <- text_color
   }
   
-  # Get fonts with fallbacks
-  font_family <- typography$fonts$body %||% typography$fonts$primary %||% ""
-  
-  # Check if we need to register Inter font (for ggplot2)
-  if (!is.null(font_family) && grepl("Inter", font_family, ignore.case = TRUE)) {
-    # Try to use Inter if available, otherwise use fallback
-    if (requireNamespace("systemfonts", quietly = TRUE)) {
-      available_fonts <- systemfonts::system_fonts()$family
-      if (!"Inter" %in% available_fonts) {
-        # Use fallback font chain
-        font_family <- typography$fonts$fallback %||% ""
-        if (!config$suppress_font_warning %||% FALSE) {
-          message("Note: Inter font not found. Install from https://fonts.google.com/specimen/Inter")
-          message("      Using fallback fonts. To suppress this message, set suppress_font_warning: true in brand config.")
-        }
-      }
-    }
+  # Enforce sans-serif chain (no serifs): Inter → Cash Sans → Helvetica → Arial → sans
+  preferred_chain <- c("Inter", "Cash Sans", "Helvetica", "Arial", "sans")
+  chosen_font <- NULL
+  if (requireNamespace("systemfonts", quietly = TRUE)) {
+    avail <- unique(systemfonts::system_fonts()$family)
+    chosen_font <- preferred_chain[preferred_chain %in% avail][1]
   }
+  if (is.na(chosen_font) || is.null(chosen_font)) chosen_font <- preferred_chain[length(preferred_chain)]
+  font_family <- chosen_font
   
   # Determine if we should show grid lines
   show_grid <- ifelse(!is.null(config$plots$grid$major), 
@@ -434,8 +425,18 @@ brand_palette <- function(brand = "block",
   
   config <- load_brand(brand)
   
-  # Get palette from plots section
-  if (!is.null(config$plots$palettes[[palette]])) {
+  # Block brand: enforce monochrome (black/white/gray only)
+  if (tolower(brand) == "block") {
+    if (palette == "categorical") {
+      colors <- c("#000000", "#666666", "#B3B3B3", "#E5E5E5")
+    } else if (palette == "sequential") {
+      colors <- c("#000000", "#333333", "#666666", "#999999", "#CCCCCC", "#E5E5E5", "#FFFFFF")
+    } else if (palette == "diverging") {
+      colors <- c("#000000", "#666666", "#FFFFFF")
+    } else {
+      colors <- c("#000000", "#FFFFFF")
+    }
+  } else if (!is.null(config$plots$palettes[[palette]])) {
     colors <- unlist(config$plots$palettes[[palette]])
   } else {
     # Fall back to extracting from color definitions
