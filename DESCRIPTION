@@ -14,7 +14,10 @@ RoxygenNote: 7.3.2
 Suggests: 
     rmarkdown,
     testthat (>= 3.0.0),
-    dplyr
+    dplyr,
+    markdown,
+    stringr,
+    htmltools
 Config/testthat/edition: 3
 Imports: 
     cli,
@@ -42,8 +45,5 @@ Imports:
     miniUI,
     rstudioapi,
     DT,
-    knitr,
-    markdown,
-    htmltools,
-    stringr
+    knitr
 VignetteBuilder: knitr

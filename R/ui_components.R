@@ -380,7 +380,7 @@ run_conversation_gadget <- function() {
                   div(
                     class = "alert alert-secondary",
                     strong("Goose: "),
-                    HTML(markdown::markdownToHTML(
+                    HTML(if (requireNamespace("markdown", quietly = TRUE)) markdown::markdownToHTML(
                       text = msg$content,
                       fragment.only = TRUE))
                   )
