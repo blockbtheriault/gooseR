@@ -17,7 +17,9 @@ Suggests:
     dplyr,
     markdown,
     stringr,
-    htmltools
+    htmltools,
+    DT,
+    RSQLite
 Config/testthat/edition: 3
 Imports: 
     cli,
@@ -32,7 +34,7 @@ Imports:
     systemfonts,
     processx,
     DBI,
-    RSQLite,
+
     digest,
     future,
     future.apply,
@@ -44,6 +46,6 @@ Imports:
     shiny,
     miniUI,
     rstudioapi,
-    DT,
+
     knitr
 VignetteBuilder: knitr

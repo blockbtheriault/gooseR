@@ -18,7 +18,7 @@
 #' @importFrom shiny dataTableOutput renderDataTable
 #' @importFrom shiny plotOutput renderPlot
 #' @importFrom shiny downloadHandler downloadButton
-#' @importFrom DT datatable formatDate formatStyle
+#' @seealso Requires Suggests: DT. If DT is not available, the UI will fallback to a basic table.
 NULL
 
 #' Cache Browser UI
