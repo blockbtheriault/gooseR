@@ -46,7 +46,7 @@ run_cache_gadget <- function() {
       tabsetPanel(
         tabPanel("Browse",
           br(),
-          DT::dataTableOutput("cache_table"),
+          (if (requireNamespace("DT", quietly = TRUE)) DT::dataTableOutput("cache_table") else tableOutput("cache_table_basic")), 
           br(),
           fluidRow(
             column(4,
