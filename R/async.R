@@ -1,4 +1,6 @@
 #' @importFrom promises %...%
+#' @importFrom promises `%...>%`
+
 #' Async and Parallel Execution Module for GooseR
 #'
 #' Provides asynchronous and parallel query execution
