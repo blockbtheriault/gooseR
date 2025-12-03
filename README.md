@@ -21,7 +21,8 @@ goose is your friendly AI pardner who can understand what you want to do and hel
 - Autonomous: Goose independently handles complex tasks, from debugging to deployment, freeing you to focus on what matters most.
 
 There are both Desktop and CLI versions of goose. If you have goose CLI is already installed and working, gooseR requires no additional R configuration (this applies to anyone with the goose CLI, not just Block employees). If you need to configure your provider/model/key, use goose_configure().
-[![More about goose here](ttps://block.github.io/goose/docs/quickstart)](goose)
+
+[more on goose here](https://block.github.io/goose/docs/quickstart)
 
 ## gooseR Installation
 
