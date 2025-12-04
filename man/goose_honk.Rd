@@ -9,28 +9,37 @@ goose_honk(path = ".", focus = NULL, severity = "moderate")
 \arguments{
 \item{path}{Path to script, RMarkdown file, or directory (default: current working directory)}
 
-\item{focus}{Area to focus review on: "statistics", "visualization", "performance", "methodology"}
+\item{focus}{Area to focus review on: "statistics", "visualization", "performance", "methodology", NULL for comprehensive}
 
-\item{severity}{Level of critique: "gentle", "moderate", "harsh" (default: "moderate")}
+\item{severity}{Level of critique:
+\itemize{
+\item "gentle" = Encouraging feedback with light suggestions
+\item "moderate" = Balanced critique with actionable improvements (default)
+\item "harsh" = Direct, no-nonsense feedback for maximum improvement
+\item "brutal" = Unfiltered critique (use with caution!)
+}}
 }
 \value{
-List containing review comments and suggestions
+List containing review comments, specific code issues, and tailored suggestions
 }
 \description{
-Reviews current work in scripts, RMarkdown files, or directories and provides
-constructive challenges to assumptions and suggestions for more advanced analyses.
-This is Goose's way of pushing you to think deeper!
+Analyzes your actual code and data to provide tailored suggestions and challenges.
+Reads R scripts, RMarkdown files, and available data objects to give specific,
+contextual feedback rather than generic advice.
 }
 \examples{
 \dontrun{
-# Review current directory
+# Review current directory with moderate critique
 goose_honk()
 
-# Review specific script with focus
-goose_honk("analysis.R", focus = "statistics")
+# Review specific script with gentle feedback
+goose_honk("analysis.R", severity = "gentle")
 
-# Get harsh critique for improvement
-goose_honk(severity = "harsh")
+# Focus on statistics with harsh critique
+goose_honk(focus = "statistics", severity = "harsh")
+
+# Get brutal honesty about your visualization code
+goose_honk(focus = "visualization", severity = "brutal")
 }
 
 }

@@ -405,26 +405,33 @@ goose_loop_me <- function(code,
 #' Review and Challenge Current Work
 #'
 #' @description
-#' Reviews current work in scripts, RMarkdown files, or directories and provides
-#' constructive challenges to assumptions and suggestions for more advanced analyses.
-#' This is Goose's way of pushing you to think deeper!
+#' Analyzes your actual code and data to provide tailored suggestions and challenges.
+#' Reads R scripts, RMarkdown files, and available data objects to give specific,
+#' contextual feedback rather than generic advice.
 #'
 #' @param path Path to script, RMarkdown file, or directory (default: current working directory)
-#' @param focus Area to focus review on: "statistics", "visualization", "performance", "methodology"
-#' @param severity Level of critique: "gentle", "moderate", "harsh" (default: "moderate")
+#' @param focus Area to focus review on: "statistics", "visualization", "performance", "methodology", NULL for comprehensive
+#' @param severity Level of critique: 
+#'   - "gentle" = Encouraging feedback with light suggestions
+#'   - "moderate" = Balanced critique with actionable improvements (default)
+#'   - "harsh" = Direct, no-nonsense feedback for maximum improvement
+#'   - "brutal" = Unfiltered critique (use with caution!)
 #'
-#' @return List containing review comments and suggestions
+#' @return List containing review comments, specific code issues, and tailored suggestions
 #'
 #' @examples
 #' \dontrun{
-#' # Review current directory
+#' # Review current directory with moderate critique
 #' goose_honk()
 #' 
-#' # Review specific script with focus
-#' goose_honk("analysis.R", focus = "statistics")
+#' # Review specific script with gentle feedback
+#' goose_honk("analysis.R", severity = "gentle")
 #' 
-#' # Get harsh critique for improvement
-#' goose_honk(severity = "harsh")
+#' # Focus on statistics with harsh critique
+#' goose_honk(focus = "statistics", severity = "harsh")
+#' 
+#' # Get brutal honesty about your visualization code
+#' goose_honk(focus = "visualization", severity = "brutal")
 #' }
 #'
 #' @export
@@ -434,6 +441,13 @@ goose_honk <- function(path = ".",
   
   cli::cli_h1("🦆 HONK! Code Review")
   
+  # Validate severity
+  valid_severities <- c("gentle", "moderate", "harsh", "brutal")
+  if (!severity %in% valid_severities) {
+    cli::cli_alert_warning("Invalid severity. Using 'moderate'. Valid options: {.val {valid_severities}}")
+    severity <- "moderate"
+  }
+  
   # Determine what to review
   if (path == ".") {
     path <- getwd()
@@ -441,125 +455,252 @@ goose_honk <- function(path = ".",
   }
   
   review_items <- list()
+  code_content <- list()
   
-  # Collect files to review
+  # Collect and READ files to review
   if (dir.exists(path)) {
-    r_files <- list.files(path, pattern = "\\.R$", full.names = TRUE, recursive = TRUE)
-    rmd_files <- list.files(path, pattern = "\\.Rmd$", full.names = TRUE, recursive = TRUE)
+    r_files <- list.files(path, pattern = "\\.R$", full.names = TRUE, recursive = FALSE)
+    rmd_files <- list.files(path, pattern = "\\.Rmd$", full.names = TRUE, recursive = FALSE)
     review_items$r_files <- r_files
     review_items$rmd_files <- rmd_files
+    
+    # Actually read the code files (limit to first 5 to avoid overwhelming)
+    for (file in head(c(r_files, rmd_files), 5)) {
+      tryCatch({
+        code_content[[basename(file)]] <- readLines(file, warn = FALSE)
+      }, error = function(e) NULL)
+    }
   } else if (file.exists(path)) {
-    if (grepl("\\.R$", path)) {
-      review_items$r_files <- path
-    } else if (grepl("\\.Rmd$", path)) {
-      review_items$rmd_files <- path
+    if (grepl("\\.(R|Rmd)$", path)) {
+      review_items$single_file <- path
+      code_content[[basename(path)]] <- readLines(path, warn = FALSE)
     }
   }
   
-  # Initialize review comments
+  # Check for available data in memory
+  available_data <- tryCatch({
+    goose_list(category = "shared_objects", global = FALSE)
+  }, error = function(e) NULL)
+  
+  # Also check global environment for data
+  env_objects <- ls(envir = .GlobalEnv)
+  data_objects <- character()
+  for (obj in env_objects) {
+    if (tryCatch(is.data.frame(get(obj, envir = .GlobalEnv)), error = function(e) FALSE)) {
+      data_objects <- c(data_objects, obj)
+    }
+  }
+  
+  # Initialize review structure
   review <- list(
     timestamp = Sys.time(),
     path = path,
     severity = severity,
-    challenges = list(),
-    suggestions = list(),
-    advanced_techniques = list()
+    focus = focus,
+    code_files = length(code_content),
+    data_available = !is.null(available_data) || length(data_objects) > 0,
+    specific_issues = list(),
+    tailored_suggestions = list(),
+    code_patterns = list()
   )
   
-  # Common issues to check
-  checks <- list(
-    statistics = c(
-      "Are you checking assumptions before running tests?",
-      "Have you considered multiple testing corrections?",
-      "Is your sample size adequate for the analysis?",
-      "Are you reporting effect sizes, not just p-values?",
-      "Have you checked for confounding variables?"
-    ),
-    visualization = c(
-      "Are your visualizations accessible (colorblind-friendly)?",
-      "Do your plots have proper labels and titles?",
-      "Have you considered interactive visualizations?",
-      "Are you showing uncertainty (confidence intervals)?",
-      "Is the chart type appropriate for the data?"
-    ),
-    performance = c(
-      "Are you using vectorized operations instead of loops?",
-      "Have you profiled your code for bottlenecks?",
-      "Are you loading only necessary data/packages?",
-      "Could this benefit from parallel processing?",
-      "Are you caching expensive computations?"
-    ),
-    methodology = c(
-      "Is your analysis reproducible?",
-      "Have you documented your assumptions?",
-      "Are you handling missing data appropriately?",
-      "Have you considered alternative approaches?",
-      "Is your code modular and reusable?"
+  # Analyze actual code patterns
+  if (length(code_content) > 0) {
+    all_code <- unlist(code_content)
+    
+    # Check for specific patterns in the actual code
+    review$code_patterns <- list(
+      has_loops = any(grepl("for\\s*\\(|while\\s*\\(", all_code)),
+      has_apply = any(grepl("apply|lapply|sapply|mapply", all_code)),
+      has_tidyverse = any(grepl("library\\(tidyverse\\)|library\\(dplyr\\)", all_code)),
+      has_ggplot = any(grepl("ggplot|geom_", all_code)),
+      has_models = any(grepl("lm\\(|glm\\(|t\\.test\\(|aov\\(", all_code)),
+      has_seed = any(grepl("set\\.seed\\(", all_code)),
+      has_comments = sum(grepl("^\\s*#", all_code)) / length(all_code),
+      has_functions = any(grepl("function\\s*\\(", all_code)),
+      has_error_handling = any(grepl("tryCatch|try\\(", all_code)),
+      line_count = length(all_code)
     )
-  )
+  }
   
   # Severity-based messages
   severity_intros <- list(
     gentle = "🌟 Great work! Here are some friendly suggestions:",
     moderate = "🔍 Good foundation! Let's level up with these considerations:",
-    harsh = "⚠️ Time for tough love! Critical improvements needed:"
+    harsh = "⚠️ Time for tough love! Critical improvements needed:",
+    brutal = "💀 Brace yourself! Here's the unvarnished truth about your code:"
   )
   
   cat("\n", severity_intros[[severity]], "\n\n")
   
-  # Generate focused or comprehensive review
-  if (!is.null(focus) && focus %in% names(checks)) {
-    review$challenges <- checks[[focus]]
+  # Generate SPECIFIC feedback based on actual code analysis
+  cli::cli_h2("Specific Code Analysis")
+  
+  if (length(code_content) > 0) {
+    # Provide specific feedback based on what we found
+    if (review$code_patterns$has_loops && !review$code_patterns$has_apply) {
+      cat("🔄 Found for/while loops. Consider vectorization or apply functions for better performance.\n")
+      if (severity %in% c("harsh", "brutal")) {
+        cat("   Your loops are probably 10-100x slower than they need to be!\n")
+      }
+    }
+    
+    if (!review$code_patterns$has_seed && review$code_patterns$has_models) {
+      cat("🎲 Statistical models detected but no set.seed(). Your results aren't reproducible!\n")
+    }
+    
+    if (review$code_patterns$has_comments < 0.1) {
+      comment_percent <- round(review$code_patterns$has_comments * 100, 1)
+      cat(sprintf("📝 Only %.1f%% of your code has comments. ", comment_percent))
+      if (severity == "brutal") {
+        cat("Future you will hate current you!\n")
+      } else {
+        cat("Consider adding more documentation.\n")
+      }
+    }
+    
+    if (!review$code_patterns$has_error_handling && review$code_patterns$line_count > 50) {
+      cat("⚠️ No error handling detected in", review$code_patterns$line_count, "lines of code.\n")
+      if (severity %in% c("harsh", "brutal")) {
+        cat("   When this breaks (not if, WHEN), you'll have no idea why!\n")
+      }
+    }
+    
+    if (review$code_patterns$has_ggplot) {
+      cat("📊 ggplot2 usage detected. ")
+      if (!any(grepl("theme_|scale_|labs\\(", unlist(code_content)))) {
+        cat("But no custom themes or proper labels found!\n")
+      } else {
+        cat("Good use of themes and labels!\n")
+      }
+    }
   } else {
-    review$challenges <- unlist(checks)
+    cat("No code files found to analyze. Share some code for specific feedback!\n")
   }
   
-  # Display challenges
-  cli::cli_h2("Challenges to Consider")
-  for (i in seq_along(review$challenges)) {
-    cat(paste0(i, ". ", review$challenges[i], "\n"))
+  # Data-specific feedback
+  if (review$data_available || length(data_objects) > 0) {
+    cat("\n")
+    cli::cli_h2("Data-Specific Suggestions")
+    
+    if (!is.null(available_data)) {
+      cat("📊 Found", nrow(available_data), "shared data objects:\n")
+      for (i in seq_len(min(3, nrow(available_data)))) {
+        cat("  •", available_data$name[i], "-", available_data$class[i], "\n")
+      }
+    }
+    
+    if (length(data_objects) > 0) {
+      cat("📈 Found", length(data_objects), "data frames in environment:\n")
+      for (obj in head(data_objects, 3)) {
+        df <- get(obj, envir = .GlobalEnv)
+        cat(sprintf("  • %s: %d rows × %d columns\n", obj, nrow(df), ncol(df)))
+        
+        # Check for specific data issues
+        if (any(is.na(df))) {
+          na_percent <- round(sum(is.na(df)) / (nrow(df) * ncol(df)) * 100, 1)
+          cat(sprintf("    ⚠️ Contains %.1f%% missing values\n", na_percent))
+        }
+      }
+    }
   }
   
-  # Advanced technique suggestions
-  review$suggestions <- c(
-    "\n📚 Advanced Techniques to Explore:\n",
-    "• Bayesian methods for uncertainty quantification",
-    "• Cross-validation for model evaluation",
-    "• Ensemble methods for predictions",
-    "• Causal inference techniques",
-    "• Dimension reduction (PCA, t-SNE, UMAP)",
-    "• Time series decomposition",
-    "• Network analysis for relationships",
-    "• Sensitivity analysis for robustness"
-  )
-  
-  cat(paste(review$suggestions, collapse = "\n"))
-  
-  # Code-specific suggestions if files were found
-  if (length(review_items$r_files) > 0 || length(review_items$rmd_files) > 0) {
-    cat("\n\n")
-    cli::cli_h2("File-Specific Observations")
+  # Focus-specific TAILORED suggestions based on actual code
+  if (!is.null(focus)) {
+    cat("\n")
+    cli::cli_h2(paste("Focus Area:", tools::toTitleCase(focus)))
     
-    total_files <- length(review_items$r_files) + length(review_items$rmd_files)
-    cat(paste0("Found ", total_files, " files to review\n"))
+    tailored_checks <- list(
+      statistics = function() {
+        if (review$code_patterns$has_models) {
+          c("✓ Models detected. Are you checking residuals and assumptions?",
+            "✓ Consider adding confidence intervals to your estimates",
+            if (severity %in% c("harsh", "brutal")) "✓ P-values without effect sizes are meaningless!" else NULL)
+        } else {
+          c("No statistical models found. Consider adding inferential statistics.")
+        }
+      },
+      visualization = function() {
+        if (review$code_patterns$has_ggplot) {
+          c("✓ ggplot2 detected. Consider adding:",
+            "  • Color-blind friendly palettes (viridis, RColorBrewer)",
+            "  • Proper axis labels with units",
+            "  • Informative titles and captions")
+        } else {
+          c("No visualization code detected. Data without plots is just numbers!")
+        }
+      },
+      performance = function() {
+        suggestions <- c()
+        if (review$code_patterns$has_loops) {
+          suggestions <- c(suggestions, 
+            "✓ Replace loops with vectorized operations",
+            "✓ Use data.table for large datasets")
+        }
+        if (review$code_patterns$line_count > 200) {
+          suggestions <- c(suggestions,
+            "✓ Consider profiling with profvis::profvis()",
+            "✓ Cache expensive computations")
+        }
+        if (length(suggestions) == 0) {
+          suggestions <- "Code seems reasonably efficient. Profile to find bottlenecks."
+        }
+        suggestions
+      },
+      methodology = function() {
+        c(if (!review$code_patterns$has_functions) "✓ No functions found. Modularize your code!" else NULL,
+          if (!review$code_patterns$has_seed) "✓ Add set.seed() for reproducibility" else NULL,
+          if (review$code_patterns$has_comments < 0.15) "✓ Document your methodology in comments" else NULL,
+          "✓ Consider creating a research compendium")
+      }
+    )
     
-    # Quick checks
-    cat("\nQuick Checks:\n")
-    cat("✓ Check for set.seed() for reproducibility\n")
-    cat("✓ Look for hardcoded values that should be parameters\n")
-    cat("✓ Verify error handling with tryCatch()\n")
-    cat("✓ Ensure consistent coding style\n")
-    cat("✓ Add unit tests for critical functions\n")
+    if (focus %in% names(tailored_checks)) {
+      suggestions <- tailored_checks[[focus]]()
+      for (suggestion in suggestions) {
+        cat(suggestion, "\n")
+      }
+    }
+  }
+  
+  # Advanced techniques based on what's actually in the code
+  cat("\n")
+  cli::cli_h2("Next Level Techniques for Your Code")
+  
+  if (review$code_patterns$has_models) {
+    cat("Since you're doing modeling:\n")
+    cat("• Try tidymodels for consistent model workflows\n")
+    cat("• Implement cross-validation with rsample\n")
+    cat("• Use broom to tidy your model outputs\n")
+  }
+  
+  if (review$code_patterns$has_ggplot) {
+    cat("Since you're using ggplot2:\n")
+    cat("• Try plotly::ggplotly() for interactive plots\n")
+    cat("• Use patchwork to combine multiple plots\n")
+    cat("• Consider gganimate for temporal data\n")
+  }
+  
+  if (review$code_patterns$has_loops || review$code_patterns$line_count > 300) {
+    cat("For better performance:\n")
+    cat("• Profile with profvis to find bottlenecks\n")
+    cat("• Use future/furrr for parallel processing\n")
+    cat("• Consider Rcpp for computationally intensive parts\n")
   }
   
   # Motivational close based on severity
   severity_closes <- list(
     gentle = "\n🌈 Keep up the excellent work! Every iteration makes it better.",
     moderate = "\n💪 You're on the right track! These improvements will make your analysis shine.",
-    harsh = "\n🔥 No excuses! Implement these changes and become a data science legend!"
+    harsh = "\n🔥 No excuses! Implement these changes and become a data science legend!",
+    brutal = "\n☠️ Your code has potential... buried deep. Very deep. Now dig it out and make it shine!"
   )
   
   cat(severity_closes[[severity]], "\n")
+  
+  # Store detailed analysis in return object
+  review$files_analyzed <- names(code_content)
+  review$suggestions_given <- TRUE
   
   invisible(review)
 }
