@@ -111,7 +111,8 @@ goose_give_sample <- function(object,
       goose_save(object, name, 
                 category = "shared_objects",
                 tags = c("structure", "reference"),
-                description = paste("Object structure shared for code generation"))
+                description = paste("Object structure shared for code generation"),
+                global = FALSE)  # Save to local project memory
       cli::cli_alert_success("Object structure saved to Goose memory")
     }, error = function(e) {
       cli::cli_alert_warning("Could not save to memory: {e$message}")
@@ -154,11 +155,11 @@ goose_make_a_plan <- function(focus = NULL,
   shared_objects <- tryCatch({
     goose_list(category = "shared_objects", global = FALSE)
   }, error = function(e) {
-    cli::cli_alert_warning("No shared objects found. Use goose_give_sample() first.")
     return(NULL)
   })
   
-  if (is.null(shared_objects) || length(shared_objects) == 0) {
+  # Check if we have any shared objects
+  if (is.null(shared_objects) || (is.data.frame(shared_objects) && nrow(shared_objects) == 0)) {
     cat("No objects have been shared yet.\n")
     cat("Use goose_give_sample() to share data with Goose.\n")
     return(invisible(NULL))
@@ -172,12 +173,19 @@ goose_make_a_plan <- function(focus = NULL,
   )
   
   # Generate plan sections
+  # Get object names based on the structure of shared_objects
+  if (is.data.frame(shared_objects)) {
+    object_names <- shared_objects$name
+  } else {
+    object_names <- names(shared_objects)
+  }
+  
   plan_text <- c(
     "# 📊 Data Analysis Plan",
     paste0("Generated: ", format(plan$timestamp, "%Y-%m-%d %H:%M:%S")),
     "",
     "## 📁 Available Objects",
-    paste0("- ", names(shared_objects)),
+    paste0("- ", object_names),
     "",
     "## 🎯 Phase 1: Data Understanding",
     "- [ ] Explore data structure and types",
