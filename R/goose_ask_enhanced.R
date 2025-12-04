@@ -100,6 +100,7 @@ goose_ask <- function(prompt,
     # Format if requested
     if (format) {
       format_ai_response(response, width = width, color = color, ...)
+      # Return the raw response invisibly so it can be captured
       invisible(response)
     } else {
       response

@@ -181,6 +181,48 @@ print.goose_response <- function(x, ...) {
 # Note: goose_ask and goose_review_code formatting is now integrated
 # directly into those functions. See goose_ask_enhanced.R
 
+#' Get copy-friendly version of formatted text
+#'
+#' Removes formatting artifacts and returns clean text for copying
+#'
+#' @param text Character string with formatted text
+#' @param preserve_markdown Logical, keep markdown formatting (default TRUE)
+#'
+#' @return Clean text suitable for copying
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' response <- goose_ask("What is R?")
+#' # Copy-friendly version:
+#' clean <- goose_clean_text(response)
+#' cat(clean)
+#' }
+goose_clean_text <- function(text, preserve_markdown = TRUE) {
+  if (is.null(text) || length(text) == 0) return("")
+  
+  # Remove any ANSI color codes
+  text <- gsub("\033\\[[0-9;]*m", "", text)
+  
+  # Remove excessive line breaks
+  text <- gsub("\n\n\n+", "\n\n", text)
+  
+  # Remove cli formatting artifacts
+  text <- gsub("^[─═]+\\s*", "", text, perl = TRUE)
+  
+  if (!preserve_markdown) {
+    # Remove markdown if requested
+    text <- gsub("#{1,6}\\s+", "", text)  # Headers
+    text <- gsub("\\*\\*([^*]+)\\*\\*", "\\1", text)  # Bold
+    text <- gsub("\\*([^*]+)\\*", "\\1", text)  # Italic
+    text <- gsub("^[*+-]\\s+", "", text, multiline = TRUE)  # Bullets
+    text <- gsub("^\\d+\\.\\s+", "", text, multiline = TRUE)  # Numbers
+    text <- gsub("`([^`]+)`", "\\1", text)  # Inline code
+  }
+  
+  text
+}
+
 #' Set global formatting options for gooseR
 #'
 #' @param auto_format Logical, automatically format all AI responses
