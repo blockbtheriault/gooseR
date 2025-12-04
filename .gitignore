@@ -4,3 +4,16 @@
 .httr-oauth
 .DS_Store
 .quarto
+
+# Test and backup files
+test_backup/
+goose_backup/
+*_backup/
+
+# Temporary files
+CONTINUATION_PROMPT_*.md
+demo_*.R
+
+# Cache directories
+.goose/
+cache/

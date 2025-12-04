@@ -215,8 +215,11 @@ goose_clean_text <- function(text, preserve_markdown = TRUE) {
     text <- gsub("#{1,6}\\s+", "", text)  # Headers
     text <- gsub("\\*\\*([^*]+)\\*\\*", "\\1", text)  # Bold
     text <- gsub("\\*([^*]+)\\*", "\\1", text)  # Italic
-    text <- gsub("^[*+-]\\s+", "", text, multiline = TRUE)  # Bullets
-    text <- gsub("^\\d+\\.\\s+", "", text, multiline = TRUE)  # Numbers
+    # Split into lines to handle line-start patterns
+    lines <- strsplit(text, "\n")[[1]]
+    lines <- gsub("^[*+-]\\s+", "", lines)  # Bullets
+    lines <- gsub("^\\d+\\.\\s+", "", lines)  # Numbers
+    text <- paste(lines, collapse = "\n")
     text <- gsub("`([^`]+)`", "\\1", text)  # Inline code
   }
   
