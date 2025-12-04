@@ -13,15 +13,17 @@ goose_session_start(session_id = NULL)
 Character, the session ID
 }
 \description{
-Start a gooseR session for tracking saved items
+Note: To automatically tag items with the session ID, you need to
+manually add the session tag when saving, or use the wrapper functions.
 }
 \examples{
 \dontrun{
 # Start a session
 session_id <- goose_session_start()
 
-# Save items (automatically tagged with session)
-goose_save(mtcars, "cars_data", category = "analysis")
+# Save items (manually tag with session)
+goose_save(mtcars, "cars_data", category = "analysis", 
+           tags = c("myanalysis", getOption("goose.session_id")))
 
 # See what was saved in this session
 goose_session_list()

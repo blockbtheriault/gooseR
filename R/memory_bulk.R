@@ -42,7 +42,7 @@ goose_clear_category <- function(category, confirm = TRUE, verbose = TRUE) {
   
   for (i in seq_len(nrow(items))) {
     tryCatch({
-      goose_delete(name = items$name[i], category = category)
+      goose_delete(name = items$name[i], category = category, confirm = FALSE)
       count <- count + 1
       cli::cli_progress_update()
     }, error = function(e) {
@@ -116,7 +116,8 @@ goose_clear_tags <- function(tags, confirm = TRUE, verbose = TRUE) {
     tryCatch({
       goose_delete(
         name = all_items$name[i], 
-        category = all_items$category[i]
+        category = all_items$category[i],
+        confirm = FALSE  # Pass through the confirm setting
       )
       count <- count + 1
       cli::cli_progress_update()
@@ -187,7 +188,8 @@ goose_clear_all <- function(confirm = TRUE, backup_first = FALSE,
     tryCatch({
       goose_delete(
         name = items$name[i], 
-        category = items$category[i]
+        category = items$category[i],
+        confirm = FALSE
       )
       count <- count + 1
       cli::cli_progress_update()
@@ -274,7 +276,7 @@ goose_rename <- function(old_name, new_name, category = "general") {
   )
   
   # Delete old item
-  goose_delete(old_name, category)
+  goose_delete(old_name, category, confirm = FALSE)
   
   cli::cli_alert_success("Renamed '{old_name}' to '{new_name}'")
   invisible(TRUE)
@@ -410,7 +412,7 @@ goose_session_list <- function() {
   items <- goose_list(tags = session_tag)
   
   if (nrow(items) > 0) {
-    cli::cli_alert_info("Session '{.goose_session$id}' has {nrow(items)} item{?s}")
+    cli::cli_alert_info("Session '{(.goose_session$id)}' has {nrow(items)} item{?s}")
   } else {
     cli::cli_alert_info("No items saved in current session")
   }
