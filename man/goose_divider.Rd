@@ -4,7 +4,7 @@
 \alias{goose_divider}
 \title{Create a markdown-style divider}
 \usage{
-goose_divider(char = "─", width = 60)
+goose_divider(char = "-", width = 60)
 }
 \arguments{
 \item{char}{Character to use for divider}

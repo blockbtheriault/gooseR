@@ -4,9 +4,9 @@
 \name{gooseR-package}
 \alias{gooseR}
 \alias{gooseR-package}
-\title{gooseR: R Integration for Goose AI}
+\title{gooseR: R Integration for 'Goose' AI}
 \description{
-Seamless integration between R and Goose AI capabilities including memory management, visualization enhancements, and workflow automation. Save R objects to Goose memory, apply Block branding to visualizations, and manage data science project workflows.
+Seamless integration between R and 'Goose' AI capabilities including memory management, visualization enhancements, and workflow automation. Save R objects to 'Goose' memory, apply Block branding to visualizations, and manage data science project workflows. For more information about 'Goose' AI, see \url{https://github.com/block/goose}.
 }
 \author{
 \strong{Maintainer}: Brandon Theriault \email{btheriault@block.xyz}

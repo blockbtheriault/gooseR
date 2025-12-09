@@ -92,7 +92,7 @@ format_ai_response <- function(text, width = 80, indent = 0,
       if (color) {
         cli::cli_li(bullet_text)
       } else {
-        cat("  • ", bullet_text, "\n", sep = "")
+        cat("  - ", bullet_text, "\n", sep = "")
       }
       next
     }
@@ -208,7 +208,7 @@ goose_clean_text <- function(text, preserve_markdown = TRUE) {
   text <- gsub("\n\n\n+", "\n\n", text)
   
   # Remove cli formatting artifacts
-  text <- gsub("^[─═]+\\s*", "", text, perl = TRUE)
+  text <- gsub("^[--]+\\s*", "", text, perl = TRUE)
   
   if (!preserve_markdown) {
     # Remove markdown if requested
@@ -267,7 +267,7 @@ goose_format_options <- function(auto_format = TRUE, width = 80,
 #' @param char Character to use for divider
 #' @param width Width of divider
 #' @export
-goose_divider <- function(char = "─", width = 60) {
+goose_divider <- function(char = "-", width = 60) {
   if (getOption("goose.format_color", TRUE)) {
     cli::cli_rule()
   } else {

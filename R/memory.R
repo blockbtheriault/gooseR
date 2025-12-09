@@ -1,9 +1,15 @@
 #' Get Goose Memory Directory Path
 #'
 #' @param global Logical. If TRUE, returns global memory path. If FALSE, returns local project memory path.
+#' @param use_temp Logical. If TRUE (default for CRAN compliance), uses tempdir(). Set to FALSE for production use.
 #' @return Character string with the memory directory path
 #' @keywords internal
-get_memory_path <- function(global = TRUE) {
+get_memory_path <- function(global = TRUE, use_temp = TRUE) {
+  if (use_temp) {
+    # Use temporary directory (CRAN policy compliant)
+    return(fs::path(tempdir(), "gooseR_memory"))
+  }
+  
   if (global) {
     fs::path(fs::path_home(), ".config", "goose", "memory")
   } else {

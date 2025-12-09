@@ -78,7 +78,7 @@ goose_rename_columns <- function(data,
   original_names <- names(data)
   n_cols <- length(original_names)
   
-  cli::cli_h2("🏷️ Intelligent Column Renaming")
+  cli::cli_h2("Intelligent Column Renaming")
   cli::cli_alert_info("Processing {n_cols} column{?s}")
   
   # Step 1: Basic cleaning with janitor (if available)
@@ -172,7 +172,7 @@ goose_rename_columns <- function(data,
         if (nchar(changes$original[i]) > 50) old <- paste0(old, "...")
         
         cli::cli_alert_success(
-          "{.field {old}} → {.val {changes$final[i]}}"
+          "{.field {old}} -> {.val {changes$final[i]}}"
         )
       }
       
@@ -217,7 +217,7 @@ goose_rename_columns <- function(data,
     for (i in seq_len(nrow(examples))) {
       old_short <- substr(examples$original[i], 1, 40)
       if (nchar(examples$original[i]) > 40) old_short <- paste0(old_short, "...")
-      cat("  ", old_short, " → ", examples$final[i], "\n", sep = "")
+      cat("  ", old_short, " -> ", examples$final[i], "\n", sep = "")
     }
   }
   
@@ -506,7 +506,7 @@ goose_view_column_map <- function(data, return_df = FALSE) {
         old <- paste0(substr(old, 1, 57), "...")
       }
       
-      cat(sprintf("  %2d. %-60s → %s\n", i, old, changed$final[i]))
+      cat(sprintf("  %2d. %-60s -> %s\n", i, old, changed$final[i]))
     }
     
     if (nrow(changed) > 20) {

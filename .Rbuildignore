@@ -12,3 +12,10 @@
 ^pkgdown$
 ^reference$
 ^tools$
+^\.goose$
+^CRAN-RELEASE$
+^CRAN_RESUBMISSION_FIXES\.md$
+^FORMATTING_GUIDE\.md$
+^TODO_v0\.1\.1\.md$
+^V0\.1\.1_DEVELOPMENT_SUMMARY\.md$
+^build_vignettes\.R$

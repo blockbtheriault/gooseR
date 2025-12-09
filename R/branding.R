@@ -8,16 +8,26 @@ NULL
 
 #' Get brand configuration directory
 #' 
+#' @param use_temp Use temporary directory (default: TRUE for CRAN compliance)
 #' @return Path to brand configuration directory
 #' @keywords internal
-get_brand_dir <- function() {
+get_brand_dir <- function(use_temp = TRUE) {
   # Check for package installation directory first
   pkg_dir <- system.file("brands", package = "gooseR")
   if (pkg_dir != "") {
     return(pkg_dir)
   }
   
-  # Fall back to user config directory
+  # Use temporary directory by default (CRAN policy)
+  if (use_temp) {
+    temp_dir <- file.path(tempdir(), "gooseR_brands")
+    if (!dir.exists(temp_dir)) {
+      dir.create(temp_dir, recursive = TRUE, showWarnings = FALSE)
+    }
+    return(temp_dir)
+  }
+  
+  # Only use user directory if explicitly requested
   user_dir <- file.path(Sys.getenv("HOME"), ".config", "goose", "brands")
   if (!dir.exists(user_dir)) {
     dir.create(user_dir, recursive = TRUE, showWarnings = FALSE)
@@ -479,8 +489,9 @@ brand_palette <- function(brand = "block",
 #' @export
 #' @examples
 #' \dontrun{
-#' # Save to file
-#' brand_css("block", "assets/block.css")
+#' # Save to file in temp directory
+#' temp_file <- file.path(tempdir(), "block.css")
+#' brand_css("block", temp_file)
 #' 
 #' # Get as string
 #' css <- brand_css("block")
@@ -616,8 +627,9 @@ brand_css <- function(brand = "block",
 #' @export
 #' @examples
 #' \dontrun{
-#' # Create branded RMarkdown template
-#' brand_rmd_template("block", "My Report", output_file = "report.Rmd")
+#' # Create branded RMarkdown template in temp directory
+#' temp_file <- file.path(tempdir(), "report.Rmd")
+#' brand_rmd_template("block", "My Report", output_file = temp_file)
 #' }
 brand_rmd_template <- function(brand = "block",
                               title = "Report",

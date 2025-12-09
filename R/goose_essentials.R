@@ -3,6 +3,10 @@
 # Version: 0.1.1
 # Date: 2025-12-03
 
+#' @importFrom stats coef formula
+#' @importFrom utils head sessionInfo
+NULL
+
 #' Share R Object Structure with Goose
 #'
 #' @description
@@ -70,8 +74,8 @@ goose_give_sample <- function(object,
   }
   
   # Format output for display
-  cat("\n", cli::style_bold(cli::col_blue("📊 Object Shared with Goose")), "\n")
-  cat(rep("─", 50), "\n", sep = "")
+  cat("\n", cli::style_bold(cli::col_blue("[Data] Object Shared with Goose")), "\n")
+  cat(rep("-", 50), "\n", sep = "")
   cat("Name:", cli::col_green(name), "\n")
   cat("Class:", paste(summary_list$class, collapse = ", "), "\n")
   
@@ -149,7 +153,7 @@ goose_give_sample <- function(object,
 goose_make_a_plan <- function(focus = NULL, 
                               output_format = "console") {
   
-  cli::cli_h1("🦆 Goose Analysis Planner")
+  cli::cli_h1("[Goose] Goose Analysis Planner")
   
   # Get all shared objects from memory
   shared_objects <- tryCatch({
@@ -181,25 +185,25 @@ goose_make_a_plan <- function(focus = NULL,
   }
   
   plan_text <- c(
-    "# 📊 Data Analysis Plan",
+    "# [Data] Data Analysis Plan",
     paste0("Generated: ", format(plan$timestamp, "%Y-%m-%d %H:%M:%S")),
     "",
-    "## 📁 Available Objects",
+    "## [Files] Available Objects",
     paste0("- ", object_names),
     "",
-    "## 🎯 Phase 1: Data Understanding",
+    "## [Target] Phase 1: Data Understanding",
     "- [ ] Explore data structure and types",
     "- [ ] Check for missing values and outliers",
     "- [ ] Generate summary statistics",
     "- [ ] Create initial visualizations",
     "",
-    "## 🔍 Phase 2: Data Quality",
+    "## [Search] Phase 2: Data Quality",
     "- [ ] Identify data quality issues",
     "- [ ] Handle missing values",
     "- [ ] Detect and handle outliers",
     "- [ ] Validate data consistency",
     "",
-    "## 📈 Phase 3: Exploratory Analysis",
+    "## [Chart] Phase 3: Exploratory Analysis",
     "- [ ] Univariate analysis",
     "- [ ] Bivariate relationships",
     "- [ ] Correlation analysis",
@@ -211,7 +215,7 @@ goose_make_a_plan <- function(focus = NULL,
     if (focus == "predictive") {
       plan_text <- c(plan_text,
         "",
-        "## 🤖 Phase 4: Predictive Modeling",
+        "## [AI] Phase 4: Predictive Modeling",
         "- [ ] Feature engineering",
         "- [ ] Train/test split",
         "- [ ] Model selection",
@@ -221,7 +225,7 @@ goose_make_a_plan <- function(focus = NULL,
     } else if (focus == "diagnostic") {
       plan_text <- c(plan_text,
         "",
-        "## 🔬 Phase 4: Diagnostic Analysis",
+        "## [Lab] Phase 4: Diagnostic Analysis",
         "- [ ] Root cause analysis",
         "- [ ] Hypothesis testing",
         "- [ ] Causal inference",
@@ -232,13 +236,13 @@ goose_make_a_plan <- function(focus = NULL,
   
   plan_text <- c(plan_text,
     "",
-    "## 📋 Phase 5: Reporting",
+    "## [List] Phase 5: Reporting",
     "- [ ] Create executive summary",
     "- [ ] Generate visualizations",
     "- [ ] Document methodology",
     "- [ ] Prepare recommendations",
     "",
-    "## 💡 Suggested Next Steps",
+    "## [Idea] Suggested Next Steps",
     "1. Run `goose_give_sample()` on additional datasets",
     "2. Use `goose_ask()` for specific analysis questions",
     "3. Use `goose_honk()` to review and improve your approach"
@@ -297,7 +301,7 @@ goose_loop_me <- function(code,
                          iterator_name = "i",
                          parallel = FALSE) {
   
-  cli::cli_h2("🔄 Loop Generator")
+  cli::cli_h2("[Loop] Loop Generator")
   
   # Check if code is a file path
   if (length(code) == 1 && file.exists(code)) {
@@ -389,9 +393,9 @@ goose_loop_me <- function(code,
   
   # Display result
   cat(cli::col_green("Generated Loop Structure:\n"))
-  cat(rep("─", 50), "\n", sep = "")
+  cat(rep("-", 50), "\n", sep = "")
   cat(paste(looped_code, collapse = "\n"))
-  cat("\n", rep("─", 50), "\n", sep = "")
+  cat("\n", rep("-", 50), "\n", sep = "")
   
   # Save to clipboard if possible
   if (requireNamespace("clipr", quietly = TRUE) && clipr::clipr_available()) {
@@ -439,7 +443,7 @@ goose_honk <- function(path = ".",
                       focus = NULL,
                       severity = "moderate") {
   
-  cli::cli_h1("🦆 HONK! Code Review")
+  cli::cli_h1("[Goose] HONK! Code Review")
   
   # Validate severity
   valid_severities <- c("gentle", "moderate", "harsh", "brutal")
@@ -525,10 +529,10 @@ goose_honk <- function(path = ".",
   
   # Severity-based messages
   severity_intros <- list(
-    gentle = "🌟 Great work! Here are some friendly suggestions:",
-    moderate = "🔍 Good foundation! Let's level up with these considerations:",
-    harsh = "⚠️ Time for tough love! Critical improvements needed:",
-    brutal = "💀 Brace yourself! Here's the unvarnished truth about your code:"
+    gentle = "[Star] Great work! Here are some friendly suggestions:",
+    moderate = "[Search] Good foundation! Let's level up with these considerations:",
+    harsh = "[Warning] Time for tough love! Critical improvements needed:",
+    brutal = "[Skull] Brace yourself! Here's the unvarnished truth about your code:"
   )
   
   cat("\n", severity_intros[[severity]], "\n\n")
@@ -539,19 +543,19 @@ goose_honk <- function(path = ".",
   if (length(code_content) > 0) {
     # Provide specific feedback based on what we found
     if (review$code_patterns$has_loops && !review$code_patterns$has_apply) {
-      cat("🔄 Found for/while loops. Consider vectorization or apply functions for better performance.\n")
+      cat("[Loop] Found for/while loops. Consider vectorization or apply functions for better performance.\n")
       if (severity %in% c("harsh", "brutal")) {
         cat("   Your loops are probably 10-100x slower than they need to be!\n")
       }
     }
     
     if (!review$code_patterns$has_seed && review$code_patterns$has_models) {
-      cat("🎲 Statistical models detected but no set.seed(). Your results aren't reproducible!\n")
+      cat("[Dice] Statistical models detected but no set.seed(). Your results aren't reproducible!\n")
     }
     
     if (review$code_patterns$has_comments < 0.1) {
       comment_percent <- round(review$code_patterns$has_comments * 100, 1)
-      cat(sprintf("📝 Only %.1f%% of your code has comments. ", comment_percent))
+      cat(sprintf("[Note] Only %.1f%% of your code has comments. ", comment_percent))
       if (severity == "brutal") {
         cat("Future you will hate current you!\n")
       } else {
@@ -560,14 +564,14 @@ goose_honk <- function(path = ".",
     }
     
     if (!review$code_patterns$has_error_handling && review$code_patterns$line_count > 50) {
-      cat("⚠️ No error handling detected in", review$code_patterns$line_count, "lines of code.\n")
+      cat("[Warning] No error handling detected in", review$code_patterns$line_count, "lines of code.\n")
       if (severity %in% c("harsh", "brutal")) {
         cat("   When this breaks (not if, WHEN), you'll have no idea why!\n")
       }
     }
     
     if (review$code_patterns$has_ggplot) {
-      cat("📊 ggplot2 usage detected. ")
+      cat("[Data] ggplot2 usage detected. ")
       if (!any(grepl("theme_|scale_|labs\\(", unlist(code_content)))) {
         cat("But no custom themes or proper labels found!\n")
       } else {
@@ -584,22 +588,22 @@ goose_honk <- function(path = ".",
     cli::cli_h2("Data-Specific Suggestions")
     
     if (!is.null(available_data)) {
-      cat("📊 Found", nrow(available_data), "shared data objects:\n")
+      cat("[Data] Found", nrow(available_data), "shared data objects:\n")
       for (i in seq_len(min(3, nrow(available_data)))) {
-        cat("  •", available_data$name[i], "-", available_data$class[i], "\n")
+        cat("  -", available_data$name[i], "-", available_data$class[i], "\n")
       }
     }
     
     if (length(data_objects) > 0) {
-      cat("📈 Found", length(data_objects), "data frames in environment:\n")
+      cat("[Chart] Found", length(data_objects), "data frames in environment:\n")
       for (obj in head(data_objects, 3)) {
         df <- get(obj, envir = .GlobalEnv)
-        cat(sprintf("  • %s: %d rows × %d columns\n", obj, nrow(df), ncol(df)))
+        cat(sprintf("  - %s: %d rows x %d columns\n", obj, nrow(df), ncol(df)))
         
         # Check for specific data issues
         if (any(is.na(df))) {
           na_percent <- round(sum(is.na(df)) / (nrow(df) * ncol(df)) * 100, 1)
-          cat(sprintf("    ⚠️ Contains %.1f%% missing values\n", na_percent))
+          cat(sprintf("    [Warning] Contains %.1f%% missing values\n", na_percent))
         }
       }
     }
@@ -613,19 +617,19 @@ goose_honk <- function(path = ".",
     tailored_checks <- list(
       statistics = function() {
         if (review$code_patterns$has_models) {
-          c("✓ Models detected. Are you checking residuals and assumptions?",
-            "✓ Consider adding confidence intervals to your estimates",
-            if (severity %in% c("harsh", "brutal")) "✓ P-values without effect sizes are meaningless!" else NULL)
+          c("- Models detected. Are you checking residuals and assumptions?",
+            "- Consider adding confidence intervals to your estimates",
+            if (severity %in% c("harsh", "brutal")) "- P-values without effect sizes are meaningless!" else NULL)
         } else {
           c("No statistical models found. Consider adding inferential statistics.")
         }
       },
       visualization = function() {
         if (review$code_patterns$has_ggplot) {
-          c("✓ ggplot2 detected. Consider adding:",
-            "  • Color-blind friendly palettes (viridis, RColorBrewer)",
-            "  • Proper axis labels with units",
-            "  • Informative titles and captions")
+          c("- ggplot2 detected. Consider adding:",
+            "  - Color-blind friendly palettes (viridis, RColorBrewer)",
+            "  - Proper axis labels with units",
+            "  - Informative titles and captions")
         } else {
           c("No visualization code detected. Data without plots is just numbers!")
         }
@@ -634,13 +638,13 @@ goose_honk <- function(path = ".",
         suggestions <- c()
         if (review$code_patterns$has_loops) {
           suggestions <- c(suggestions, 
-            "✓ Replace loops with vectorized operations",
-            "✓ Use data.table for large datasets")
+            "- Replace loops with vectorized operations",
+            "- Use data.table for large datasets")
         }
         if (review$code_patterns$line_count > 200) {
           suggestions <- c(suggestions,
-            "✓ Consider profiling with profvis::profvis()",
-            "✓ Cache expensive computations")
+            "- Consider profiling with profvis::profvis()",
+            "- Cache expensive computations")
         }
         if (length(suggestions) == 0) {
           suggestions <- "Code seems reasonably efficient. Profile to find bottlenecks."
@@ -648,10 +652,10 @@ goose_honk <- function(path = ".",
         suggestions
       },
       methodology = function() {
-        c(if (!review$code_patterns$has_functions) "✓ No functions found. Modularize your code!" else NULL,
-          if (!review$code_patterns$has_seed) "✓ Add set.seed() for reproducibility" else NULL,
-          if (review$code_patterns$has_comments < 0.15) "✓ Document your methodology in comments" else NULL,
-          "✓ Consider creating a research compendium")
+        c(if (!review$code_patterns$has_functions) "- No functions found. Modularize your code!" else NULL,
+          if (!review$code_patterns$has_seed) "- Add set.seed() for reproducibility" else NULL,
+          if (review$code_patterns$has_comments < 0.15) "- Document your methodology in comments" else NULL,
+          "- Consider creating a research compendium")
       }
     )
     
@@ -669,31 +673,31 @@ goose_honk <- function(path = ".",
   
   if (review$code_patterns$has_models) {
     cat("Since you're doing modeling:\n")
-    cat("• Try tidymodels for consistent model workflows\n")
-    cat("• Implement cross-validation with rsample\n")
-    cat("• Use broom to tidy your model outputs\n")
+    cat("- Try tidymodels for consistent model workflows\n")
+    cat("- Implement cross-validation with rsample\n")
+    cat("- Use broom to tidy your model outputs\n")
   }
   
   if (review$code_patterns$has_ggplot) {
     cat("Since you're using ggplot2:\n")
-    cat("• Try plotly::ggplotly() for interactive plots\n")
-    cat("• Use patchwork to combine multiple plots\n")
-    cat("• Consider gganimate for temporal data\n")
+    cat("- Try plotly::ggplotly() for interactive plots\n")
+    cat("- Use patchwork to combine multiple plots\n")
+    cat("- Consider gganimate for temporal data\n")
   }
   
   if (review$code_patterns$has_loops || review$code_patterns$line_count > 300) {
     cat("For better performance:\n")
-    cat("• Profile with profvis to find bottlenecks\n")
-    cat("• Use future/furrr for parallel processing\n")
-    cat("• Consider Rcpp for computationally intensive parts\n")
+    cat("- Profile with profvis to find bottlenecks\n")
+    cat("- Use future/furrr for parallel processing\n")
+    cat("- Consider Rcpp for computationally intensive parts\n")
   }
   
   # Motivational close based on severity
   severity_closes <- list(
-    gentle = "\n🌈 Keep up the excellent work! Every iteration makes it better.",
-    moderate = "\n💪 You're on the right track! These improvements will make your analysis shine.",
-    harsh = "\n🔥 No excuses! Implement these changes and become a data science legend!",
-    brutal = "\n☠️ Your code has potential... buried deep. Very deep. Now dig it out and make it shine!"
+    gentle = "\n[Rainbow] Keep up the excellent work! Every iteration makes it better.",
+    moderate = "\n[Strong] You're on the right track! These improvements will make your analysis shine.",
+    harsh = "\n[Fire] No excuses! Implement these changes and become a data science legend!",
+    brutal = "\n[Danger] Your code has potential... buried deep. Very deep. Now dig it out and make it shine!"
   )
   
   cat(severity_closes[[severity]], "\n")
@@ -737,7 +741,7 @@ goose_continuation_prompt <- function(path = ".",
                                     include_todos = TRUE,
                                     save_to = NULL) {
   
-  cli::cli_h1("📝 Generating Continuation Prompt")
+  cli::cli_h1("[Note] Generating Continuation Prompt")
   
   # Set up paths
   if (path == ".") {
@@ -755,7 +759,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Header
   prompt$header <- c(
-    "# 🦆 GooseR Continuation Prompt",
+    "# [Goose] GooseR Continuation Prompt",
     paste0("Generated: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
     paste0("Project: ", basename(path)),
     paste0("Path: ", path),
@@ -766,7 +770,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Session Summary
   prompt$summary <- c(
-    "## 📊 Session Summary",
+    "## [Data] Session Summary",
     "",
     "### Working Directory",
     paste0("```\n", path, "\n```"),
@@ -788,7 +792,7 @@ goose_continuation_prompt <- function(path = ".",
                             full.names = FALSE, recursive = TRUE)
     
     prompt$files <- c(
-      "## 📁 Project Structure",
+      "## [Files] Project Structure",
       "",
       "### R Scripts",
       if (length(r_files) > 0) paste0("- ", r_files) else "- No R scripts found",
@@ -821,7 +825,7 @@ goose_continuation_prompt <- function(path = ".",
     }
     
     prompt$todos <- c(
-      "## ✅ TODOs and Notes",
+      "## [Done] TODOs and Notes",
       ""
     )
     
@@ -844,7 +848,7 @@ goose_continuation_prompt <- function(path = ".",
     memories <- goose_list(category = "*", global = FALSE)
     if (length(memories) > 0) {
       c(
-        "## 🧠 Recent Goose Memory",
+        "## [Memory] Recent Goose Memory",
         "",
         "### Saved Objects",
         paste0("- ", names(memories)[1:min(10, length(memories))]),
@@ -862,7 +866,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Progress Status
   prompt$progress <- c(
-    "## 📈 Progress Status",
+    "## [Chart] Progress Status",
     "",
     "### Completed in This Session",
     "- [ ] Add completed tasks here",
@@ -877,7 +881,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Next Steps
   prompt$next_steps <- c(
-    "## 🚀 Next Steps",
+    "## [Rocket] Next Steps",
     "",
     "### Immediate Priorities",
     "1. ",
@@ -896,7 +900,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Key Commands
   prompt$commands <- c(
-    "## 💡 Quick Start Commands",
+    "## [Idea] Quick Start Commands",
     "",
     "```r",
     "# Load gooseR",
@@ -916,7 +920,7 @@ goose_continuation_prompt <- function(path = ".",
   
   # Notes section
   prompt$notes <- c(
-    "## 📝 Session Notes",
+    "## [Note] Session Notes",
     "",
     "_Add any important context, decisions, or observations from this session:_",
     "",
@@ -942,15 +946,15 @@ goose_continuation_prompt <- function(path = ".",
   cat(cli::col_blue(save_to), "\n\n")
   
   cat("Summary:\n")
-  cat("• Project:", basename(path), "\n")
+  cat("- Project:", basename(path), "\n")
   if (include_files) {
     total_files <- length(r_files) + length(rmd_files) + length(data_files)
-    cat("• Files tracked:", total_files, "\n")
+    cat("- Files tracked:", total_files, "\n")
   }
   if (include_todos && length(todos) > 0) {
-    cat("• TODOs found:", sum(lengths(todos)), "\n")
+    cat("- TODOs found:", sum(lengths(todos)), "\n")
   }
-  cat("• Timestamp:", timestamp, "\n")
+  cat("- Timestamp:", timestamp, "\n")
   
   cli::cli_alert_info("Copy this prompt to start your next session exactly where you left off!")
   
