@@ -57,7 +57,7 @@ goose is your friendly AI partner who can understand what you want to do and hel
 - **Extensible**: Customize with your preferred LLM and connect to any external MCP server
 - **Autonomous**: Independently handles complex tasks, from debugging to deployment
 
-[Learn more about goose](https://block.github.io/goose/docs/quickstart)
+[Learn more about goose](https://block.github.io/goose/docs/quickstart/)
 
 ## Installation
 
@@ -225,7 +225,6 @@ More examples in `docs/assets/` and `inst/examples/`.
 - **Vignettes**: Run `browseVignettes("gooseR")` for tutorials
 - **Examples**: See `examples/` directory for use cases
 - **Function docs**: Use `?function_name` for detailed help
-- **GitHub**: [blockbtheriault/gooseR](https://github.com/blockbtheriault/gooseR)
 
 ## Version History
 

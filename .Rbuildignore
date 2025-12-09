@@ -19,3 +19,11 @@
 ^TODO_v0\.1\.1\.md$
 ^V0\.1\.1_DEVELOPMENT_SUMMARY\.md$
 ^build_vignettes\.R$
+^check_logs$
+^git_sync\.sh$
+^test_v0\.1\.1_features\.R$
+^view_docs\.sh$
+^CRAN_RESUBMISSION_SUMMARY\.md$
+^CRAN_SUBMISSION_TRACKING\.md$
+^GITHUB_UPDATED\.md$
+^SUBMIT_TO_CRAN\.md$
