@@ -244,7 +244,7 @@ More examples in `docs/assets/` and `inst/examples/`.
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
+We welcome contributions! Please see the CONTRIBUTING.md and CODE_OF_CONDUCT.md files in the source repository at <https://github.com/blockbtheriault/gooseR>.
 
 ## License
 

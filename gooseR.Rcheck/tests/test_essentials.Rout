@@ -1,0 +1,329 @@
+
+R version 4.5.1 (2025-06-13) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Test script for gooseR essential functions
+> # Date: 2025-12-03
+> 
+> library(gooseR)
+> library(cli)
+> 
+> cli::cli_h1("Testing gooseR Essential Functions")
+
+── Testing gooseR Essential Functions ──────────────────────────────────────────
+> 
+> # Test 1: goose_give_sample()
+> cli::cli_h2("Test 1: goose_give_sample()")
+
+── Test 1: goose_give_sample() ──
+
+> test_data <- data.frame(
++   id = 1:10,
++   value = rnorm(10),
++   category = sample(letters[1:3], 10, replace = TRUE),
++   date = Sys.Date() + 1:10
++ )
+> 
+> # Share the test data
+> goose_give_sample(test_data, "test_dataset")
+
+ [Data] Object Shared with Goose 
+--------------------------------------------------
+Name: test_dataset 
+Class: data.frame 
+Dimensions: 10 x 4 
+Size: 1.9 Kb 
+
+ Columns: 
+   Column      Type Missing
+       id   integer       0
+    value   numeric       0
+ category character       0
+     date      Date       0
+
+ Sample Data: 
+  id      value category       date
+1  1  0.8622597        c 2025-12-11
+2  2  0.1679009        c 2025-12-12
+3  3  2.0645868        c 2025-12-13
+4  4  1.2810703        c 2025-12-14
+5  5 -0.9358111        b 2025-12-15
+ℹ Created Goose memory directory: '/var/folders/_4/5zbk3mcx73qfmmscm52hpd2w0000gn/T/RtmpIrIIua/working_dir/RtmpREFGaD/gooseR_memory'
+✔ Saved "test_dataset" to Goose memory (category: "shared_objects")
+ℹ Tags: "structure" and "reference"
+✔ Object structure saved to Goose memory
+> 
+> # Test with mtcars
+> cli::cli_alert_info("Testing with mtcars dataset")
+ℹ Testing with mtcars dataset
+> goose_give_sample(mtcars, rows = 3)
+
+ [Data] Object Shared with Goose 
+--------------------------------------------------
+Name: mtcars 
+Class: data.frame 
+Dimensions: 32 x 11 
+Size: 7 Kb 
+
+ Columns: 
+ Column    Type Missing
+    mpg numeric       0
+    cyl numeric       0
+   disp numeric       0
+     hp numeric       0
+   drat numeric       0
+     wt numeric       0
+   qsec numeric       0
+     vs numeric       0
+     am numeric       0
+   gear numeric       0
+   carb numeric       0
+
+ Sample Data: 
+               mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4     21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710    22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+✔ Saved "mtcars" to Goose memory (category: "shared_objects")
+ℹ Tags: "structure" and "reference"
+✔ Object structure saved to Goose memory
+> 
+> # Test 2: goose_make_a_plan()
+> cli::cli_h2("Test 2: goose_make_a_plan()")
+
+── Test 2: goose_make_a_plan() ──
+
+> plan <- goose_make_a_plan(focus = "predictive")
+── [Goose] Goose Analysis Planner ──────────────────────────────────────────────
+
+── Goose Memory Objects ──
+
+Found 2 objects
+          name       category      class   size         tags
+1 test_dataset shared_objects data.frame 1.9 Kb structur....
+2       mtcars shared_objects data.frame   7 Kb structur....
+# [Data] Data Analysis Plan
+Generated: 2025-12-10 13:35:41
+
+## [Files] Available Objects
+- test_dataset
+- mtcars
+
+## [Target] Phase 1: Data Understanding
+- [ ] Explore data structure and types
+- [ ] Check for missing values and outliers
+- [ ] Generate summary statistics
+- [ ] Create initial visualizations
+
+## [Search] Phase 2: Data Quality
+- [ ] Identify data quality issues
+- [ ] Handle missing values
+- [ ] Detect and handle outliers
+- [ ] Validate data consistency
+
+## [Chart] Phase 3: Exploratory Analysis
+- [ ] Univariate analysis
+- [ ] Bivariate relationships
+- [ ] Correlation analysis
+- [ ] Feature importance
+
+## [AI] Phase 4: Predictive Modeling
+- [ ] Feature engineering
+- [ ] Train/test split
+- [ ] Model selection
+- [ ] Model evaluation
+- [ ] Hyperparameter tuning
+
+## [List] Phase 5: Reporting
+- [ ] Create executive summary
+- [ ] Generate visualizations
+- [ ] Document methodology
+- [ ] Prepare recommendations
+
+## [Idea] Suggested Next Steps
+1. Run `goose_give_sample()` on additional datasets
+2. Use `goose_ask()` for specific analysis questions
+3. Use `goose_honk()` to review and improve your approach> 
+> # Test 3: goose_loop_me()
+> cli::cli_h2("Test 3: goose_loop_me()")
+
+── Test 3: goose_loop_me() ──
+
+> 
+> # Simple code to loop
+> simple_code <- "df <- read.csv(file)
++ summary(df)
++ write.csv(df, paste0('processed_', file))"
+> 
+> cli::cli_alert_info("Converting to file loop:")
+ℹ Converting to file loop:
+> goose_loop_me(simple_code, loop_over = "files")
+
+── [Loop] Loop Generator ──
+
+Generated Loop Structure:
+--------------------------------------------------
+# Loop Structure
+files <- list.files(pattern = '*.csv', full.names = TRUE)
+# Optional: Add progress bar
+# library(progress)
+# pb <- progress_bar$new(total = length(items))
+
+for (file in files) {
+  # Your code here:
+  df <- read.csv(file)
+  summary(df)
+  write.csv(df, paste0('processed_', file))
+}
+  # pb$tick()  # Update progress
+--------------------------------------------------
+> 
+> cli::cli_alert_info("\nConverting to parallel processing:")
+ℹ Converting to parallel processing:
+> goose_loop_me(simple_code, loop_over = "files", parallel = TRUE)
+
+── [Loop] Loop Generator ──
+
+Generated Loop Structure:
+--------------------------------------------------
+# Parallel Loop Structure
+library(parallel)
+files <- list.files(pattern = '*.csv', full.names = TRUE)
+results <- mclapply(files, function(file) {
+  # Your code here:
+  df <- read.csv(file)
+  summary(df)
+  write.csv(df, paste0('processed_', file))
+}, mc.cores = detectCores() - 1)
+--------------------------------------------------
+> 
+> # Test 4: goose_honk()
+> cli::cli_h2("Test 4: goose_honk()")
+── Test 4: goose_honk() ──
+
+> 
+> # Gentle review
+> cli::cli_alert_info("Gentle review:")
+ℹ Gentle review:
+> goose_honk(severity = "gentle", focus = "statistics")
+
+── [Goose] HONK! Code Review ───────────────────────────────────────────────────
+ℹ Reviewing current directory: '/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck/tests'
+
+── Goose Memory Objects ──
+
+Found 2 objects
+          name       category      class   size         tags
+1 test_dataset shared_objects data.frame 1.9 Kb structur....
+2       mtcars shared_objects data.frame   7 Kb structur....
+
+ [Star] Great work! Here are some friendly suggestions: 
+
+
+── Specific Code Analysis ──
+
+[Warning] No error handling detected in 76 lines of code.
+
+── Data-Specific Suggestions ──
+
+[Data] Found 2 shared data objects:
+  - test_dataset - data.frame 
+  - mtcars - data.frame 
+[Chart] Found 1 data frames in environment:
+  - test_data: 10 rows x 4 columns
+
+── Focus Area: Statistics ──
+
+No statistical models found. Consider adding inferential statistics. 
+
+── Next Level Techniques for Your Code ──
+
+
+[Rainbow] Keep up the excellent work! Every iteration makes it better. 
+> 
+> # Harsh review
+> cli::cli_alert_info("\nHarsh review:")
+ℹ Harsh review:
+> goose_honk(severity = "harsh", focus = "performance")
+
+── [Goose] HONK! Code Review ───────────────────────────────────────────────────
+ℹ Reviewing current directory: '/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck/tests'
+
+── Goose Memory Objects ──
+
+Found 2 objects
+          name       category      class   size         tags
+1 test_dataset shared_objects data.frame 1.9 Kb structur....
+2       mtcars shared_objects data.frame   7 Kb structur....
+
+ [Warning] Time for tough love! Critical improvements needed: 
+
+
+── Specific Code Analysis ──
+
+[Warning] No error handling detected in 76 lines of code.
+   When this breaks (not if, WHEN), you'll have no idea why!
+
+── Data-Specific Suggestions ──
+
+[Data] Found 2 shared data objects:
+  - test_dataset - data.frame 
+  - mtcars - data.frame 
+[Chart] Found 1 data frames in environment:
+  - test_data: 10 rows x 4 columns
+
+── Focus Area: Performance ──
+
+Code seems reasonably efficient. Profile to find bottlenecks. 
+
+── Next Level Techniques for Your Code ──
+
+
+[Fire] No excuses! Implement these changes and become a data science legend! 
+> 
+> # Test 5: goose_continuation_prompt()
+> cli::cli_h2("Test 5: goose_continuation_prompt()")
+── Test 5: goose_continuation_prompt() ──
+
+> 
+> # Generate continuation prompt
+> prompt_file <- goose_continuation_prompt(
++   include_files = TRUE,
++   include_todos = TRUE
++ )
+── [Note] Generating Continuation Prompt ───────────────────────────────────────
+ℹ Mapping project files...
+ℹ Scanning for TODOs...
+ℹ Checking Goose memory...
+! No memories found matching your criteria.
+✔ Continuation prompt saved to:
+/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck/tests/CONTINUATION_PROMPT_20251210_133541.md 
+
+Summary:
+- Project: tests 
+- Files tracked: 7 
+- TODOs found: 2 
+- Timestamp: 20251210_133541 
+ℹ Copy this prompt to start your next session exactly where you left off!
+> 
+> cli::cli_alert_success("All essential functions tested successfully!")
+✔ All essential functions tested successfully!
+> cli::cli_alert_info("Continuation prompt saved to: {.file {prompt_file}}")
+ℹ Continuation prompt saved to: '/Users/btheriault/Documents/R/gooseR/gooseR.Rcheck/tests/CONTINUATION_PROMPT_20251210_133541.md'
+> 
+> proc.time()
+   user  system elapsed 
+  0.559   0.100   0.764 

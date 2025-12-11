@@ -28,7 +28,8 @@ Generate RMarkdown template with brand styling
 }
 \examples{
 \dontrun{
-# Create branded RMarkdown template
-brand_rmd_template("block", "My Report", output_file = "report.Rmd")
+# Create branded RMarkdown template in temp directory
+temp_file <- file.path(tempdir(), "report.Rmd")
+brand_rmd_template("block", "My Report", output_file = temp_file)
 }
 }

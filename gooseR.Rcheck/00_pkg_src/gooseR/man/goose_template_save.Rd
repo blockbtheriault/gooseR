@@ -4,16 +4,25 @@
 \alias{goose_template_save}
 \title{Save Template to Library}
 \usage{
-goose_template_save(template, overwrite = FALSE)
+goose_template_save(template, overwrite = FALSE, template_dir = NULL)
 }
 \arguments{
 \item{template}{Template object}
 
 \item{overwrite}{Overwrite if exists}
+
+\item{template_dir}{Directory to save templates (default: tempdir() for CRAN compliance)}
 }
 \value{
 Logical indicating success
 }
 \description{
 Save a template for future use
+}
+\examples{
+\dontrun{
+# Create and save template in temp directory
+template <- goose_template("test", "Hello {name}")
+goose_template_save(template, template_dir = tempdir())
+}
 }

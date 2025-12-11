@@ -105,11 +105,21 @@ goose_template_apply <- function(template, ..., execute = TRUE) {
 #' Save a template for future use
 #' @param template Template object
 #' @param overwrite Overwrite if exists
+#' @param template_dir Directory to save templates (default: tempdir() for CRAN compliance)
 #' @return Logical indicating success
 #' @export
-goose_template_save <- function(template, overwrite = FALSE) {
-  # Template directory
-  template_dir <- file.path(rappdirs::user_data_dir("gooseR"), "templates")
+#' @examples
+#' \dontrun{
+#' # Create and save template in temp directory
+#' template <- goose_template("test", "Hello {name}")
+#' goose_template_save(template, template_dir = tempdir())
+#' }
+goose_template_save <- function(template, overwrite = FALSE, template_dir = NULL) {
+  # Template directory - use tempdir() by default for CRAN compliance
+  if (is.null(template_dir)) {
+    template_dir <- file.path(tempdir(), "gooseR_templates")
+  }
+  
   if (!dir.exists(template_dir)) {
     dir.create(template_dir, recursive = TRUE)
   }

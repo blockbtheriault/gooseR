@@ -1,6 +1,0 @@
-
-== Checking for Missing Imports ==
-Error in find.package(package, lib.loc) : 
-  there is no package called ‘package:gooseR’
-Calls: <Anonymous> -> find.package
-Execution halted

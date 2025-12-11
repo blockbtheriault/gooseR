@@ -4,7 +4,10 @@
 \alias{get_brand_dir}
 \title{Get brand configuration directory}
 \usage{
-get_brand_dir()
+get_brand_dir(use_temp = TRUE)
+}
+\arguments{
+\item{use_temp}{Use temporary directory (default: TRUE for CRAN compliance)}
 }
 \value{
 Path to brand configuration directory

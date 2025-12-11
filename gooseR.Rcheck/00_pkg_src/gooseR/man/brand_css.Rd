@@ -21,8 +21,9 @@ Generate CSS from brand configuration
 }
 \examples{
 \dontrun{
-# Save to file
-brand_css("block", "assets/block.css")
+# Save to file in temp directory
+temp_file <- file.path(tempdir(), "block.css")
+brand_css("block", temp_file)
 
 # Get as string
 css <- brand_css("block")

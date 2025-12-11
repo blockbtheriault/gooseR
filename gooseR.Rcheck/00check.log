@@ -6,21 +6,37 @@
     GNU Fortran (GCC) 14.2.0
 * running under: macOS Tahoe 26.1
 * using session charset: UTF-8
-* using options ‘--no-manual --no-vignettes’
+* using option ‘--as-cran’
 * checking for file ‘gooseR/DESCRIPTION’ ... OK
 * this is package ‘gooseR’ version ‘0.1.0’
 * package encoding: UTF-8
+* checking CRAN incoming feasibility ... [3s/17s] NOTE
+Maintainer: ‘Brandon Theriault <btheriault@block.xyz>’
+
+New submission
+
+Found the following (possibly) invalid URLs:
+  URL: https://github.com/blockbtheriault/gooseR
+    From: README.md
+    Status: 404
+    Message: Not Found
 * checking package namespace information ... OK
-* checking package dependencies ... OK
+* checking package dependencies ... INFO
+Imports includes 23 non-default packages.
+Importing from so many packages makes the package vulnerable to any of
+them becoming unavailable.  Move as many as possible to Suggests and
+use conditionally.
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
 * checking whether package ‘gooseR’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
+* checking for future file timestamps ... OK
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
 * checking top-level files ... OK
@@ -34,6 +50,7 @@
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -41,6 +58,7 @@
 * checking R code for possible problems ... OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
+* checking Rd line widths ... OK
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
@@ -52,10 +70,17 @@
 * checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
+  Running ‘test_essentials.R’
   Running ‘testthat.R’
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes ... OK
-* checking running R code from vignettes ... SKIPPED
-* checking re-building of vignette outputs ... SKIPPED
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: 'tidy' doesn't look like recent enough HTML Tidy.
+Please obtain a recent version of HTML Tidy by downloading a binary
+release or compiling the source code from <https://www.html-tidy.org/>.
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
 * DONE
-Status: OK
+Status: 2 NOTEs

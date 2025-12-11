@@ -4,10 +4,12 @@
 \alias{get_memory_path}
 \title{Get Goose Memory Directory Path}
 \usage{
-get_memory_path(global = TRUE)
+get_memory_path(global = TRUE, use_temp = TRUE)
 }
 \arguments{
 \item{global}{Logical. If TRUE, returns global memory path. If FALSE, returns local project memory path.}
+
+\item{use_temp}{Logical. If TRUE (default for CRAN compliance), uses tempdir(). Set to FALSE for production use.}
 }
 \value{
 Character string with the memory directory path

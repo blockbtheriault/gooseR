@@ -7,11 +7,20 @@
 goose_cache_init(cache_dir = NULL)
 }
 \arguments{
-\item{cache_dir}{Directory for cache database}
+\item{cache_dir}{Directory for cache database (default: tempdir() for CRAN compliance)}
 }
 \value{
 DBI connection object
 }
 \description{
 Create or connect to the cache database
+}
+\examples{
+\dontrun{
+# Initialize cache in temp directory (CRAN compliant)
+conn <- goose_cache_init()
+
+# Or specify custom directory
+conn <- goose_cache_init(cache_dir = tempdir())
+}
 }

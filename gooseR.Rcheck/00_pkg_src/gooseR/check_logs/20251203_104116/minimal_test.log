@@ -1,8 +1,0 @@
-
-== Minimal Dependencies Test ==
-1. Basic functions available: PASS
-2. CLI integration check: PASS
-3. Brand creation (non-interactive): 
-Brand configuration created: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/gooseR/brands/test_104119/test_104119_brand.yaml
-To use: theme_brand('test_104119')
-PASS

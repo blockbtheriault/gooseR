@@ -4,16 +4,21 @@ WorkerPool              Worker Pool R6 Class
 brand_css               Generate CSS from brand configuration
 brand_palette           Get brand color palette
 brand_rmd_template      Generate RMarkdown template with brand styling
+format_ai_response      Format AI response text for better display in R
+                        console
+format_conversation     Format and display a gooseR conversation
 gooseR-branding         GooseR Universal Branding System
 goose_addin_chat        GooseR Chat Interface
 goose_addin_quick       Quick Ask
 goose_addin_review      Code Review Interface
 goose_addin_snippet     Code Snippet Generator
 goose_addin_template    Template Builder UI
-goose_ask               Ask Goose a Question
+goose_ask               Enhanced Ask Goose with Formatting
+goose_ask_raw           Original goose_ask (unformatted)
 goose_async             Execute Query Asynchronously
 goose_async_retry       Async Query with Retry
 goose_async_timeout     Async Query with Timeout
+goose_backup            Create a backup of all gooseR memory
 goose_batch             Execute Multiple Queries in Parallel
 goose_batch_file        Batch Process File
 goose_cache_clear       Clear Cache
@@ -28,7 +33,13 @@ goose_cache_warmup      Cache Warmup
 goose_cached            Cached Query Execution
 goose_check_installation
                         Check Goose CLI Installation
+goose_clean_text        Get copy-friendly version of formatted text
+goose_clear_all         Clear all gooseR memory
+goose_clear_category    Clear all items in a category
+goose_clear_tags        Clear all items with specified tags
 goose_configure         Configure Goose CLI Settings
+goose_continuation_prompt
+                        Generate Continuation Prompt for Next Session
 goose_conversation_ui   Conversation Manager UI
 goose_create_brand      Create a new brand configuration interactively
 goose_create_brand_ai   Create Brand with AI Assistance
@@ -36,13 +47,20 @@ goose_create_quarto     Create Quarto AI Document
 goose_create_report     Create RMarkdown Report with AI
 goose_create_template   Create Parameterized Report Template
 goose_delete            Delete Object from Goose Memory
+goose_divider           Create a markdown-style divider
 goose_document          Generate R Documentation with AI
+goose_exists            Check if an item exists in gooseR memory
 goose_explain_error     Explain R Error with AI
+goose_format_options    Set global formatting options for gooseR
 goose_generate_tests    Generate Unit Tests with AI
 goose_get_config        Get Current Goose Configuration
+goose_give_sample       Share R Object Structure with Goose
+goose_honk              Review and Challenge Current Work
 goose_insert_chunk      Insert AI Chunk in Current Document
 goose_list              List Objects in Goose Memory
 goose_load              Load R Object from Goose Memory
+goose_loop_me           Convert Code to Loop Structure
+goose_make_a_plan       Generate Analysis Plan from Shared Objects
 goose_map               Map Async Function Over Data
 goose_mapreduce         Parallel Map-Reduce with AI
 goose_optimize_palette
@@ -53,10 +71,17 @@ goose_quarto_chunk      Create AI-Powered Quarto Chunk
 goose_query             Query Goose with Session Context
 goose_recipe            Execute Goose Recipe
 goose_reduce            Reduce Results with AI
+goose_rename            Rename an item in gooseR memory
+goose_rename_columns    Intelligently Rename Survey Columns
 goose_review_code       Review R Code with AI
 goose_rmd_ai            Create RMarkdown AI Section
 goose_save              Save R Object to Goose Memory
 goose_session           Create or Resume Goose Session
+goose_session_clear     Clear all items from current session
+goose_session_end       End the current gooseR session
+goose_session_list      List items saved in current session
+goose_session_save      Save an object with session tracking
+goose_session_start     Start a gooseR session for tracking saved items
 goose_stream            Stream Response from Goose
 goose_stream_async      Async Stream with Promise
 goose_stream_multi      Stream Multiple Queries
@@ -75,6 +100,7 @@ goose_template_validate
                         Validate Template
 goose_test_cli          Test if Goose CLI is Working
 goose_version           Get Goose CLI Version
+goose_view_column_map   View Column Name Mapping
 goose_worker_pool       Create Async Worker Pool
 load_brand              Load brand configuration
 preview_brand           Preview Brand Configuration
@@ -85,8 +111,11 @@ print.goose_code_review
 print.goose_error_explanation
                         Print method for goose_error_explanation
 print.goose_palette     Print method for goose_palette
+print.goose_response    Print formatted AI response
 print.goose_session     Print method for goose_session
 print.goose_template    Print Template
 register_goose_engine   Register Goose Chunk Engine
 theme_brand             Generate ggplot2 theme from brand configuration
 validate_brand          Validate brand configuration
+with_goose_session      Execute code with automatic gooseR session
+                        management

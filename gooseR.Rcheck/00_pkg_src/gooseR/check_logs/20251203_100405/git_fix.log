@@ -1,22 +1,0 @@
-rm 'gooseR_0.1.0.tar.gz'
-[main_branch 7fd7770] chore: CRAN preflight + R-hub v2 setup, metadata updates, ignore artifacts
- 9 files changed, 29 insertions(+), 15 deletions(-)
- delete mode 100644 gooseR_0.1.0.tar.gz
-Rebasing (1/4)dropping 76a1686f9f837fdb965fd0f215c25f19607c593e chore(check): silence NOTE for promises pipeline operator by adding '%...>%' to globalVariables -- patch contents already upstream
-Rebasing (2/4)Rebasing (3/4)Auto-merging DESCRIPTION
-CONFLICT (content): Merge conflict in DESCRIPTION
-Auto-merging inst/CITATION
-CONFLICT (content): Merge conflict in inst/CITATION
-error: could not apply a350a10... chore: CRAN preflight updates + R-hub v2 workflow
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply a350a10... chore: CRAN preflight updates + R-hub v2 workflow
-fatal: You are not currently on a branch.
-To push the history leading to the current (detached HEAD)
-state now, use
-
-    git push origin HEAD:<name-of-remote-branch>
-

@@ -1,51 +1,88 @@
-# gooseR
+# gooseR 🦆
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](#)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CRAN Status](https://img.shields.io/badge/CRAN-pending-orange.svg)](#)
 
-gooseR brings goose AI into R. It’s a user-first toolkit for analysis, visualization, and developer workflows — powered by the goose CLI.
+gooseR brings goose AI into R. It's a comprehensive, intelligent R development assistant powered by the goose CLI.
 
-- Memory integration for any R object
-- Brand-ready visualization system
-- AI assistant utilities for code, docs, and debugging
-- Advanced runtime features: streaming, caching, async, templates
-- IDE addins (RStudio/Positron) for one-click actions
+## 🚀 What's New in v0.1.1 (Feature Complete!)
 
-About goose
-goose is your friendly AI pardner who can understand what you want to do and help you do it! The best part is that goose can learn from your preferences and remember them for next time!
+### 🔍 Intelligent Code Analysis
+- **`goose_honk()`** - Actually reads your code and provides specific feedback
+  - 4 severity levels: `gentle`, `moderate`, `harsh`, `brutal`
+  - Detects patterns: loops, models, ggplot usage, error handling
+  - Data-aware analysis - checks for missing values in your data frames
 
-- Open Source: Built with transparency and collaboration in mind, goose empowers developers to contribute, customize, and innovate freely.
-- Runs Locally: Goose runs locally to execute tasks efficiently, keeping control in your hands.
-- Extensible: Customize goose with your preferred LLM and enhance its capabilities by connecting it to any external MCP server or API.
-- Autonomous: Goose independently handles complex tasks, from debugging to deployment, freeing you to focus on what matters most.
+### 📊 Survey Data Tools
+- **`goose_rename_columns()`** - Transform long survey questions into meaningful variable names
+  - "How satisfied are you with customer service?" → `sat_cust_serv`
+  - "On a scale of 1-10, how likely..." → `nps`
+  - Pattern recognition for NPS, satisfaction, demographics, frequency questions
+  - Saves mapping CSV for documentation
 
-There are both Desktop and CLI versions of goose. If you have goose CLI is already installed and working, gooseR requires no additional R configuration (this applies to anyone with the goose CLI, not just Block employees). If you need to configure your provider/model/key, use goose_configure().
+### 🎯 Essential Workflow Functions
+- **`goose_give_sample()`** - Share data samples with AI for context
+- **`goose_make_a_plan()`** - Get AI-powered analysis plans (exploratory/predictive/diagnostic)
+- **`goose_continuation_prompt()`** - Save your work context for tomorrow
+- **`goose_handoff()`** - Create comprehensive project handoffs
+- **`goose_summarize_session()`** - Summarize your work session
 
-[more on goose here](https://block.github.io/goose/docs/quickstart)
+### 💾 Enhanced Memory Management
+- **Bulk operations**: `goose_backup()`, `goose_restore()`, `goose_clear_tags()`
+- **Session management**: `with_goose_session()` with auto-cleanup
+- **Column mapping**: `goose_view_column_map()` for renamed survey data
 
-## gooseR Installation
+### 🎨 Beautiful Formatting
+- **`goose_format_response()`** - Beautiful markdown formatting
+- **`goose_format_table()`** - Clean table output
+- **`goose_format_code()`** - Syntax-highlighted code blocks
+- **`goose_format_list()`** - Formatted lists with emojis
+
+## ✨ Core Features
+
+- **Memory integration** for any R object - save, load, list, delete with tags
+- **Brand-ready visualization** system - Block and custom themes
+- **AI assistant utilities** for code reviews, docs, and debugging
+- **Advanced runtime features**: streaming, caching, async, templates
+- **IDE addins** (RStudio/Positron) for one-click actions
+
+## About goose
+
+goose is your friendly AI partner who can understand what you want to do and help you do it! The best part is that goose can learn from your preferences and remember them for next time!
+
+- **Open Source**: Built with transparency and collaboration in mind
+- **Runs Locally**: Execute tasks efficiently, keeping control in your hands
+- **Extensible**: Customize with your preferred LLM and connect to any external MCP server
+- **Autonomous**: Independently handles complex tasks, from debugging to deployment
+
+[Learn more about goose](https://block.github.io/goose/docs/quickstart/)
+
+## Installation
 
 ```r
-# Install from GitHub (private repo)
+# Install from GitHub (soon on CRAN!)
 # install.packages("remotes")
 remotes::install_github("blockbtheriault/gooseR")
 ```
 
-Configuration
-- If Goose CLI is already working on your machine, you do not need any extra R-side setup. This applies to anyone with the Goose CLI configured — not just Block employees.
-- To validate, run:
+## Configuration
+
+If Goose CLI is already working on your machine, you're ready to go! No extra R-side setup needed.
 
 ```r
 library(gooseR)
-if (goose_test_cli()) message("Goose CLI is ready!")
+
+# Test your setup
+if (goose_test_cli()) message("Goose CLI is ready! 🦆")
 ```
 
-- If you don’t have Goose CLI working yet, configure credentials:
+If you don't have Goose CLI configured yet:
 
 ```r
-# Example for external users
-# goose_configure(provider = "openai", model = "gpt-4o", api_key = "your-key")
+# Configure credentials (example for OpenAI)
+goose_configure(provider = "openai", model = "gpt-4o", api_key = "your-key")
 ```
 
 ## Quick Start
@@ -54,24 +91,125 @@ if (goose_test_cli()) message("Goose CLI is ready!")
 library(gooseR)
 
 # Ask Goose a question
-resp <- goose_ask("Summarize mtcars and suggest 2 visualizations")
-cat(substr(resp, 1, 240), "...\n")
+goose_ask("Summarize mtcars and suggest 2 visualizations")
 
-# Memory: save and load any R object
-gears <- as.list(split(mtcars, mtcars$gear))
-goose_save(gears, category = "demo", tags = c("example", "mtcars"))
-objs <- goose_list(category = "demo")
-restored <- goose_load(objs$name[1])
+# Get intelligent code review
+goose_honk(severity = "moderate")  # Reviews your current script
 
-# Branded visualization (Block)
+# Clean survey data
+survey_data <- read.csv("qualtrics_export.csv")
+clean_data <- goose_rename_columns(survey_data)
+goose_view_column_map(clean_data)  # See the mapping
+
+# Save and load R objects with memory
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+goose_save(model, category = "models", tags = c("mtcars", "regression"))
+my_model <- goose_load("model")
+
+# Create a branded visualization
 library(ggplot2)
-
-p <- ggplot(mtcars, aes(wt, mpg)) +
-  geom_point(color = "#000000", alpha = 0.8) +
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
   theme_brand("block") +
-  labs(title = "Fuel Efficiency vs Weight", x = "Weight", y = "MPG")
-print(p)
+  labs(title = "Fuel Efficiency")
 ```
+
+## Real-World Workflows
+
+### Survey Researcher
+```r
+# Load messy Qualtrics data
+survey <- read.csv("survey_export.csv")
+
+# Clean column names intelligently
+clean <- goose_rename_columns(survey)
+# "How satisfied are you with..." → sat_overall
+# "On a scale of 1-10..." → nps
+
+# Get analysis plan
+goose_make_a_plan("exploratory")
+
+# Save for tomorrow
+goose_continuation_prompt()
+```
+
+### Data Scientist
+```r
+# Share data context
+goose_give_sample(my_data)
+
+# Get analysis plan
+plan <- goose_make_a_plan("predictive")
+
+# Write your model...
+model <- glm(outcome ~ ., data = my_data, family = binomial)
+
+# Get tough feedback
+goose_honk(severity = "harsh")
+
+# Create handoff document
+goose_handoff()
+```
+
+### Team Lead
+```r
+# Backup team's work
+goose_backup()
+
+# Clean up test objects
+goose_clear_tags(c("test", "temp", "draft"))
+
+# Summarize sprint work
+goose_summarize_session()
+
+# Create continuation for next sprint
+goose_continuation_prompt()
+```
+
+## Key Functions by Category
+
+### 🤖 AI Assistant
+- `goose_ask()` - General AI queries
+- `goose_review_code()` - AI code review
+- `goose_document()` - Generate roxygen2 docs
+- `goose_generate_tests()` - Create test suites
+- `goose_explain_error()` - Debug errors
+
+### 🔍 Intelligent Analysis (NEW!)
+- `goose_honk()` - Context-aware code review
+- `goose_make_a_plan()` - Analysis planning
+- `goose_give_sample()` - Share data context
+- `goose_handoff()` - Project documentation
+- `goose_continuation_prompt()` - Save work context
+
+### 📊 Data Tools (NEW!)
+- `goose_rename_columns()` - Smart column renaming
+- `goose_view_column_map()` - View rename mappings
+
+### 💾 Memory Management
+- `goose_save()`, `goose_load()` - Save/load any R object
+- `goose_list()`, `goose_delete()` - Manage saved objects
+- `goose_backup()`, `goose_restore()` - Bulk operations
+- `goose_clear_tags()` - Clean by tags
+- `with_goose_session()` - Temporary work sessions
+
+### 🎨 Visualization & Branding
+- `theme_brand()` - Apply brand themes
+- `brand_palette()` - Access color palettes
+- `brand_css()` - Export CSS styles
+- `brand_rmd_template()` - RMarkdown templates
+
+### 🎯 Formatting (NEW!)
+- `goose_format_response()` - Beautiful markdown
+- `goose_format_table()` - Clean tables
+- `goose_format_code()` - Syntax highlighting
+- `goose_format_list()` - Formatted lists
+
+### ⚡ Advanced Features
+- `goose_stream()` - Streaming responses
+- `goose_cache_*()` - Caching system
+- `goose_batch()` - Parallel processing
+- `goose_template_*()` - Template system
 
 ## Visual Examples
 
@@ -80,53 +218,42 @@ print(p)
   <img src="docs/assets/block_bar_chart.png" width="45%" />
 </p>
 
-More in docs/assets and inst/examples.
-
-## What gooseR Provides
-
-- Memory
-  - goose_save(), goose_load(), goose_list(), goose_delete()
-- Branding
-  - theme_brand(), brand_palette(), brand_css(), brand_rmd_template()
-- AI Assistant
-  - goose_ask(): general queries
-  - goose_review_code(): AI code review
-  - goose_document(): AI-generated roxygen docs
-  - goose_generate_tests(): testthat scaffolding
-  - goose_explain_error(): error explanation and fixes
-- Advanced Runtime
-  - goose_stream(), goose_stream_session(): streaming with handlers
-  - goose_cache_init/set/get/stats/clear/export/import
-  - goose_batch(), goose_mapreduce(), goose_reduce()
-  - goose_template(), goose_template_apply/save/load/list/builtin/validate
-  - WorkerPool (R6) for parallel async use cases
-- IDE & Docs
-  - Addins: goose_addin_chat, goose_addin_review, goose_addin_template, goose_addin_quick, goose_addin_snippet
-  - Quarto/RMarkdown: register_goose_engine(), goose_quarto_chunk(), goose_create_quarto(), goose_create_report(), goose_insert_chunk()
-
-## Top / Unique Functions (Quick Overview)
-- goose_ask(): Ask Goose directly from R (text or JSON)
-- goose_review_code(): AI-powered review of selected R code (works great via addin)
-- goose_generate_tests(): Generate tests from function code
-- goose_document(): Produce roxygen2 documentation from a function
-- goose_explain_error(): Explain and fix R errors with suggested code
-- theme_brand("block"): Block-branded ggplot2 theme
-- brand_palette(): Access brand color palettes (categorical, sequential, diverging)
-- brand_css(), brand_rmd_template(): Export CSS and R Markdown templates in brand style
-- goose_stream(), StreamHandler: Streaming responses with callbacks
-- goose_cache_*(): Durable caching layer (SQLite) with export/import and stats
-- goose_batch(), goose_mapreduce(): Simple parallel/async AI workflows
-- goose_template_*(): Robust templating (create/apply/save/load/validate)
-- goose_addin_*(): One-click IDE addins for chat, code review, templates, snippets
-
+More examples in `docs/assets/` and `inst/examples/`.
 
 ## Documentation & Examples
-- Vignettes: run `browseVignettes("gooseR")` to open the overview and use-case demos.
-- Examples: examples/ (use_case_*.R) and inst/examples/ contain runnable scripts.
-- Technical docs and assets: docs/ and docs/assets/
+
+- **Vignettes**: Run `browseVignettes("gooseR")` for tutorials
+- **Examples**: See `examples/` directory for use cases
+- **Function docs**: Use `?function_name` for detailed help
+
+## Version History
+
+### v0.1.1 (Current) - Feature Complete! 🎉
+- ✅ Intelligent code analysis with `goose_honk()`
+- ✅ Survey data tools for column renaming
+- ✅ Essential workflow functions (5 new)
+- ✅ Enhanced memory management (10+ functions)
+- ✅ Beautiful formatting utilities (4 new)
+- ✅ 30+ total new functions
+
+### v0.1.0 (Initial Release)
+- Core memory integration
+- Basic AI assistant
+- Branding system
+- Initial CLI integration
 
 ## Contributing
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+We welcome contributions! Please see the CONTRIBUTING.md and CODE_OF_CONDUCT.md files in the source repository at <https://github.com/blockbtheriault/gooseR>.
 
 ## License
-MIT License. See [LICENSE](LICENSE).
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+Built with ❤️ by the Block People Analytics & Research team. Special thanks to the goose team for creating such an amazing AI platform!
+
+---
+
+*gooseR: Making R development more intelligent, one honk at a time!* 🦆

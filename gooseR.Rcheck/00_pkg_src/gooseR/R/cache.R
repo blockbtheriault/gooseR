@@ -12,12 +12,21 @@ NULL
 #' Initialize Cache Database
 #'
 #' Create or connect to the cache database
-#' @param cache_dir Directory for cache database
+#' @param cache_dir Directory for cache database (default: tempdir() for CRAN compliance)
 #' @return DBI connection object
 #' @export
+#' @examples
+#' \dontrun{
+#' # Initialize cache in temp directory (CRAN compliant)
+#' conn <- goose_cache_init()
+#' 
+#' # Or specify custom directory
+#' conn <- goose_cache_init(cache_dir = tempdir())
+#' }
 goose_cache_init <- function(cache_dir = NULL) {
   if (is.null(cache_dir)) {
-    cache_dir <- file.path(rappdirs::user_cache_dir("gooseR"), "cache")
+    # Use tempdir() by default for CRAN compliance
+    cache_dir <- file.path(tempdir(), "gooseR_cache")
   }
   
   if (!dir.exists(cache_dir)) {
