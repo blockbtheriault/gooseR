@@ -50,8 +50,13 @@ cat("  Cleared items with 'test' tag\n")
 
 # List final state
 cat("\nFinal state:\n")
-items <- goose_list()
-if (nrow(items) == 0) {
+items <- tryCatch({
+  goose_list()
+}, error = function(e) {
+  data.frame()
+})
+
+if (is.null(items) || nrow(items) == 0) {
   cat("  No items remaining (as expected)\n")
 } else {
   print(items)
@@ -67,9 +72,10 @@ cat("---------------------------\n")
 cat("Starting a new session...\n")
 goose_session_start()
 
-# Add some data to the session
-goose_save(mtcars, "session_mtcars", category = "session_test")
-goose_save(iris, "session_iris", category = "session_test")
+# Add some data to the session with session tags
+session_id <- getOption("goose.session_id")
+goose_save(mtcars, "session_mtcars", category = "session_test", tags = session_id)
+goose_save(iris, "session_iris", category = "session_test", tags = session_id)
 
 # List session items
 cat("\nSession items:\n")

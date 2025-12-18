@@ -1,10 +1,17 @@
 # gooseR News
 
-## 0.1.1 (Development)
-- Enhanced memory management system
-- AI response formatting improvements
-- Dependency reduction (25 → 11 packages)
-- Session tracking for better workflow management
+## 0.1.1 (2024-12-17)
+- **Major Enhancement**: Comprehensive memory management system
+  - `goose_clear_category()`, `goose_clear_tags()`, `goose_clear_all()` for bulk cleanup
+  - `goose_exists()`, `goose_rename()`, `goose_backup()` for smart memory operations
+  - Session tracking with `goose_session_start()`, `with_goose_session()` wrapper
+- **AI Response Formatting**: Beautiful markdown output by default
+  - `format_ai_response()` with headers, bullets, code blocks, colors
+  - `goose_format_options()` for global configuration
+  - Enhanced `goose_ask()` with automatic formatting
+- **18 New Functions**: Doubling package functionality
+- **100% Backward Compatibility**: All existing code continues to work
+- **Improved Error Handling**: Progress bars, confirmations, comprehensive validation
 
 ## 0.1.0 (2024-12-17) - CRAN Release
 - Initial professional release ✅ **NOW LIVE ON CRAN**
