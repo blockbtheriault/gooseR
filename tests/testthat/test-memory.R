@@ -13,9 +13,10 @@ test_that("goose_save and goose_load work correctly", {
       # Test saving a simple object
       test_data <- data.frame(x = 1:5, y = letters[1:5])
       
-      expect_silent(
+      expect_message(
         goose_save(test_data, "test_df", category = "test_category", 
-                   tags = c("test", "example"))
+                   tags = c("test", "example")),
+        "Saved"
       )
       
       # Test loading the object
@@ -30,9 +31,10 @@ test_that("goose_save and goose_load work correctly", {
       
       # Test that overwrite = TRUE allows overwriting
       test_data2 <- data.frame(x = 6:10, y = letters[6:10])
-      expect_silent(
+      expect_message(
         goose_save(test_data2, "test_df", category = "test_category", 
-                   overwrite = TRUE)
+                   overwrite = TRUE),
+        "Saved"
       )
       
       loaded_data2 <- goose_load("test_df", category = "test_category")
