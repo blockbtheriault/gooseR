@@ -10,7 +10,8 @@
 #' @param format Logical, whether to format the response (default TRUE)
 #' @param output_format Character, either "text" or "json"
 #' @param quiet Logical, suppress status messages
-#' @param timeout Numeric, timeout in seconds (default 30)
+#' @param timeout Numeric, timeout in seconds (default 300, i.e., 5 minutes).
+#'   Complex queries may take longer. Set to Inf for no timeout.
 #' @param session_id Optional session ID for context preservation
 #' @param width Integer, line width for wrapping (default 80)
 #' @param color Logical, whether to use color output (default TRUE)
@@ -33,12 +34,15 @@
 #' 
 #' # Customize formatting
 #' goose_ask("Explain ggplot2", width = 100, color = FALSE)
+#' 
+#' # For very complex queries, increase timeout
+#' goose_ask("Write a complete Shiny app", timeout = 600)
 #' }
 goose_ask <- function(prompt,
                      format = getOption("goose.auto_format", TRUE),
                      output_format = c("text", "json"),
                      quiet = TRUE,
-                     timeout = 30,
+                     timeout = getOption("goose.timeout", 300),
                      session_id = NULL,
                      width = getOption("goose.format_width", 80),
                      color = getOption("goose.format_color", TRUE),
@@ -116,7 +120,8 @@ goose_ask <- function(prompt,
 #' @param prompt Character string with the question or prompt
 #' @param output_format Character, either "text" or "json"
 #' @param quiet Logical, suppress status messages
-#' @param timeout Numeric, timeout in seconds (default 30)
+#' @param timeout Numeric, timeout in seconds (default 300, i.e., 5 minutes).
+#'   Complex queries may take longer. Set to Inf for no timeout.
 #' @param session_id Optional session ID for context preservation
 #'
 #' @return Character string with response (text format) or list (json format)
@@ -124,7 +129,7 @@ goose_ask <- function(prompt,
 goose_ask_raw <- function(prompt, 
                          output_format = c("text", "json"),
                          quiet = TRUE,
-                         timeout = 30,
+                         timeout = getOption("goose.timeout", 300),
                          session_id = NULL) {
   
   output_format <- match.arg(output_format)

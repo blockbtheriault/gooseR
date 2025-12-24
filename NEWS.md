@@ -1,5 +1,18 @@
 # gooseR News
 
+## 0.1.2 (2024-12-23)
+- **Critical Fix**: Increased default timeout from 30s to 300s (5 minutes)
+  - `goose_ask()` and `goose_ask_raw()` now use 300s default timeout
+  - All AI-powered functions updated to use configurable timeout
+  - Complex queries (code generation, analysis) no longer timeout prematurely
+- **Improved Authentication**: `goose_test_cli()` timeout increased to 60s
+  - Added informative message about authentication during test
+  - Allows sufficient time for password entry during first-time auth
+- **New Global Option**: `options(goose.timeout = 300)` 
+  - Set custom default timeout for all goose functions
+  - Use `timeout = Inf` for no timeout on individual calls
+- **Documentation**: Updated all timeout-related documentation
+
 ## 0.1.1 (2024-12-17)
 - **Major Enhancement**: Comprehensive memory management system
   - `goose_clear_category()`, `goose_clear_tags()`, `goose_clear_all()` for bulk cleanup

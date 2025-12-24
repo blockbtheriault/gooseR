@@ -158,6 +158,8 @@ goose_version <- function() {
 #' but don't need to provide API keys in R.
 #'
 #' @param verbose Logical, whether to print status messages
+#' @param timeout Numeric, timeout in seconds for the test query (default 60).
+#'   Increase this if authentication prompts require more time.
 #'
 #' @return Logical, TRUE if CLI works, FALSE otherwise
 #' @export
@@ -172,8 +174,11 @@ goose_version <- function() {
 #'   # May need configuration
 #'   goose_configure(provider = "openai", model = "gpt-4", api_key = "key")
 #' }
+#' 
+#' # Allow more time for authentication
+#' goose_test_cli(timeout = 120)
 #' }
-goose_test_cli <- function(verbose = TRUE) {
+goose_test_cli <- function(verbose = TRUE, timeout = 60) {
   
   # First check if CLI is installed
   if (!goose_check_installation()) {
@@ -193,15 +198,16 @@ goose_test_cli <- function(verbose = TRUE) {
   
   if (verbose) {
     message("[CLI] Testing CLI connection...")
+    message("   (timeout: ", timeout, "s - if authentication is needed, enter credentials now)")
   }
-  
+
   result <- tryCatch({
     system2("goose", 
             args = c("run", "--text", shQuote(test_query), 
                     "--no-session", "--quiet"),
             stdout = TRUE,
             stderr = TRUE,
-            timeout = 10)
+            timeout = timeout)
   }, error = function(e) {
     return(NULL)
   }, warning = function(w) {
