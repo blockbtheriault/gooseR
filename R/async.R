@@ -334,12 +334,16 @@ WorkerPool <- R6::R6Class(
     },
     
     #' Clear queue
+    #' @description Remove all queued items without processing them.
+    #' @return Invisible self
     clear_queue = function() {
       self$queue <- list()
       message("Queue cleared")
     },
-    
+
     #' Shutdown pool
+    #' @description Shut down the worker pool and reset the future plan to sequential.
+    #' @return Invisible self
     shutdown = function() {
       future::plan(future::sequential)
       self$active <- FALSE

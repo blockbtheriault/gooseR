@@ -5,6 +5,12 @@
 .DS_Store
 .quarto
 
+# R CMD check/build output
+.Rcheck/
+..Rcheck/
+*.Rcheck/
+*.tar.gz
+
 # Test and backup files
 test_backup/
 goose_backup/
